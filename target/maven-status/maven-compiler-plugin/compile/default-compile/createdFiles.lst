@@ -1,0 +1,10 @@
+com\ksfe\controller\HomeController.class
+com\ksfe\dao\util\AbstractDao.class
+com\ksfe\service\QueryServiceImpl.class
+com\ksfe\TestApp\TestApplication.class
+com\ksfe\model\Query.class
+com\ksfe\service\QueryService.class
+com\ksfe\dao\util\AbstractDao1.class
+com\ksfe\dao\util\CustomHibernateDaoSupport.class
+com\ksfe\dao\QueryDao.class
+com\ksfe\dao\QueryDaoImpl.class
