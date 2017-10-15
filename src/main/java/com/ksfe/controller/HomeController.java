@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2017, 2018, KSFE and/or its affiliates. All rights reserved.
+ * KSFE PROPRIETARY/CONFIDENTIAL. Use is subject to license terms.
+ */
 package com.ksfe.controller;
 
 import java.text.DateFormat;
@@ -17,8 +21,12 @@ import com.ksfe.service.QueryService;
 import com.ksfe.service.QueryServiceImpl;
 
 /**
- * Handles requests for the application home page.
+ * This is a Spring MVC based web Controller class
+ *
+ * @author RNarendran
+ * @since 1.0,
  */
+
 @Controller
 // @RequestMapping("/")
 
