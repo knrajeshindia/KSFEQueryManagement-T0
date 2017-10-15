@@ -8,17 +8,14 @@ import java.text.DateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.ksfe.model.Query;
-import com.ksfe.service.QueryService;
-import com.ksfe.service.QueryServiceImpl;
+import com.ksfe.model.Question;
+import com.ksfe.service.QuestionService;
 
 /**
  * This is a Spring MVC based web Controller class
@@ -32,7 +29,7 @@ import com.ksfe.service.QueryServiceImpl;
 
 public class HomeController {
 	@Autowired
-	private QueryService queryService;
+	private QuestionService questionService;
 
 	/**
 	 * Simply selects the home view to render by returning its name.
@@ -50,17 +47,12 @@ public class HomeController {
 	}
 
 	@RequestMapping(value = "/add", method = RequestMethod.GET)
-	public String insertQuery(Model model) {
+	public String insertQuestion(Model model) {
 		System.out.println(getClass());
-		Query query = new Query();
-		query.setBranchID(100);
-		query.setQueryDescription("How are you");
-		query.setQueryID(100);
-		query.setQueryStatus("posted");
-		query.setQuestionnaireID(100);
-		System.out.println(query);
-		model.addAttribute("query", query.getQueryDescription());
-		queryService.insertQuery(query);		
+		Question question = new Question(100,100,"Hi How are you","Remarks",1000,"draft");
+		System.out.println(question);
+		model.addAttribute("question", question.getQuestionDescription());
+		questionService.insertQuestion(question);
 		return "home";
 	}
 

@@ -1,18 +1,14 @@
 package com.ksfe.TestApp;
 
-import com.ksfe.model.Query;
-import com.ksfe.service.QueryService;
-import com.ksfe.service.QueryServiceImpl;
+import com.ksfe.model.Question;
+import com.ksfe.service.QuestionService;
+import com.ksfe.service.QuestionServiceImpl;
 
 public class TestApplication {
     public static void main(String[] args) {
-        Query query=new Query();
-        query.setBranchID(100);
-        query.setQueryDescription("How are you");
-        query.setQueryID(100);
-        query.setQueryStatus("posted");
-        query.setQuestionnaireID(100);
-        QueryService queryService=new QueryServiceImpl();
-        queryService.insertQuery(query);
+    	Question question = new Question(100,"Hi How are you","Remarks",1000,"draft");
+		System.out.println(question);
+		QuestionService questionService = new QuestionServiceImpl();
+		questionService.insertQuestion(question);
     }
 }

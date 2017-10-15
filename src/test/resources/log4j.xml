@@ -11,7 +11,7 @@
 	</appender>
 	
 	<!-- Application Loggers -->
-	<logger name="com.ksfe.query">
+	<logger name="com.ksfe.question">
 		<level value="info" />
 	</logger>
 	
