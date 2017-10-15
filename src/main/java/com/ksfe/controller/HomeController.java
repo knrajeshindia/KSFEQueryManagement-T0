@@ -32,41 +32,38 @@ import com.ksfe.service.QuestionService;
 // @RequestMapping("/")
 
 public class HomeController {
-	@Autowired
-	private QuestionService questionService;
+    @Autowired
+    private QuestionService questionService;
     @Autowired
     private UnitService unitService;
     @Autowired
     private UnitTypeService unitTypeService;
 
-	/**
-	 * Simply selects the home view to render by returning its name.
-	 */
-	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String home(Locale locale, Model model) {
-		Date date = new Date();
-		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
+    /**
+     * Simply selects the home view to render by returning its name.
+     */
+    @RequestMapping(value = "/", method = RequestMethod.GET)
+    public String home(Locale locale, Model model) {
+        Date date = new Date();
+        DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
+        String formattedDate = dateFormat.format(date);
+        model.addAttribute("serverTime", formattedDate);
+        return "home";
+    }
 
-		String formattedDate = dateFormat.format(date);
-
-		model.addAttribute("serverTime", formattedDate);
-
-		return "home";
-	}
-
-	@RequestMapping(value = "/add", method = RequestMethod.GET)
-	public String insertQuestion(Model model) {
-		System.out.println(getClass());
-        UnitType unitType = new UnitType(1,"UnitType","Eligibility");
-		Unit unit = new Unit(100,100,1,"UName","UCode","UAddress", "UDistrict", "UManager","Email", "Mobile", "Telephone","Status");
-		Question question = new Question(100,"Hi How are you","Remarks",1000,"draft");
-		System.out.println(question);
-		model.addAttribute("question", question.getQuestionDescription());
-		unitService.insertUnit(unit);
+    @RequestMapping(value = "/add", method = RequestMethod.GET)
+    public String insertQuestion(Model model) {
+        System.out.println(getClass());
+        UnitType unitType = new UnitType(1, "UnitType", "Eligibility");
+        Unit unit = new Unit(100, 100, 1, "UName", "UCode", "UAddress", "UDistrict", "UManager", "Email", "Mobile", "Telephone", "Status");
+        Question question = new Question(100, "Hi How are you", "Remarks", 1000, "draft");
+        System.out.println(question);
+        model.addAttribute("question", question.getQuestionDescription());
+        unitService.insertUnit(unit);
         unitTypeService.insertUnitType(unitType);
-		questionService.insertQuestion(question);
-		
-		return "home";
-	}
+        questionService.insertQuestion(question);
+
+        return "home";
+    }
 
 }
