@@ -57,7 +57,7 @@ public class Unit implements Serializable {
     public Unit() {
     }
 
-    /*public Unit(@NotNull Integer unitTypeID, Integer regionID, @NotNull String unitName, @NotNull String unitCode, @NotNull String unitAddress, @NotNull String unitDistrict, @NotNull String unitManager, @NotNull String unitEmail, @NotNull String unitMobile, @NotNull String unitTelephone, @NotNull String unitStatus) {
+    public Unit(@NotNull Integer unitTypeID, Integer regionID, @NotNull String unitName, @NotNull String unitCode, @NotNull String unitAddress, @NotNull String unitDistrict, @NotNull String unitManager, @NotNull String unitEmail, @NotNull String unitMobile, @NotNull String unitTelephone, @NotNull String unitStatus) {
         this.unitTypeID = unitTypeID;
         this.regionID = regionID;
         this.unitName = unitName;
@@ -69,7 +69,7 @@ public class Unit implements Serializable {
         this.unitMobile = unitMobile;
         this.unitTelephone = unitTelephone;
         this.unitStatus = unitStatus;
-    }*/
+    }
 
     public Unit(Integer unitID, @NotNull Integer unitTypeID, Integer regionID, @NotNull String unitName, @NotNull String unitCode, @NotNull String unitAddress, @NotNull String unitDistrict, @NotNull String unitManager, @NotNull String unitEmail, @NotNull String unitMobile, @NotNull String unitTelephone, @NotNull String unitStatus) {
         this.unitID = unitID;

@@ -9,7 +9,9 @@ import java.util.Date;
 import java.util.Locale;
 
 import com.ksfe.model.Unit;
+import com.ksfe.model.UnitType;
 import com.ksfe.service.UnitService;
+import com.ksfe.service.UnitTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -34,6 +36,8 @@ public class HomeController {
 	private QuestionService questionService;
     @Autowired
     private UnitService unitService;
+    @Autowired
+    private UnitTypeService unitTypeService;
 
 	/**
 	 * Simply selects the home view to render by returning its name.
@@ -53,11 +57,13 @@ public class HomeController {
 	@RequestMapping(value = "/add", method = RequestMethod.GET)
 	public String insertQuestion(Model model) {
 		System.out.println(getClass());
+        UnitType unitType = new UnitType(1,"UnitType","Eligibility");
 		Unit unit = new Unit(100,100,1,"UName","UCode","UAddress", "UDistrict", "UManager","Email", "Mobile", "Telephone","Status");
 		Question question = new Question(100,"Hi How are you","Remarks",1000,"draft");
 		System.out.println(question);
 		model.addAttribute("question", question.getQuestionDescription());
 		unitService.insertUnit(unit);
+        unitTypeService.insertUnitType(unitType);
 		questionService.insertQuestion(question);
 		
 		return "home";

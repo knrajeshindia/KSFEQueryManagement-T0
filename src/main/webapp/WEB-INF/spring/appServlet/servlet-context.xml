@@ -46,6 +46,7 @@
                 <beans:list>
                     <beans:value>com.ksfe.model.Question</beans:value>
                     <beans:value>com.ksfe.model.Unit</beans:value>
+					<beans:value>com.ksfe.model.UnitType</beans:value>
                 </beans:list>
             </beans:property>
             <beans:property name="hibernateProperties">
