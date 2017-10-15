@@ -1,8 +1,13 @@
 com\ksfe\controller\HomeController.class
 com\ksfe\dao\util\AbstractDao.class
+com\ksfe\model\Unit.class
 com\ksfe\service\QuestionService.class
+com\ksfe\dao\UnitDAOImpl.class
 com\ksfe\service\QuestionServiceImpl.class
+com\ksfe\service\UnitServiceImpl.class
+com\ksfe\service\UnitService.class
 com\ksfe\TestApp\TestApplication.class
+com\ksfe\dao\UnitDAO.class
 com\ksfe\dao\util\AbstractDao1.class
 com\ksfe\dao\QuestionDAO.class
 com\ksfe\dao\util\CustomHibernateDaoSupport.class
