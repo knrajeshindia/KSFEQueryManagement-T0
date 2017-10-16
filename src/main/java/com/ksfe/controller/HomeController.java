@@ -72,7 +72,7 @@ public class HomeController {
 
         Questionnaire questionnaire=new Questionnaire("QTitle", "QDesc","QRemarks", "Rajesh","Accounts Manager", 0);
         questionnaire.setPostedDate(new Date());
-        questionnaire.setDueDate(StringToDate.convertString("20-10-2017"));
+        questionnaire.setDueDate(StringToDate.convertString("20/10/2017"));
 
         questionnaire.getTargetRespondentList().add(target1);
         questionnaire.getTargetRespondentList().add(target2);
