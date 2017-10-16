@@ -23,7 +23,7 @@ import java.util.HashSet;
 @Table(name = "KSFE_Questionaire_List")
 public class Questionnaire implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer questionnaireID;
     @NotNull
     @Column(nullable = false)

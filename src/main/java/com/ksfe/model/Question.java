@@ -21,7 +21,7 @@ import java.util.Collection;
 @Table(name = "KSFE_Question_List")
 public class Question implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer questionID;
     @NotNull
     @Column(nullable = false)

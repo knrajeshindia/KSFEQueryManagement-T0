@@ -19,7 +19,7 @@ import java.io.Serializable;
 @Table(name="KSFE_Unit_List")
 public class Unit implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer unitID;
     
     @NotNull
