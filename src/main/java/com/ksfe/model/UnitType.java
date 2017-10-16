@@ -31,8 +31,7 @@ public class UnitType implements Serializable {
     public UnitType() {
     }
 
-    public UnitType(Integer unitTypeID, String unitTypeName, @NotNull String unitQueryEligibility) {
-        this.unitTypeID = unitTypeID;
+    public UnitType(String unitTypeName, @NotNull String unitQueryEligibility) {
         this.unitTypeName = unitTypeName;
         this.unitQueryEligibility = unitQueryEligibility;
     }

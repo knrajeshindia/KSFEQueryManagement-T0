@@ -21,10 +21,8 @@ public class Unit implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer unitID;
-    
-    @NotNull
-    @Column(nullable = false)
-    private Integer unitTypeID;
+    @ManyToOne
+    private UnitType unitType;
     //Duplicate unitID for binding branches to region-where applicable
     private Integer regionID;
     @NotNull
@@ -58,147 +56,226 @@ public class Unit implements Serializable {
     public Unit() {
     }
 
-    public Unit(@NotNull Integer unitTypeID, Integer regionID, @NotNull String unitName, @NotNull String unitCode, @NotNull String unitAddress, @NotNull String unitDistrict, @NotNull String unitManager, @NotNull String unitEmail, @NotNull String unitMobile, @NotNull String unitTelephone, @NotNull String unitStatus) {
-        this.unitTypeID = unitTypeID;
-        this.regionID = regionID;
-        this.unitName = unitName;
-        this.unitCode = unitCode;
-        this.unitAddress = unitAddress;
-        this.unitDistrict = unitDistrict;
-        this.unitManager = unitManager;
-        this.unitEmail = unitEmail;
-        this.unitMobile = unitMobile;
-        this.unitTelephone = unitTelephone;
-        this.unitStatus = unitStatus;
-    }
+    
+	public Unit( Integer regionID, @NotNull String unitName, @NotNull String unitCode,
+			@NotNull String unitAddress, @NotNull String unitDistrict, @NotNull String unitManager,
+			@NotNull String unitEmail, @NotNull String unitMobile, @NotNull String unitTelephone,
+			@NotNull String unitStatus) {
+		super();
+		this.regionID = regionID;
+		this.unitName = unitName;
+		this.unitCode = unitCode;
+		this.unitAddress = unitAddress;
+		this.unitDistrict = unitDistrict;
+		this.unitManager = unitManager;
+		this.unitEmail = unitEmail;
+		this.unitMobile = unitMobile;
+		this.unitTelephone = unitTelephone;
+		this.unitStatus = unitStatus;
+	}
 
-    public Unit(Integer unitID, @NotNull Integer unitTypeID, Integer regionID, @NotNull String unitName, @NotNull String unitCode, @NotNull String unitAddress, @NotNull String unitDistrict, @NotNull String unitManager, @NotNull String unitEmail, @NotNull String unitMobile, @NotNull String unitTelephone, @NotNull String unitStatus) {
-        this.unitID = unitID;
-        this.unitTypeID = unitTypeID;
-        this.regionID = regionID;
-        this.unitName = unitName;
-        this.unitCode = unitCode;
-        this.unitAddress = unitAddress;
-        this.unitDistrict = unitDistrict;
-        this.unitManager = unitManager;
-        this.unitEmail = unitEmail;
-        this.unitMobile = unitMobile;
-        this.unitTelephone = unitTelephone;
-        this.unitStatus = unitStatus;
-    }
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "Unit [unitID=" + unitID + ", unitType=" + unitType + ", regionID=" + regionID + ", unitName=" + unitName
+				+ ", unitCode=" + unitCode + ", unitAddress=" + unitAddress + ", unitDistrict=" + unitDistrict
+				+ ", unitManager=" + unitManager + ", unitEmail=" + unitEmail + ", unitMobile=" + unitMobile
+				+ ", unitTelephone=" + unitTelephone + ", unitStatus=" + unitStatus + "]";
+	}
 
-    @Override
-    public String toString() {
-        return "Unit{" +
-                "unitID=" + unitID +
-                ", unitTypeID=" + unitTypeID +
-                ", regionID=" + regionID +
-                ", unitName='" + unitName + '\'' +
-                ", unitCode='" + unitCode + '\'' +
-                ", unitAddress='" + unitAddress + '\'' +
-                ", unitDistrict='" + unitDistrict + '\'' +
-                ", unitManager='" + unitManager + '\'' +
-                ", unitEmail='" + unitEmail + '\'' +
-                ", unitMobile='" + unitMobile + '\'' +
-                ", unitTelephone='" + unitTelephone + '\'' +
-                ", unitStatus='" + unitStatus + '\'' +
-                '}';
-    }
 
-    public Integer getUnitID() {
-        return unitID;
-    }
+	/**
+	 * @return the unitID
+	 */
+	public Integer getUnitID() {
+		return unitID;
+	}
 
-    public void setUnitID(Integer unitID) {
-        this.unitID = unitID;
-    }
-    @ManyToOne(cascade=CascadeType.ALL)
-    @JoinColumn(name = "unitTypeID")
-    public Integer getUnitTypeID() {
-        return unitTypeID;
-    }
 
-    public void setUnitTypeID(Integer unitTypeID) {
-        this.unitTypeID = unitTypeID;
-    }
+	/**
+	 * @param unitID the unitID to set
+	 */
+	public void setUnitID(Integer unitID) {
+		this.unitID = unitID;
+	}
 
-    public Integer getRegionID() {
-        return regionID;
-    }
 
-    public void setRegionID(Integer regionID) {
-        this.regionID = regionID;
-    }
+	/**
+	 * @return the unitType
+	 */
+	public UnitType getUnitType() {
+		return unitType;
+	}
 
-    public String getUnitName() {
-        return unitName;
-    }
 
-    public void setUnitName(String unitName) {
-        this.unitName = unitName;
-    }
+	/**
+	 * @param unitType the unitType to set
+	 */
+	public void setUnitType(UnitType unitType) {
+		this.unitType = unitType;
+	}
 
-    public String getUnitCode() {
-        return unitCode;
-    }
 
-    public void setUnitCode(String unitCode) {
-        this.unitCode = unitCode;
-    }
+	/**
+	 * @return the regionID
+	 */
+	public Integer getRegionID() {
+		return regionID;
+	}
 
-    public String getUnitAddress() {
-        return unitAddress;
-    }
 
-    public void setUnitAddress(String unitAddress) {
-        this.unitAddress = unitAddress;
-    }
+	/**
+	 * @param regionID the regionID to set
+	 */
+	public void setRegionID(Integer regionID) {
+		this.regionID = regionID;
+	}
 
-    public String getUnitDistrict() {
-        return unitDistrict;
-    }
 
-    public void setUnitDistrict(String unitDistrict) {
-        this.unitDistrict = unitDistrict;
-    }
+	/**
+	 * @return the unitName
+	 */
+	public String getUnitName() {
+		return unitName;
+	}
 
-    public String getUnitManager() {
-        return unitManager;
-    }
 
-    public void setUnitManager(String unitManager) {
-        this.unitManager = unitManager;
-    }
+	/**
+	 * @param unitName the unitName to set
+	 */
+	public void setUnitName(String unitName) {
+		this.unitName = unitName;
+	}
 
-    public String getUnitEmail() {
-        return unitEmail;
-    }
 
-    public void setUnitEmail(String unitEmail) {
-        this.unitEmail = unitEmail;
-    }
+	/**
+	 * @return the unitCode
+	 */
+	public String getUnitCode() {
+		return unitCode;
+	}
 
-    public String getUnitMobile() {
-        return unitMobile;
-    }
 
-    public void setUnitMobile(String unitMobile) {
-        this.unitMobile = unitMobile;
-    }
+	/**
+	 * @param unitCode the unitCode to set
+	 */
+	public void setUnitCode(String unitCode) {
+		this.unitCode = unitCode;
+	}
 
-    public String getUnitTelephone() {
-        return unitTelephone;
-    }
 
-    public void setUnitTelephone(String unitTelephone) {
-        this.unitTelephone = unitTelephone;
-    }
+	/**
+	 * @return the unitAddress
+	 */
+	public String getUnitAddress() {
+		return unitAddress;
+	}
 
-    public String getUnitStatus() {
-        return unitStatus;
-    }
 
-    public void setUnitStatus(String unitStatus) {
-        this.unitStatus = unitStatus;
-    }
+	/**
+	 * @param unitAddress the unitAddress to set
+	 */
+	public void setUnitAddress(String unitAddress) {
+		this.unitAddress = unitAddress;
+	}
+
+
+	/**
+	 * @return the unitDistrict
+	 */
+	public String getUnitDistrict() {
+		return unitDistrict;
+	}
+
+
+	/**
+	 * @param unitDistrict the unitDistrict to set
+	 */
+	public void setUnitDistrict(String unitDistrict) {
+		this.unitDistrict = unitDistrict;
+	}
+
+
+	/**
+	 * @return the unitManager
+	 */
+	public String getUnitManager() {
+		return unitManager;
+	}
+
+
+	/**
+	 * @param unitManager the unitManager to set
+	 */
+	public void setUnitManager(String unitManager) {
+		this.unitManager = unitManager;
+	}
+
+
+	/**
+	 * @return the unitEmail
+	 */
+	public String getUnitEmail() {
+		return unitEmail;
+	}
+
+
+	/**
+	 * @param unitEmail the unitEmail to set
+	 */
+	public void setUnitEmail(String unitEmail) {
+		this.unitEmail = unitEmail;
+	}
+
+
+	/**
+	 * @return the unitMobile
+	 */
+	public String getUnitMobile() {
+		return unitMobile;
+	}
+
+
+	/**
+	 * @param unitMobile the unitMobile to set
+	 */
+	public void setUnitMobile(String unitMobile) {
+		this.unitMobile = unitMobile;
+	}
+
+
+	/**
+	 * @return the unitTelephone
+	 */
+	public String getUnitTelephone() {
+		return unitTelephone;
+	}
+
+
+	/**
+	 * @param unitTelephone the unitTelephone to set
+	 */
+	public void setUnitTelephone(String unitTelephone) {
+		this.unitTelephone = unitTelephone;
+	}
+
+
+	/**
+	 * @return the unitStatus
+	 */
+	public String getUnitStatus() {
+		return unitStatus;
+	}
+
+
+	/**
+	 * @param unitStatus the unitStatus to set
+	 */
+	public void setUnitStatus(String unitStatus) {
+		this.unitStatus = unitStatus;
+	}
+
+
 }

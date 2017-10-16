@@ -18,8 +18,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import javax.validation.constraints.NotNull;
-
 /**
  * This is a Spring MVC based web Controller class
  *
@@ -59,8 +57,10 @@ public class HomeController {
     @RequestMapping(value = "/add", method = RequestMethod.GET)
     public String insertQuestion(Model model) {
         System.out.println(getClass());
-        UnitType unitType = new UnitType(1, "UnitType", "Eligibility");
-        Unit unit = new Unit(100, 100, 1, "UName", "UCode", "UAddress", "UDistrict", "UManager", "Email", "Mobile", "Telephone", "Status");
+        UnitType unitType = new UnitType("UnitType", "Eligibility");
+        unitTypeService.insertUnitType(unitType);
+        Unit unit = new Unit(100,"UnitName","Code","Address","District","Manager","Email","Mobile","Telephone","Status");
+        unit.setUnitType(unitType);
         Question question1 = new Question(100, "Hi How are you-1", "Remarks", 1000, "draft");
         Question question2 = new Question(100, "Hi How are you-2", "Remarks", 1000, "draft");
 
@@ -85,12 +85,13 @@ public class HomeController {
         responseService.insertResponse(response1);
         responseService.insertResponse(response2);
         unitService.insertUnit(unit);
-        unitTypeService.insertUnitType(unitType);
+        
         targetService.insertTarget(target1);
         targetService.insertTarget(target2);
         questionService.insertQuestion(question1);
         questionService.insertQuestion(question2);
         questionnaireService.insertQuestionnaire(questionnaire);
+        
         
 
         return "home";
