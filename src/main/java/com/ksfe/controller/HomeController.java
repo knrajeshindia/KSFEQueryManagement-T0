@@ -11,6 +11,8 @@ import java.util.Locale;
 import com.ksfe.model.*;
 import com.ksfe.service.UnitService;
 import com.ksfe.service.UnitTypeService;
+import com.ksfe.util.StringToDate;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,6 +20,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.ksfe.service.QuestionService;
+import com.ksfe.service.QuestionnaireService;
+import com.ksfe.service.TargetService;
 
 import javax.validation.constraints.NotNull;
 
@@ -38,6 +42,10 @@ public class HomeController {
     private UnitService unitService;
     @Autowired
     private UnitTypeService unitTypeService;
+    @Autowired
+    private QuestionnaireService questionnaireService;
+    @Autowired
+    private TargetService targetService;
 
     /**
      * Simply selects the home view to render by returning its name.
@@ -63,8 +71,8 @@ public class HomeController {
         Target target2=new Target(2,"status");
 
         Questionnaire questionnaire=new Questionnaire("QTitle", "QDesc","QRemarks", "Rajesh","Accounts Manager", 0);
-        questionnaire.setPostedDate(new Date("2017-10-16"));
-        questionnaire.setDueDate(new Date("2017-10-20"));
+        questionnaire.setPostedDate(new Date());
+        questionnaire.setDueDate(StringToDate.convertString("20-10-2017"));
 
         questionnaire.getTargetRespondentList().add(target1);
         questionnaire.getTargetRespondentList().add(target2);
@@ -74,7 +82,11 @@ public class HomeController {
         model.addAttribute("question", question1.getQuestionDescription());
         unitService.insertUnit(unit);
         unitTypeService.insertUnitType(unitType);
+        targetService.insertTarget(target1);
+        targetService.insertTarget(target2);
         questionService.insertQuestion(question1);
+        questionService.insertQuestion(question2);
+        questionnaireService.insertQuestionnaire(questionnaire);
 
         return "home";
     }
