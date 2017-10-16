@@ -9,8 +9,7 @@ import java.util.Date;
 import java.util.Locale;
 
 import com.ksfe.model.*;
-import com.ksfe.service.UnitService;
-import com.ksfe.service.UnitTypeService;
+import com.ksfe.service.*;
 import com.ksfe.util.StringToDate;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,10 +17,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-
-import com.ksfe.service.QuestionService;
-import com.ksfe.service.QuestionnaireService;
-import com.ksfe.service.TargetService;
 
 import javax.validation.constraints.NotNull;
 
@@ -46,6 +41,8 @@ public class HomeController {
     private QuestionnaireService questionnaireService;
     @Autowired
     private TargetService targetService;
+    @Autowired
+    private ResponseService responseService;
 
     /**
      * Simply selects the home view to render by returning its name.
@@ -74,12 +71,19 @@ public class HomeController {
         questionnaire.setPostedDate(new Date());
         questionnaire.setDueDate(StringToDate.convertString("20/10/2017"));
 
+        Response response1=new Response(1000, "ResponseDescription", "responseRemarks", "respondentName", "respondentJobTitile", "responseStatus");
+        Response response2=new Response(1000, "ResponseDescription", "responseRemarks", "respondentName", "respondentJobTitile", "responseStatus");
+        question1.getResponseList().add(response1);
+        question1.getResponseList().add(response2);
+
         questionnaire.getTargetRespondentList().add(target1);
         questionnaire.getTargetRespondentList().add(target2);
         questionnaire.getQuestionList().add(question1);
         questionnaire.getQuestionList().add(question2);
 
         model.addAttribute("question", question1.getQuestionDescription());
+        responseService.insertResponse(response1);
+        responseService.insertResponse(response2);
         unitService.insertUnit(unit);
         unitTypeService.insertUnitType(unitType);
         targetService.insertTarget(target1);
@@ -87,6 +91,7 @@ public class HomeController {
         questionService.insertQuestion(question1);
         questionService.insertQuestion(question2);
         questionnaireService.insertQuestionnaire(questionnaire);
+        
 
         return "home";
     }

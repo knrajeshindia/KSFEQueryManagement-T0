@@ -19,19 +19,21 @@ import java.io.Serializable;
 @Table(name="KSFE_Response_List")
 public class Response implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer responseID;
     @NotNull
     @Column(nullable = false)
-	private Integer responsenaireID;
+	private Integer unitID;
     @NotNull
     @Column(nullable = false)
 	private String responseDescription;
     private String responseRemarks;
-    //Delete - not required-recheck later
     @NotNull
     @Column(nullable = false)
-	private Integer unitID;
+	private String respondentName;
+    @NotNull
+    @Column(nullable = false)
+    private String respondentJobTitile;
     @NotNull
     @Column(nullable = false)
 	private String responseStatus;
@@ -39,65 +41,34 @@ public class Response implements Serializable {
     public Response() {
     }
 
-    public Response(@NotNull Integer responsenaireID, @NotNull String responseDescription, String responseRemarks, @NotNull Integer unitID, @NotNull String responseStatus) {
-        this.responsenaireID = responsenaireID;
+    public Response(@NotNull Integer unitID, @NotNull String responseDescription, String responseRemarks, @NotNull String respondentName, @NotNull String respondentJobTitile, @NotNull String responseStatus) {
+        this.unitID = unitID;
         this.responseDescription = responseDescription;
         this.responseRemarks = responseRemarks;
-        this.unitID = unitID;
-        this.responseStatus = responseStatus;
-    }
-
-    public Response(Integer responseID, @NotNull Integer responsenaireID, @NotNull String responseDescription, String responseRemarks, @NotNull Integer unitID, @NotNull String responseStatus) {
-        this.responseID = responseID;
-        this.responsenaireID = responsenaireID;
-        this.responseDescription = responseDescription;
-        this.responseRemarks = responseRemarks;
-        this.unitID = unitID;
+        this.respondentName = respondentName;
+        this.respondentJobTitile = respondentJobTitile;
         this.responseStatus = responseStatus;
     }
 
     @Override
     public String toString() {
-        return "Question{" +
+        return "Response{" +
                 "responseID=" + responseID +
-                ", responsenaireID=" + responsenaireID +
+                ", unitID=" + unitID +
                 ", responseDescription='" + responseDescription + '\'' +
                 ", responseRemarks='" + responseRemarks + '\'' +
-                ", unitID=" + unitID +
+                ", respondentName='" + respondentName + '\'' +
+                ", respondentJobTitile='" + respondentJobTitile + '\'' +
                 ", responseStatus='" + responseStatus + '\'' +
                 '}';
     }
 
-    public Integer getQuestionID() {
+    public Integer getResponseID() {
         return responseID;
     }
 
-    public void setQuestionID(Integer responseID) {
+    public void setResponseID(Integer responseID) {
         this.responseID = responseID;
-    }
-
-    public Integer getQuestionnaireID() {
-        return responsenaireID;
-    }
-
-    public void setQuestionnaireID(Integer responsenaireID) {
-        this.responsenaireID = responsenaireID;
-    }
-
-    public String getQuestionDescription() {
-        return responseDescription;
-    }
-
-    public void setQuestionDescription(String responseDescription) {
-        this.responseDescription = responseDescription;
-    }
-
-    public String getQuestionRemarks() {
-        return responseRemarks;
-    }
-
-    public void setQuestionRemarks(String responseRemarks) {
-        this.responseRemarks = responseRemarks;
     }
 
     public Integer getUnitID() {
@@ -108,11 +79,43 @@ public class Response implements Serializable {
         this.unitID = unitID;
     }
 
-    public String getQuestionStatus() {
+    public String getResponseDescription() {
+        return responseDescription;
+    }
+
+    public void setResponseDescription(String responseDescription) {
+        this.responseDescription = responseDescription;
+    }
+
+    public String getResponseRemarks() {
+        return responseRemarks;
+    }
+
+    public void setResponseRemarks(String responseRemarks) {
+        this.responseRemarks = responseRemarks;
+    }
+
+    public String getRespondentName() {
+        return respondentName;
+    }
+
+    public void setRespondentName(String respondentName) {
+        this.respondentName = respondentName;
+    }
+
+    public String getRespondentJobTitile() {
+        return respondentJobTitile;
+    }
+
+    public void setRespondentJobTitile(String respondentJobTitile) {
+        this.respondentJobTitile = respondentJobTitile;
+    }
+
+    public String getResponseStatus() {
         return responseStatus;
     }
 
-    public void setQuestionStatus(String responseStatus) {
+    public void setResponseStatus(String responseStatus) {
         this.responseStatus = responseStatus;
     }
 }

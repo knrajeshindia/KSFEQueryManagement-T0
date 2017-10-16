@@ -51,6 +51,7 @@
                 <beans:value>com.ksfe.model.UnitType</beans:value>
                 <beans:value>com.ksfe.model.Questionnaire</beans:value>
                 <beans:value>com.ksfe.model.Target</beans:value>
+                <beans:value>com.ksfe.model.Response</beans:value>
             </beans:list>
         </beans:property>
         <beans:property name="hibernateProperties">

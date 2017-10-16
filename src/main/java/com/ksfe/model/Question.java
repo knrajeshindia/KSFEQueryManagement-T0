@@ -10,56 +10,40 @@ package com.ksfe.model;
  * @author RNarendran
  * @since 1.0,
  */
+
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import javax.persistence.*;
-import javax.validation.constraints.Digits;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-
-import org.hibernate.annotations.Type;
-import org.hibernate.validator.constraints.NotEmpty;
-import org.springframework.format.annotation.DateTimeFormat;
-
 @Entity
-@Table(name="KSFE_Question_List")
+@Table(name = "KSFE_Question_List")
 public class Question implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-	private Integer questionID;
+    private Integer questionID;
     @NotNull
     @Column(nullable = false)
-	private Integer questionnaireID;
+    private Integer questionnaireID;
     @NotNull
     @Column(nullable = false)
-	private String questionDescription;
+    private String questionDescription;
     private String questionRemarks;
-    /*@OneToMany
-    private Collection<Response> responseList=new ArrayList<Response>();*/
+    @OneToMany
+    private Collection<Response> responseList = new ArrayList<Response>();
     //Delete - not required-recheck later
     @NotNull
     @Column(nullable = false)
-	private Integer unitID;
+    private Integer unitID;
     @NotNull
     @Column(nullable = false)
-	private String questionStatus;
+    private String questionStatus;
 
     public Question() {
     }
 
     public Question(@NotNull Integer questionnaireID, @NotNull String questionDescription, String questionRemarks, @NotNull Integer unitID, @NotNull String questionStatus) {
-        this.questionnaireID = questionnaireID;
-        this.questionDescription = questionDescription;
-        this.questionRemarks = questionRemarks;
-        this.unitID = unitID;
-        this.questionStatus = questionStatus;
-    }
-
-    public Question(Integer questionID, @NotNull Integer questionnaireID, @NotNull String questionDescription, String questionRemarks, @NotNull Integer unitID, @NotNull String questionStatus) {
-        this.questionID = questionID;
         this.questionnaireID = questionnaireID;
         this.questionDescription = questionDescription;
         this.questionRemarks = questionRemarks;
@@ -74,9 +58,18 @@ public class Question implements Serializable {
                 ", questionnaireID=" + questionnaireID +
                 ", questionDescription='" + questionDescription + '\'' +
                 ", questionRemarks='" + questionRemarks + '\'' +
+                ", responseList=" + responseList +
                 ", unitID=" + unitID +
                 ", questionStatus='" + questionStatus + '\'' +
                 '}';
+    }
+
+    public Collection<Response> getResponseList() {
+        return responseList;
+    }
+
+    public void setResponseList(Collection<Response> responseList) {
+        this.responseList = responseList;
     }
 
     public Integer getQuestionID() {
