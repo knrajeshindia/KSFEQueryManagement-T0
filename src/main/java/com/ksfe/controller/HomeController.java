@@ -8,8 +8,7 @@ import java.text.DateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-import com.ksfe.model.Unit;
-import com.ksfe.model.UnitType;
+import com.ksfe.model.*;
 import com.ksfe.service.UnitService;
 import com.ksfe.service.UnitTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,8 +17,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.ksfe.model.Question;
 import com.ksfe.service.QuestionService;
+
+import javax.validation.constraints.NotNull;
 
 /**
  * This is a Spring MVC based web Controller class
@@ -56,12 +56,25 @@ public class HomeController {
         System.out.println(getClass());
         UnitType unitType = new UnitType(1, "UnitType", "Eligibility");
         Unit unit = new Unit(100, 100, 1, "UName", "UCode", "UAddress", "UDistrict", "UManager", "Email", "Mobile", "Telephone", "Status");
-        Question question = new Question(100, "Hi How are you", "Remarks", 1000, "draft");
-        System.out.println(question);
-        model.addAttribute("question", question.getQuestionDescription());
+        Question question1 = new Question(100, "Hi How are you-1", "Remarks", 1000, "draft");
+        Question question2 = new Question(100, "Hi How are you-2", "Remarks", 1000, "draft");
+
+        Target target1=new Target(1,"status");
+        Target target2=new Target(2,"status");
+
+        Questionnaire questionnaire=new Questionnaire("QTitle", "QDesc","QRemarks", "Rajesh","Accounts Manager", 0);
+        questionnaire.setPostedDate(new Date("2017-10-16"));
+        questionnaire.setDueDate(new Date("2017-10-20"));
+
+        questionnaire.getTargetRespondentList().add(target1);
+        questionnaire.getTargetRespondentList().add(target2);
+        questionnaire.getQuestionList().add(question1);
+        questionnaire.getQuestionList().add(question2);
+
+        model.addAttribute("question", question1.getQuestionDescription());
         unitService.insertUnit(unit);
         unitTypeService.insertUnitType(unitType);
-        questionService.insertQuestion(question);
+        questionService.insertQuestion(question1);
 
         return "home";
     }

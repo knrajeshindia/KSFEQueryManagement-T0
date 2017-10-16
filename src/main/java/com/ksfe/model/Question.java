@@ -40,6 +40,7 @@ public class Question implements Serializable {
     @Column(nullable = false)
 	private String questionDescription;
     private String questionRemarks;
+    //Delete - not required
     @NotNull
     @Column(nullable = false)
 	private Integer unitID;

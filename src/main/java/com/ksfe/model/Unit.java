@@ -21,6 +21,7 @@ public class Unit implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer unitID;
+    
     @NotNull
     @Column(nullable = false)
     private Integer unitTypeID;
@@ -111,7 +112,8 @@ public class Unit implements Serializable {
     public void setUnitID(Integer unitID) {
         this.unitID = unitID;
     }
-
+    @ManyToOne(cascade=CascadeType.ALL)
+    @JoinColumn(name = "unitTypeID")
     public Integer getUnitTypeID() {
         return unitTypeID;
     }

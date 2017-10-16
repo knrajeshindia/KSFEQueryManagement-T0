@@ -20,7 +20,7 @@ import java.io.Serializable;
 public class UnitType implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-	private Integer unitTypeID;
+    private Integer unitTypeID;
     @NotNull
     @Column(nullable = false)
     private String unitTypeName;
