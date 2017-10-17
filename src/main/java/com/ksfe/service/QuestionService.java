@@ -6,6 +6,7 @@ package com.ksfe.service;
 
 import com.ksfe.model.Question;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 /**
@@ -17,4 +18,5 @@ import java.util.List;
 public interface QuestionService {
     public void insertQuestion(Question question);
     public List<Question> getAllQuestions();
+    public Question getQuestion(int pk);
 }

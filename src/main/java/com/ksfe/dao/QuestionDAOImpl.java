@@ -5,8 +5,9 @@
 package com.ksfe.dao;
 
 import com.ksfe.model.Question;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -26,29 +27,54 @@ import java.util.List;
 public class QuestionDAOImpl implements QuestionDAO {
     @Autowired
     private SessionFactory sessionFactory;
-    List<Question> questionList=new ArrayList<Question>();
+    private Session session;
+    Question question;
+    List<Question> questionList = new ArrayList<Question>();
     CriteriaBuilder criteriaBuilder;
     CriteriaQuery<Question> query;
     Root<Question> root;
-
+    Query<Question> q;     
 
     //Insert question
     @Override
     public void insertQuestion(Question question) {
         System.out.println(getClass());
-        sessionFactory.getCurrentSession().save(question);
+        session = sessionFactory.getCurrentSession();
+        session.save(question);
         System.out.println("Inserted Question: " + question);
 
     }
 
+    //Retrieve All Question
     @Override
     public List<Question> getAllQuestions() {
         System.out.println(getClass());
-        criteriaBuilder = sessionFactory.getCurrentSession().getCriteriaBuilder();
-        query = criteriaBuilder.createQuery(Question.class);
-        root = query.from(Question.class);
-        questionList = sessionFactory.getCurrentSession().createQuery(query).getResultList();
+        bindDB();
+        questionList = session.createQuery(query).getResultList();
         System.out.println("Questionlist-Complete records: " + questionList);
         return questionList;
     }
+
+    //Retrieve one Question
+    @Override
+    public Question getQuestion(int pk) {
+        System.out.println(getClass());
+        bindDB();
+        query.where(criteriaBuilder.equal(root.get("questionID"), pk));
+        q = session.createQuery(query);
+        question = q.getSingleResult();
+        System.out.println("Question- ID: " + question);
+        return question;
+    }
+
+
+    void bindDB() {
+    	 session = sessionFactory.getCurrentSession();
+        criteriaBuilder = session.getCriteriaBuilder();
+        query = criteriaBuilder.createQuery(Question.class);
+        root = query.from(Question.class);
+        query.select(root);
+    }
+
+
 }

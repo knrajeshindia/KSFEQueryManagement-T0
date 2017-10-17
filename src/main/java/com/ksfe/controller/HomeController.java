@@ -95,7 +95,7 @@ public class HomeController {
         questionnaireService.insertQuestionnaire(questionnaire);
 
         questionService.getAllQuestions();
-        
+        questionService.getQuestion(1);
 
         return "home";
     }

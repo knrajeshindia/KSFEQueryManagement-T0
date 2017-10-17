@@ -35,4 +35,10 @@ public class QuestionServiceImpl implements QuestionService {
     public List<Question> getAllQuestions() {
         return questionDAO.getAllQuestions();
     }
+
+    @Override
+    @Transactional
+    public Question getQuestion(int pk) {
+        return questionDAO.getQuestion(pk);
+    }
 }
