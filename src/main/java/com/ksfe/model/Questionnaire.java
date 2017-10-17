@@ -40,9 +40,9 @@ public class Questionnaire implements Serializable {
     private Date postedDate;
     @Temporal(TemporalType.DATE)
     private Date dueDate;
-    @OneToMany
+    @OneToMany(cascade=CascadeType.ALL, fetch = FetchType.LAZY)
     private Collection<Target> targetRespondentList = new HashSet<Target>();
-    @OneToMany
+    @OneToMany(cascade=CascadeType.ALL, fetch = FetchType.LAZY)
     private Collection<Question> questionList = new ArrayList<Question>();
     @NotNull
     @Column(nullable = false)
