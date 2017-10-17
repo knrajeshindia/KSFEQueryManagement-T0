@@ -17,6 +17,12 @@ import java.util.List;
  */
 public interface QuestionService {
     public void insertQuestion(Question question);
-    public List<Question> getAllQuestions();
     public Question getQuestion(int pk);
+    //Retrieve Multiple Question based on condition -
+    public List<Question> getMultipleQuestions(int pk);
+    public List<Question> getAllQuestions();
+    //Update Question
+    public Question updateQuestion(String questionDescription, Integer pk);
+    //Delete Question
+    public Question deleteQuestion(Integer pk);
 }

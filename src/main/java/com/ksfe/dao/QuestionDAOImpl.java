@@ -13,7 +13,9 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.CriteriaUpdate;
 import javax.persistence.criteria.Root;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,7 +35,7 @@ public class QuestionDAOImpl implements QuestionDAO {
     CriteriaBuilder criteriaBuilder;
     CriteriaQuery<Question> query;
     Root<Question> root;
-    Query<Question> q;     
+    Query<Question> q;
 
     //Insert question
     @Override
@@ -67,13 +69,53 @@ public class QuestionDAOImpl implements QuestionDAO {
         return question;
     }
 
+    //Retrieve Multiple Question based on condition
+    @Override
+    public List<Question> getMultipleQuestions(int pk) {
+        System.out.println(getClass());
+        bindDB();
+        query.where(criteriaBuilder.gt(root.get("questionID"), pk));
+        q = session.createQuery(query);
+        questionList = q.getResultList();
+        System.out.println("Question- Multiple: " + questionList);
+        return questionList;
+    }
 
+    //Update Question
+    @Override
+    public Question updateQuestion(String questionDescription, Integer pk) {
+        System.out.println(getClass());
+        question = getQuestion(pk);
+        question.setQuestionDescription(questionDescription);
+        session.update(question);
+        System.out.println("Question- Updated Description: " + question.getQuestionDescription());
+        return question;
+    }
+
+    //Delete Question
+    @Override
+    public Question deleteQuestion(Integer pk) {
+        System.out.println(getClass());
+        bindDB();
+        Serializable id = new Integer(pk);
+        Question question = session.load(Question.class, id);
+        if (question != null) {
+            session.delete(question);
+            System.out.println("Question- Updated Description: " + question.getQuestionDescription());
+        }
+        return question;
+    }
+
+    //Critieria builder instantiation
     void bindDB() {
-    	 session = sessionFactory.getCurrentSession();
+        session = sessionFactory.getCurrentSession();
         criteriaBuilder = session.getCriteriaBuilder();
         query = criteriaBuilder.createQuery(Question.class);
         root = query.from(Question.class);
         query.select(root);
+        q = null;
+        question = null;
+        questionList = null;
     }
 
 

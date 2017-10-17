@@ -21,4 +21,13 @@ public interface QuestionDAO {
     List<Question> getAllQuestions();
     //Retrieve one Question
     Question getQuestion(int pk );
+
+    //Retrieve Multiple Question based on condition -
+    List<Question> getMultipleQuestions(int pk);
+
+    //Update Question
+    Question updateQuestion(String questionDescription, Integer pk);
+
+    //Delete Question
+    Question deleteQuestion(Integer pk);
 }

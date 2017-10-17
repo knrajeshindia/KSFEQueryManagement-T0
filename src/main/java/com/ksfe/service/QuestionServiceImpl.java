@@ -41,4 +41,25 @@ public class QuestionServiceImpl implements QuestionService {
     public Question getQuestion(int pk) {
         return questionDAO.getQuestion(pk);
     }
+
+    @Override
+    @Transactional
+    public List<Question> getMultipleQuestions(int pk) {
+        return questionDAO.getMultipleQuestions(pk);
+    }
+
+    //Update Question
+    @Override
+    @Transactional
+    public Question updateQuestion(String questionDescription, Integer pk){
+        return questionDAO.updateQuestion(questionDescription,pk);
+    }
+
+    //Delete Question
+    @Override
+    @Transactional
+    public Question deleteQuestion(Integer pk) {
+        return questionDAO.deleteQuestion(pk);
+    }
+
 }

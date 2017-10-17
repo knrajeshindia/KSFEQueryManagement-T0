@@ -95,7 +95,10 @@ public class HomeController {
         questionnaireService.insertQuestionnaire(questionnaire);
 
         questionService.getAllQuestions();
-        questionService.getQuestion(1);
+        questionService.getQuestion(2);
+        questionService.getMultipleQuestions(10);
+        questionService.updateQuestion("Good afternoon",1);
+        questionService.deleteQuestion(5);
 
         return "home";
     }

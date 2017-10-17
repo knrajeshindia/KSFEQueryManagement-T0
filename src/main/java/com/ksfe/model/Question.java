@@ -30,7 +30,7 @@ public class Question implements Serializable {
     @Column(nullable = false)
     private String questionDescription;
     private String questionRemarks;
-    @OneToMany
+    @OneToMany(fetch =  FetchType.LAZY)
     private Collection<Response> responseList = new ArrayList<Response>();
     //Delete - not required-review
     @NotNull
