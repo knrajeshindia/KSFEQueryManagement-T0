@@ -36,7 +36,7 @@ public class QuestionDAOImpl implements QuestionDAO {
     Root<Question> root;
     Query<Question> q;
 
-    //Insert question
+    //Insert question object
     @Override
     public void insertQuestion(Question question) {
         System.out.println(getClass());
