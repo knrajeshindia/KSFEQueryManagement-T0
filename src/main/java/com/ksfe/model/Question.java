@@ -20,7 +20,11 @@ import java.util.Collection;
 @Entity
 @Table(name = "KSFE_Question")
 public class Question implements Serializable {
-    @Id
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer questionID;
     @NotNull

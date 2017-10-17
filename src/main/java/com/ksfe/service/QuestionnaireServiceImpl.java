@@ -5,7 +5,6 @@
 package com.ksfe.service;
 
 import com.ksfe.dao.QuestionnaireDAO;
-import com.ksfe.model.Question;
 import com.ksfe.model.Questionnaire;
 
 import org.springframework.beans.factory.annotation.Autowired;

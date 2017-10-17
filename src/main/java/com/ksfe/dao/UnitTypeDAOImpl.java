@@ -4,7 +4,6 @@
  */
 package com.ksfe.dao;
 
-import com.ksfe.model.Unit;
 import com.ksfe.model.UnitType;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;

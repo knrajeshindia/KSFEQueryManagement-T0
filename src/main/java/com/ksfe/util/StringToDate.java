@@ -8,8 +8,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import com.ksfe.model.Question;
-
 /**
  * This is a Java utility class to convert Strng to Util Date.
  *

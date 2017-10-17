@@ -22,7 +22,11 @@ import java.util.HashSet;
 @Entity
 @Table(name = "KSFE_Questionaire")
 public class Questionnaire implements Serializable {
-    @Id
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer questionnaireID;
     @NotNull

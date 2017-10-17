@@ -18,7 +18,11 @@ import java.io.Serializable;
 @Entity
 @Table(name="KSFE_Target")
 public class Target implements Serializable {
-    @Id
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer targetListID;
     @NotNull

@@ -18,7 +18,11 @@ import java.io.Serializable;
 @Entity
 @Table(name="KSFE_Unit_Type")
 public class UnitType implements Serializable {
-    @Id
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 2561751222287241977L;
+	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer unitTypeID;
     @NotNull

@@ -6,7 +6,6 @@ package com.ksfe.service;
 
 import com.ksfe.model.Question;
 
-import javax.transaction.Transactional;
 import java.util.List;
 
 /**

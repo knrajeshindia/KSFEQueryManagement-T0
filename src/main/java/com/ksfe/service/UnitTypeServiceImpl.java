@@ -4,9 +4,7 @@
  */
 package com.ksfe.service;
 
-import com.ksfe.dao.UnitDAO;
 import com.ksfe.dao.UnitTypeDAO;
-import com.ksfe.model.Unit;
 import com.ksfe.model.UnitType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
