@@ -6,6 +6,7 @@ package com.ksfe.dao;
 
 import com.ksfe.model.Question;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -47,8 +48,7 @@ public class QuestionDAOImpl implements QuestionDAO {
         query = criteriaBuilder.createQuery(Question.class);
         root = query.from(Question.class);
         questionList = sessionFactory.getCurrentSession().createQuery(query).getResultList();
-        sessionFactory.getCurrentSession().close();
-        System.out.println("Inserted Question: " + questionList);
+        System.out.println("Questionlist-Complete records: " + questionList);
         return questionList;
     }
 }

@@ -16,3 +16,6 @@ Code for uploading files-Spring
     stream.write(bytes);
     stream.flush();
     stream.close();
+    ------------------------------------------------------------------------------
+    Hibernate criteria-manipulation
+    https://www.boraji.com/hibernate-5-criteria-query-example
