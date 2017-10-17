@@ -59,7 +59,7 @@ public class HomeController {
         System.out.println(getClass());
         UnitType unitType = new UnitType("UnitType", "Eligibility");
         unitTypeService.insertUnitType(unitType);
-        Unit unit = new Unit(100,"UnitName","Code","Address","District","Manager","Email","Mobile","Telephone","Status");
+        Unit unit = new Unit(100,"Password","UnitName","Code","Address","District","Manager","Email","Mobile","Telephone","Status");
         unit.setUnitType(unitType);
         Question question1 = new Question(100, "Hi How are you-1", "Remarks", 1000, "draft");
         Question question2 = new Question(100, "Hi How are you-2", "Remarks", 1000, "draft");
@@ -73,6 +73,8 @@ public class HomeController {
 
         Response response1=new Response(1000, "ResponseDescription", "responseRemarks", "respondentName", "respondentJobTitile", "responseStatus");
         Response response2=new Response(1000, "ResponseDescription", "responseRemarks", "respondentName", "respondentJobTitile", "responseStatus");
+        response1.setResponseDate(new Date());
+        response2.setResponseDate(new Date());
         question1.getResponseList().add(response1);
         question1.getResponseList().add(response2);
 

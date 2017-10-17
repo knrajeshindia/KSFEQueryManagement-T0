@@ -20,7 +20,7 @@ import java.util.Date;
 import java.util.HashSet;
 
 @Entity
-@Table(name = "KSFE_Questionaire_List")
+@Table(name = "KSFE_Questionaire")
 public class Questionnaire implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

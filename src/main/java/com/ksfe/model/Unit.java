@@ -16,7 +16,7 @@ import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 @Entity
-@Table(name="KSFE_Unit_List")
+@Table(name="KSFE_Unit")
 public class Unit implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,6 +27,9 @@ public class Unit implements Serializable {
     private Integer regionID;
     @NotNull
     @Column(nullable = false)
+	private String password;
+	@NotNull
+	@Column(nullable = false)
 	private String unitName;
     @NotNull
     @Column(nullable = false)
@@ -56,13 +59,9 @@ public class Unit implements Serializable {
     public Unit() {
     }
 
-    
-	public Unit( Integer regionID, @NotNull String unitName, @NotNull String unitCode,
-			@NotNull String unitAddress, @NotNull String unitDistrict, @NotNull String unitManager,
-			@NotNull String unitEmail, @NotNull String unitMobile, @NotNull String unitTelephone,
-			@NotNull String unitStatus) {
-		super();
+	public Unit(Integer regionID, @NotNull String password, @NotNull String unitName, @NotNull String unitCode, @NotNull String unitAddress, @NotNull String unitDistrict, @NotNull String unitManager, @NotNull String unitEmail, @NotNull String unitMobile, @NotNull String unitTelephone, @NotNull String unitStatus) {
 		this.regionID = regionID;
+		this.password = password;
 		this.unitName = unitName;
 		this.unitCode = unitCode;
 		this.unitAddress = unitAddress;
@@ -74,17 +73,24 @@ public class Unit implements Serializable {
 		this.unitStatus = unitStatus;
 	}
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
 	@Override
 	public String toString() {
-		return "Unit [unitID=" + unitID + ", unitType=" + unitType + ", regionID=" + regionID + ", unitName=" + unitName
-				+ ", unitCode=" + unitCode + ", unitAddress=" + unitAddress + ", unitDistrict=" + unitDistrict
-				+ ", unitManager=" + unitManager + ", unitEmail=" + unitEmail + ", unitMobile=" + unitMobile
-				+ ", unitTelephone=" + unitTelephone + ", unitStatus=" + unitStatus + "]";
+		return "Unit{" +
+				"unitID=" + unitID +
+				", unitType=" + unitType +
+				", regionID=" + regionID +
+				", password='" + password + '\'' +
+				", unitName='" + unitName + '\'' +
+				", unitCode='" + unitCode + '\'' +
+				", unitAddress='" + unitAddress + '\'' +
+				", unitDistrict='" + unitDistrict + '\'' +
+				", unitManager='" + unitManager + '\'' +
+				", unitEmail='" + unitEmail + '\'' +
+				", unitMobile='" + unitMobile + '\'' +
+				", unitTelephone='" + unitTelephone + '\'' +
+				", unitStatus='" + unitStatus + '\'' +
+				'}';
 	}
-
 
 	/**
 	 * @return the unitID

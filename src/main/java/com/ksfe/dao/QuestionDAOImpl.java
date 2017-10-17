@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 /**
- * This is a Spring Repository class - DAO
+ * This is a Spring Repository bean class - DAO
  *
  * @author RNarendran
  * @since 1.0,

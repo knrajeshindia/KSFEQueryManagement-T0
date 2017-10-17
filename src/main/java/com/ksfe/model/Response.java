@@ -14,9 +14,10 @@ package com.ksfe.model;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.util.Date;
 
 @Entity
-@Table(name="KSFE_Response_List")
+@Table(name="KSFE_Response")
 public class Response implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,12 +29,17 @@ public class Response implements Serializable {
     @Column(nullable = false)
 	private String responseDescription;
     private String responseRemarks;
+    private String attachmentDescription;
+    private byte[] attachmentFile;
     @NotNull
     @Column(nullable = false)
 	private String respondentName;
     @NotNull
     @Column(nullable = false)
     private String respondentJobTitile;
+    @NotNull
+    @Column(nullable = false)
+    private Date responseDate;
     @NotNull
     @Column(nullable = false)
 	private String responseStatus;
@@ -117,5 +123,29 @@ public class Response implements Serializable {
 
     public void setResponseStatus(String responseStatus) {
         this.responseStatus = responseStatus;
+    }
+
+    public String getAttachmentDescription() {
+        return attachmentDescription;
+    }
+
+    public void setAttachmentDescription(String attachmentDescription) {
+        this.attachmentDescription = attachmentDescription;
+    }
+
+    public byte[] getAttachmentFile() {
+        return attachmentFile;
+    }
+
+    public void setAttachmentFile(byte[] attachmentFile) {
+        this.attachmentFile = attachmentFile;
+    }
+
+    public Date getResponseDate() {
+        return responseDate;
+    }
+
+    public void setResponseDate(Date responseDate) {
+        this.responseDate = responseDate;
     }
 }

@@ -16,7 +16,7 @@ import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 @Entity
-@Table(name="KSFE_Target_List")
+@Table(name="KSFE_Target")
 public class Target implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 @Entity
-@Table(name = "KSFE_Question_List")
+@Table(name = "KSFE_Question")
 public class Question implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,12 +32,11 @@ public class Question implements Serializable {
     private String questionRemarks;
     @OneToMany
     private Collection<Response> responseList = new ArrayList<Response>();
-    //Delete - not required-recheck later
+    //Delete - not required-review
     @NotNull
     @Column(nullable = false)
     private Integer unitID;
-    @NotNull
-    @Column(nullable = false)
+    //Optional-review
     private String questionStatus;
 
     public Question() {
