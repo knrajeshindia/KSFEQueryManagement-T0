@@ -93,7 +93,8 @@ public class HomeController {
         questionService.insertQuestion(question1);
         questionService.insertQuestion(question2);
         questionnaireService.insertQuestionnaire(questionnaire);
-        
+
+        questionService.getAllQuestions();
         
 
         return "home";

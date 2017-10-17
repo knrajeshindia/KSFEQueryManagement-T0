@@ -6,6 +6,8 @@ package com.ksfe.dao;
 
 import com.ksfe.model.Question;
 
+import java.util.List;
+
 /**
  * This is a Java interface for defining DAO operations
  *
@@ -14,4 +16,5 @@ import com.ksfe.model.Question;
  */
 public interface QuestionDAO {
     void insertQuestion(Question question);
+    List<Question> getAllQuestions();
 }

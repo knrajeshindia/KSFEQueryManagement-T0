@@ -5,6 +5,9 @@
 package com.ksfe.service;
 
 import com.ksfe.model.Question;
+
+import java.util.List;
+
 /**
  * This is a Java Interface declaring Service methods
  *
@@ -13,4 +16,5 @@ import com.ksfe.model.Question;
  */
 public interface QuestionService {
     public void insertQuestion(Question question);
+    public List<Question> getAllQuestions();
 }
