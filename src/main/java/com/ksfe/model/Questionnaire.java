@@ -31,10 +31,10 @@ public class Questionnaire implements Serializable {
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer questionnaireID;
-    @NotNull
+    @NotNull(message = "required field")
     @Column(nullable = false)
     private String questionnaireTitle;
-    @NotNull
+    @NotNull(message = "required field")
     @Column(nullable = false)
     private String questionnaireDescription;
     private String questionnaireRemarks;
@@ -46,20 +46,18 @@ public class Questionnaire implements Serializable {
     private Collection<Target> targetRespondentList = new HashSet<Target>();
     @OneToMany(cascade=CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     private Collection<Question> questionList = new ArrayList<Question>();
-    @NotNull
+    @NotNull(message = "required field")
     @Column(nullable = false)
     private String senderName;
-    @NotNull
+    @NotNull(message = "required field")
     @Column(nullable = false)
     private String senderJobTitle;
-    @NotNull
-    @Column(nullable = false)
     private Integer questionnaireStatus;
 
     public Questionnaire() {
     }
 
-    public Questionnaire(@NotNull String questionnaireTitle, @NotNull String questionnaireDescription, String questionnaireRemarks, @NotNull String senderName, @NotNull String senderJobTitle, @NotNull Integer questionnaireStatus) {
+    public Questionnaire(@NotNull(message = "required field") String questionnaireTitle, @NotNull(message = "required field") String questionnaireDescription, String questionnaireRemarks, @NotNull(message = "required field") String senderName, @NotNull(message = "required field") String senderJobTitle, @NotNull(message = "required field") Integer questionnaireStatus) {
         this.questionnaireTitle = questionnaireTitle;
         this.questionnaireDescription = questionnaireDescription;
         this.questionnaireRemarks = questionnaireRemarks;

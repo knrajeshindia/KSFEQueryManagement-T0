@@ -25,17 +25,17 @@ public class UnitType implements Serializable {
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer unitTypeID;
-    @NotNull
+    @NotNull(message = "required field")
     @Column(nullable = false)
     private String unitTypeName;
-    @NotNull
+    @NotNull(message = "required field")
     @Column(nullable = false)
     private String unitQueryEligibility;
 
     public UnitType() {
     }
 
-    public UnitType(String unitTypeName, @NotNull String unitQueryEligibility) {
+    public UnitType(String unitTypeName, @NotNull(message = "required field") String unitQueryEligibility) {
         this.unitTypeName = unitTypeName;
         this.unitQueryEligibility = unitQueryEligibility;
     }

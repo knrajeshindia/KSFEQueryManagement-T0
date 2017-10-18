@@ -9,9 +9,11 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import com.ksfe.model.*;
 import com.ksfe.service.*;
@@ -19,6 +21,9 @@ import com.ksfe.util.StringToDate;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.context.support.DefaultMessageSourceResolvable;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -129,15 +134,24 @@ public class HomeController {
     //Insert new questionnaire
     @RequestMapping(value = "/insertQuestionnaire", method = RequestMethod.POST)
     public String insertQuestionnaire(@ModelAttribute("questionnaire")@Valid Questionnaire questionnaire,
-                                      BindingResult bindingResult, Model model) {
+                                      BindingResult result, Model model) {
     	target1=new Target(1,"status");
     	Set<Target>targetRespondentList=new HashSet<Target>();
     	targetRespondentList.add(target1);
     	questionnaire.setTargetRespondentList(targetRespondentList);
-    	System.out.println(getClass());
-        if (bindingResult.hasErrors()) {
+    	
+    	
+    	System.out.println(questionnaire);
+        if (result.hasErrors()) {
         	System.out.println("Form has errors");
-            return "questionnaire";
+        	
+        	List<String> errors = result.getAllErrors().stream()
+        	          .map(DefaultMessageSourceResolvable::getDefaultMessage)
+        	          .collect(Collectors.toList());
+        	System.out.println("Errors: "+errors);
+        	        return "questionnaire";
+        	
+            
         }
         System.out.println("Questionnaire"+questionnaire);
         Question question =new Question();

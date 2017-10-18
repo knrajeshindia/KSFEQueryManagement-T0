@@ -26,32 +26,32 @@ public class Response implements Serializable {
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer responseID;
-    @NotNull
+    @NotNull(message = "required field")
     @Column(nullable = false)
 	private Integer unitID;
-    @NotNull
+    @NotNull(message = "required field")
     @Column(nullable = false)
 	private String responseDescription;
     private String responseRemarks;
     private String attachmentDescription;
     private byte[] attachmentFile;
-    @NotNull
+    @NotNull(message = "required field")
     @Column(nullable = false)
 	private String respondentName;
-    @NotNull
+    @NotNull(message = "required field")
     @Column(nullable = false)
     private String respondentJobTitile;
-    @NotNull
+    @NotNull(message = "required field")
     @Column(nullable = false)
     private Date responseDate;
-    @NotNull
+    @NotNull(message = "required field")
     @Column(nullable = false)
 	private String responseStatus;
 
     public Response() {
     }
 
-    public Response(@NotNull Integer unitID, @NotNull String responseDescription, String responseRemarks, @NotNull String respondentName, @NotNull String respondentJobTitile, @NotNull String responseStatus) {
+    public Response(@NotNull(message = "required field") Integer unitID, @NotNull(message = "required field") String responseDescription, String responseRemarks, @NotNull(message = "required field") String respondentName, @NotNull(message = "required field") String respondentJobTitile, @NotNull(message = "required field") String responseStatus) {
         this.unitID = unitID;
         this.responseDescription = responseDescription;
         this.responseRemarks = responseRemarks;

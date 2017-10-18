@@ -28,17 +28,17 @@ public class Target implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer targetListID;
-	@NotNull
+	@NotNull(message = "required field")
 	@Column(nullable = false)
 	private Integer unitID;
-	@NotNull
+	@NotNull(message = "required field")
 	@Column(nullable = false)
 	private String questionnaireStatus;
 
 	public Target() {
 	}
 
-	public Target(@NotNull Integer unitID, @NotNull String questionnaireStatus) {
+	public Target(@NotNull(message = "required field") Integer unitID, @NotNull(message = "required field") String questionnaireStatus) {
 		this.unitID = unitID;
 		this.questionnaireStatus = questionnaireStatus;
 	}

@@ -27,17 +27,17 @@ public class Question implements Serializable {
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer questionID;
-    @NotNull
+    @NotNull(message = "required field")
     @Column(nullable = false)
     private Integer questionnaireID;
-    @NotNull
+    @NotNull(message = "required field")
     @Column(nullable = false)
     private String questionDescription;
     private String questionRemarks;
     @OneToMany(cascade=CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     private Collection<Response> responseList = new ArrayList<Response>();
     //Delete - not required-review
-    @NotNull
+    @NotNull(message = "required field")
     @Column(nullable = false)
     private Integer unitID;
     //Optional-review
@@ -46,7 +46,7 @@ public class Question implements Serializable {
     public Question() {
     }
 
-    public Question(@NotNull Integer questionnaireID, @NotNull String questionDescription, String questionRemarks, @NotNull Integer unitID, @NotNull String questionStatus) {
+    public Question(@NotNull(message = "required field") Integer questionnaireID, @NotNull(message = "required field") String questionDescription, String questionRemarks, @NotNull(message = "required field") Integer unitID, @NotNull(message = "required field") String questionStatus) {
         this.questionnaireID = questionnaireID;
         this.questionDescription = questionDescription;
         this.questionRemarks = questionRemarks;

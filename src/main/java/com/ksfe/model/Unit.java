@@ -29,41 +29,41 @@ public class Unit implements Serializable {
     private UnitType unitType;
     //Duplicate unitID for binding branches to region-where applicable
     private Integer regionID;
-    @NotNull
+    @NotNull(message = "required field")
     @Column(nullable = false)
 	private String password;
-	@NotNull
+	@NotNull(message = "required field")
 	@Column(nullable = false)
 	private String unitName;
-    @NotNull
+    @NotNull(message = "required field")
     @Column(nullable = false)
     private String unitCode;
-    @NotNull
+    @NotNull(message = "required field")
     @Column(nullable = false)
     private String unitAddress;
-    @NotNull
+    @NotNull(message = "required field")
     @Column(nullable = false)
     private String unitDistrict;
-    @NotNull
+    @NotNull(message = "required field")
     @Column(nullable = false)
     private String unitManager;
-    @NotNull
+    @NotNull(message = "required field")
     @Column(nullable = false)
     private String unitEmail;
-    @NotNull
+    @NotNull(message = "required field")
     @Column(nullable = false)
     private String unitMobile;
-    @NotNull
+    @NotNull(message = "required field")
     @Column(nullable = false)
     private String unitTelephone;
-    @NotNull
+    @NotNull(message = "required field")
     @Column(nullable = false)
 	private String unitStatus;
 
     public Unit() {
     }
 
-	public Unit(Integer regionID, @NotNull String password, @NotNull String unitName, @NotNull String unitCode, @NotNull String unitAddress, @NotNull String unitDistrict, @NotNull String unitManager, @NotNull String unitEmail, @NotNull String unitMobile, @NotNull String unitTelephone, @NotNull String unitStatus) {
+	public Unit(Integer regionID, @NotNull(message = "required field") String password, @NotNull(message = "required field") String unitName, @NotNull(message = "required field") String unitCode, @NotNull(message = "required field") String unitAddress, @NotNull(message = "required field") String unitDistrict, @NotNull(message = "required field") String unitManager, @NotNull(message = "required field") String unitEmail, @NotNull(message = "required field") String unitMobile, @NotNull(message = "required field") String unitTelephone, @NotNull(message = "required field") String unitStatus) {
 		this.regionID = regionID;
 		this.password = password;
 		this.unitName = unitName;
