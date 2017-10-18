@@ -5,18 +5,31 @@
 package com.ksfe.controller;
 
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Locale;
+import java.util.Map;
+import java.util.Set;
 
 import com.ksfe.model.*;
 import com.ksfe.service.*;
 import com.ksfe.util.StringToDate;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
+
+import javax.validation.Valid;
 
 /**
  * This is a Spring MVC based web Controller class
@@ -41,6 +54,15 @@ public class HomeController {
     private TargetService targetService;
     @Autowired
     private ResponseService responseService;
+    Target target1;
+    
+    @InitBinder
+    public void initBinder(WebDataBinder binder) {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");   
+        sdf.setLenient(true);
+        binder.registerCustomEditor(Date.class, new CustomDateEditor(sdf, true));
+    }
+
 
     /**
      * Simply selects the home view to render by returning its name.
@@ -58,49 +80,77 @@ public class HomeController {
     public String insertQuestion(Model model) {
         System.out.println(getClass());
         UnitType unitType = new UnitType("UnitType", "Eligibility");
-        unitTypeService.insertUnitType(unitType);
-        Unit unit = new Unit(100,"Password","UnitName","Code","Address","District","Manager","Email","Mobile","Telephone","Status");
+        
+        Unit unit = new Unit(100, "Password", "UnitName", "Code", "Address", "District", "Manager", "Email", "Mobile", "Telephone", "Status");
         unit.setUnitType(unitType);
-        Question question1 = new Question(100, "Hi How are you-1", "Remarks", 1000, "draft");
-        Question question2 = new Question(100, "Hi How are you-2", "Remarks", 1000, "draft");
+        Question question1 = new Question(1, "Hi How are you", "Remarks", 1, "draft");
 
-        Target target1=new Target(1,"status");
-        Target target2=new Target(2,"status");
+         target1= new Target(1, "status");
 
-        Questionnaire questionnaire=new Questionnaire("QTitle", "QDesc","QRemarks", "Rajesh","Accounts Manager", 0);
+
+        Questionnaire questionnaire = new Questionnaire("QTitle", "QDesc", "QRemarks", "Rajesh", "Accounts Manager", 0);
         questionnaire.setPostedDate(new Date());
         questionnaire.setDueDate(StringToDate.convertString("20/10/2017"));
 
-        Response response1=new Response(1000, "ResponseDescription", "responseRemarks", "respondentName", "respondentJobTitile", "responseStatus");
-        Response response2=new Response(1000, "ResponseDescription", "responseRemarks", "respondentName", "respondentJobTitile", "responseStatus");
+        Response response1 = new Response(1, "ResponseDescription", "responseRemarks", "respondentName", "respondentJobTitile", "responseStatus");
+
         response1.setResponseDate(new Date());
-        response2.setResponseDate(new Date());
         question1.getResponseList().add(response1);
-        question1.getResponseList().add(response2);
 
         questionnaire.getTargetRespondentList().add(target1);
-        questionnaire.getTargetRespondentList().add(target2);
         questionnaire.getQuestionList().add(question1);
-        questionnaire.getQuestionList().add(question2);
 
-        model.addAttribute("question", question1.getQuestionDescription());
-        responseService.insertResponse(response1);
-        responseService.insertResponse(response2);
+        unitTypeService.insertUnitType(unitType);
         unitService.insertUnit(unit);
-        
+        responseService.insertResponse(response1);
         targetService.insertTarget(target1);
-        targetService.insertTarget(target2);
         questionService.insertQuestion(question1);
-        questionService.insertQuestion(question2);
         questionnaireService.insertQuestionnaire(questionnaire);
+        
 
         questionService.getAllQuestions();
-        questionService.getQuestion(2);
-        questionService.getMultipleQuestions(10);
-        questionService.updateQuestion("Good afternoon",1);
-        questionService.deleteQuestion(5);
+        questionService.getQuestion(1);
+        questionService.getMultipleQuestions(0);
+        questionService.updateQuestion("Good afternoon", 1);
+        //questionService.deleteQuestion(5);
+        //questionnaireDAO.deleteQuestionnaire(1);
 
         return "home";
     }
 
+    //Navigate to questionnaire generation form
+    @RequestMapping(value = "/createQuestionnaire", method = RequestMethod.GET)
+    public String createQuestionnaire(Model model) {
+        Questionnaire questionnaire=new Questionnaire();
+        model.addAttribute("questionnaire", questionnaire);
+        return "questionnaire";
+    }
+
+    //Insert new questionnaire
+    @RequestMapping(value = "/insertQuestionnaire", method = RequestMethod.POST)
+    public String insertQuestionnaire(@ModelAttribute("questionnaire")@Valid Questionnaire questionnaire,
+                                      BindingResult bindingResult, Model model) {
+    	target1=new Target(1,"status");
+    	Set<Target>targetRespondentList=new HashSet<Target>();
+    	targetRespondentList.add(target1);
+    	questionnaire.setTargetRespondentList(targetRespondentList);
+    	System.out.println(getClass());
+        if (bindingResult.hasErrors()) {
+        	System.out.println("Form has errors");
+            return "questionnaire";
+        }
+        System.out.println("Questionnaire"+questionnaire);
+        Question question =new Question();
+        model.addAttribute("question", question);
+        return "question";
+    }
+
+    @ModelAttribute("respondentList")
+    public Set<String> getStringRespondentList() {
+    	Set<String> targetRespondentList = new HashSet<String>();
+        targetRespondentList.add("All Departments");
+        targetRespondentList.add("All Regions");
+        targetRespondentList.add("All Branches");
+        return targetRespondentList;
+    }
 }

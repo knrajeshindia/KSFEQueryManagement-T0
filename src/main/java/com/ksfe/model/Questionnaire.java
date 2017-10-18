@@ -11,6 +11,8 @@ package com.ksfe.model;
  * @since 1.0,
  */
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
@@ -36,13 +38,13 @@ public class Questionnaire implements Serializable {
     @Column(nullable = false)
     private String questionnaireDescription;
     private String questionnaireRemarks;
-    @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern="dd/MM/yyyy")
     private Date postedDate;
-    @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern="dd/MM/yyyy")
     private Date dueDate;
-    @OneToMany(cascade=CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(cascade=CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     private Collection<Target> targetRespondentList = new HashSet<Target>();
-    @OneToMany(cascade=CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(cascade=CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     private Collection<Question> questionList = new ArrayList<Question>();
     @NotNull
     @Column(nullable = false)
@@ -66,24 +68,22 @@ public class Questionnaire implements Serializable {
         this.questionnaireStatus = questionnaireStatus;
     }
 
-    @Override
-    public String toString() {
-        return "Questionnaire{" +
-                "questionnaireID=" + questionnaireID +
-                ", questionnaireTitle='" + questionnaireTitle + '\'' +
-                ", questionnaireDescription='" + questionnaireDescription + '\'' +
-                ", questionnaireRemarks='" + questionnaireRemarks + '\'' +
-                ", postedDate=" + postedDate +
-                ", dueDate=" + dueDate +
-                ", targetRespondentList=" + targetRespondentList +
-                ", questionList=" + questionList +
-                ", senderName='" + senderName + '\'' +
-                ", senderJobTitle='" + senderJobTitle + '\'' +
-                ", questionnaireStatus=" + questionnaireStatus +
-                '}';
-    }
+    
 
-    public Integer getQuestionnaireID() {
+    /* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "Questionnaire [questionnaireID=" + questionnaireID + ", questionnaireTitle=" + questionnaireTitle
+				+ ", questionnaireDescription=" + questionnaireDescription + ", questionnaireRemarks="
+				+ questionnaireRemarks + ", postedDate=" + postedDate + ", dueDate=" + dueDate
+				+ ", targetRespondentList=" + targetRespondentList + ", questionList=" + questionList + ", senderName="
+				+ senderName + ", senderJobTitle=" + senderJobTitle + ", questionnaireStatus=" + questionnaireStatus
+				+ "]";
+	}
+
+	public Integer getQuestionnaireID() {
         return questionnaireID;
     }
 
@@ -131,15 +131,32 @@ public class Questionnaire implements Serializable {
         this.dueDate = dueDate;
     }
 
-    public Collection<Target> getTargetRespondentList() {
-        return targetRespondentList;
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
     }
 
-    public void setTargetRespondentList(Collection<Target> targetRespondentList) {
-        this.targetRespondentList = targetRespondentList;
-    }
+    /**
+	 * @return the targetRespondentList
+	 */
+	public Collection<Target> getTargetRespondentList() {
+		return targetRespondentList;
+	}
 
-    public Collection<Question> getQuestionList() {
+	/**
+	 * @param targetRespondentList the targetRespondentList to set
+	 */
+	public void setTargetRespondentList(Collection<Target> targetRespondentList) {
+		this.targetRespondentList = targetRespondentList;
+	}
+
+	/**
+	 * @return the serialversionuid
+	 */
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
+	public Collection<Question> getQuestionList() {
         return questionList;
     }
 

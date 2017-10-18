@@ -5,6 +5,8 @@
 package com.ksfe.dao;
 
 import com.ksfe.model.Question;
+import com.ksfe.model.Questionnaire;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
@@ -103,6 +105,20 @@ public class QuestionDAOImpl implements QuestionDAO {
             System.out.println("Question- Updated Description: " + question.getQuestionDescription());
         }
         return question;
+    }
+    
+  //Delete Questionnaire-TEMPORARY -MOVE TO QUESIONNAIREDAO
+   
+    public Questionnaire deleteQuestionnaire(Integer pk) {
+        System.out.println(getClass());
+        bindDB();
+        Serializable id = new Integer(pk);
+        Questionnaire questionnaire = session.load(Questionnaire.class, id);
+        if (questionnaire != null) {
+            session.delete(questionnaire);
+            System.out.println("Questionnaire- Deletedn: " + questionnaire.getQuestionnaireTitle());
+        }
+        return questionnaire;
     }
 
     //Critieria builder instantiation

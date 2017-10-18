@@ -27,3 +27,7 @@ https://www.javacodegeeks.com/2013/04/jpa-2-0-criteria-query-with-hibernate.html
     Hibernate fetch type
 
     @ManyToOne(fetch =  FetchType.LAZY)
+
+    ----------------------------------------------------------------------------
+    Angular file sgtructure
+    https://github.com/joeLloyd/DoingAngularRight

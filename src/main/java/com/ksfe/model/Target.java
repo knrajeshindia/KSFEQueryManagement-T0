@@ -4,6 +4,13 @@
  */
 package com.ksfe.model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
 /**
  * This is a Java Bean based class,used to hold the DB Details of KSFE
  *
@@ -11,56 +18,52 @@ package com.ksfe.model;
  * @since 1.0,
  */
 
-import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-
 @Entity
 @Table(name="KSFE_Target")
 public class Target implements Serializable {
-    /**
-	 * 
-	 */
+	
 	private static final long serialVersionUID = 1L;
 	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer targetListID;
-    @NotNull
-    @Column(nullable = false)
+	@NotNull
+	@Column(nullable = false)
 	private Integer unitID;
-    @NotNull
-    @Column(nullable = false)
-    private String questionnaireStatus;
+	@NotNull
+	@Column(nullable = false)
+	private String questionnaireStatus;
 
-    public Target() {
-    }
+	public Target() {
+	}
 
-    public Target(@NotNull Integer unitID, @NotNull String questionnaireStatus) {
-        this.unitID = unitID;
-        this.questionnaireStatus = questionnaireStatus;
-    }
+	public Target(@NotNull Integer unitID, @NotNull String questionnaireStatus) {
+		this.unitID = unitID;
+		this.questionnaireStatus = questionnaireStatus;
+	}
 
-    public Integer getTargetListID() {
-        return targetListID;
-    }
+	public Integer getTargetListID() {
+		return targetListID;
+	}
 
-    public void setTargetListID(Integer targetListID) {
-        this.targetListID = targetListID;
-    }
+	public void setTargetListID(Integer targetListID) {
+		this.targetListID = targetListID;
+	}
 
-    public Integer getUnitID() {
-        return unitID;
-    }
+	public Integer getUnitID() {
+		return unitID;
+	}
 
-    public void setUnitID(Integer unitID) {
-        this.unitID = unitID;
-    }
+	public void setUnitID(Integer unitID) {
+		this.unitID = unitID;
+	}
 
-    public String getQuestionnaireStatus() {
-        return questionnaireStatus;
-    }
+	public String getQuestionnaireStatus() {
+		return questionnaireStatus;
+	}
 
-    public void setQuestionnaireStatus(String questionnaireStatus) {
-        this.questionnaireStatus = questionnaireStatus;
-    }
+	public void setQuestionnaireStatus(String questionnaireStatus) {
+		this.questionnaireStatus = questionnaireStatus;
+	}
 }

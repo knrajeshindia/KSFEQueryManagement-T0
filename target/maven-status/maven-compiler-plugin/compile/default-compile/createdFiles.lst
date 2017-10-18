@@ -10,7 +10,6 @@ com\ksfe\model\Response.class
 com\ksfe\dao\ResponseDAOImpl.class
 com\ksfe\dao\util\AbstractDao1.class
 com\ksfe\dao\QuestionnaireDAOImpl.class
-com\ksfe\dao\util\CustomHibernateDaoSupport.class
 com\ksfe\dao\QuestionDAOImpl.class
 com\ksfe\dao\ResponseDAO.class
 com\ksfe\controller\HomeController.class
