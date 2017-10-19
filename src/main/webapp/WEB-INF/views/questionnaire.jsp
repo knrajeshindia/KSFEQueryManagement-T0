@@ -33,11 +33,7 @@
 				<td><form:input path="questionnaireRemarks" id="questionnaireRemarks" />
 				 <form:errors path="questionnaireRemarks" cssClass="error" /></td>
 			</tr>
-			<tr>
-				<th>Posted Date</th>
-				<td><form:input type="date" path="postedDate" id="postedDate" />
-				<form:errors path="postedDate" cssClass="error" /></td>
-			</tr>
+			
 			<tr>
 				<th>Due Date</th>
 				<td><form:input type="date" path="dueDate" id="dueDate" />
