@@ -20,8 +20,17 @@
     <resources mapping="/resources/**" location="/resources/"/>
 
     <context:property-placeholder location="classpath:db.properties"/>
+    <context:property-placeholder location="classpath:messages.properties"/>
 
-    <context:component-scan base-package="com.ksfe.controller, com.ksfe.service, com.ksfe.dao, com.ksfe.model"/>
+
+    <!--Definition to bind error messages-needs to review further-->
+    <beans:bean class="org.springframework.context.support.ResourceBundleMessageSource" id="messageSource">
+        <beans:property name="basename" value="messages" />
+    </beans:bean>
+
+
+
+    <context:component-scan base-package="com.ksfe.controller, com.ksfe.service, com.ksfe.dao, com.ksfe.model, com.ksfe.util" />
 
     <!-- Resolves views selected for rendering by @Controllers to .jsp resources
         in the /WEB-INF/views directory -->

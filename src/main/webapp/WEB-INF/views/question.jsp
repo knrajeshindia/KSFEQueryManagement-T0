@@ -18,21 +18,22 @@
 	<hr/>
 	<form:form action="insertQuestion" method="post" modelAttribute="question">
 		<table>
+
+
 			
 			<tr>
-				<th>Description</th>
-				<td><form:input path="questionDescription" /> <form:errors
-						path="questionDescription" cssClass="error" /></td>
-			</tr>
-			<tr>
-				<th>Remarks</th>
-				<td><form:input path="questionRemarks" /> <form:errors
-						path="questionRemarks" cssClass="error" /></td>
-			</tr>
-			
-			<tr>
-				<td><button type="submit">Create Question</button></td>
-			</tr>
+            				<th>Question</th>
+            				<td><form:input type="text" path="questionDescription" id="questionDescription" />
+            				<form:errors path="questionDescription" cssClass="error" /></td>
+            			</tr>
+            			<tr>
+            				<th>Remarks</th>
+            				<td><form:textarea path="questionRemarks" id="questionRemarks" />
+            				 <form:errors path="questionRemarks" cssClass="error" /></td>
+            			</tr>
+            			<tr>
+                        				<td><button type="submit">Create Question</button></td>
+                        			</tr>
 		</table>
 	</form:form>
 </body>

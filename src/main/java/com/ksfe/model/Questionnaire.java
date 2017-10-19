@@ -31,7 +31,7 @@ public class Questionnaire implements Serializable {
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer questionnaireID;
-    @NotNull(message = "required field")
+    @NotNull
     @Column(nullable = false)
     private String questionnaireTitle;
     @NotNull(message = "required field")

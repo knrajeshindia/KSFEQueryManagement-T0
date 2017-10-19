@@ -7,13 +7,9 @@ package com.ksfe.controller;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 import com.ksfe.model.*;
 import com.ksfe.service.*;
@@ -21,9 +17,6 @@ import com.ksfe.util.StringToDate;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
-import org.springframework.context.support.DefaultMessageSourceResolvable;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -32,7 +25,6 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
 
@@ -61,11 +53,20 @@ public class HomeController {
     private ResponseService responseService;
     Target target1;
     
+    
+   /* @Autowired
+    private QuestionnaireValidator questionnaireValidator;*/
+
     @InitBinder
     public void initBinder(WebDataBinder binder) {
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");   
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         sdf.setLenient(true);
         binder.registerCustomEditor(Date.class, new CustomDateEditor(sdf, true));
+
+
+        //Add custom validators
+        //binder.addValidators(questionnaireValidator);
+
     }
 
 
@@ -85,12 +86,12 @@ public class HomeController {
     public String insertQuestion(Model model) {
         System.out.println(getClass());
         UnitType unitType = new UnitType("UnitType", "Eligibility");
-        
+
         Unit unit = new Unit(100, "Password", "UnitName", "Code", "Address", "District", "Manager", "Email", "Mobile", "Telephone", "Status");
         unit.setUnitType(unitType);
         Question question1 = new Question(1, "Hi How are you", "Remarks", 1, "draft");
 
-         target1= new Target(1, "status");
+        target1 = new Target(1, "status");
 
 
         Questionnaire questionnaire = new Questionnaire("QTitle", "QDesc", "QRemarks", "Rajesh", "Accounts Manager", 0);
@@ -111,7 +112,7 @@ public class HomeController {
         targetService.insertTarget(target1);
         questionService.insertQuestion(question1);
         questionnaireService.insertQuestionnaire(questionnaire);
-        
+
 
         questionService.getAllQuestions();
         questionService.getQuestion(1);
@@ -126,42 +127,51 @@ public class HomeController {
     //Navigate to questionnaire generation form
     @RequestMapping(value = "/createQuestionnaire", method = RequestMethod.GET)
     public String createQuestionnaire(Model model) {
-        Questionnaire questionnaire=new Questionnaire();
+        Questionnaire questionnaire = new Questionnaire();
         model.addAttribute("questionnaire", questionnaire);
         return "questionnaire";
     }
 
     //Insert new questionnaire
     @RequestMapping(value = "/insertQuestionnaire", method = RequestMethod.POST)
-    public String insertQuestionnaire(@ModelAttribute("questionnaire")@Valid Questionnaire questionnaire,
+    public String insertQuestionnaire(@ModelAttribute("questionnaire") @Valid Questionnaire questionnaire,
                                       BindingResult result, Model model) {
-    	target1=new Target(1,"status");
+        /*target1=new Target(1,"status");
     	Set<Target>targetRespondentList=new HashSet<Target>();
     	targetRespondentList.add(target1);
-    	questionnaire.setTargetRespondentList(targetRespondentList);
-    	
-    	
-    	System.out.println(questionnaire);
+    	questionnaire.setTargetRespondentList(targetRespondentList);*/
+
+
+        System.out.println(questionnaire);
         if (result.hasErrors()) {
-        	System.out.println("Form has errors");
-        	
-        	List<String> errors = result.getAllErrors().stream()
-        	          .map(DefaultMessageSourceResolvable::getDefaultMessage)
-        	          .collect(Collectors.toList());
-        	System.out.println("Errors: "+errors);
-        	        return "questionnaire";
-        	
-            
+            System.out.println("Form has errors"+result.getAllErrors());
+            return "questionnaire";
+
         }
-        System.out.println("Questionnaire"+questionnaire);
-        Question question =new Question();
+        System.out.println("Questionnaire" + questionnaire);
+        Question question = new Question();
         model.addAttribute("question", question);
         return "question";
     }
 
+    //Insert new question
+    @RequestMapping(value = "/insertQuestion", method = RequestMethod.POST)
+    public String insertQuestion(@Valid @ModelAttribute("question") Question question,
+                                 BindingResult result, Model model) {
+        System.out.println(question);
+        if (result.hasErrors()) {
+            System.out.println("Form has errors"+result.getAllErrors());
+            return "question";
+        }
+        questionService.insertQuestion(question);
+        System.out.println("Question" + question);
+        return "response";
+    }
+
+
     @ModelAttribute("respondentList")
     public Set<String> getStringRespondentList() {
-    	Set<String> targetRespondentList = new HashSet<String>();
+        Set<String> targetRespondentList = new HashSet<String>();
         targetRespondentList.add("All Departments");
         targetRespondentList.add("All Regions");
         targetRespondentList.add("All Branches");

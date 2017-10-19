@@ -18,6 +18,7 @@ com\ksfe\service\UnitTypeServiceImpl.class
 com\ksfe\dao\TargetDAOImpl.class
 com\ksfe\service\UnitTypeService.class
 com\ksfe\dao\UnitTypeDAOImpl.class
+com\ksfe\util\QuestionnaireValidator.class
 com\ksfe\service\QuestionServiceImpl.class
 com\ksfe\service\TargetServiceImpl.class
 com\ksfe\service\UnitServiceImpl.class
