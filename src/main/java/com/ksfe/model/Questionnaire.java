@@ -16,7 +16,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
@@ -42,10 +41,14 @@ public class Questionnaire implements Serializable {
     private Date postedDate;
     @DateTimeFormat(pattern="dd/MM/yyyy")
     private Date dueDate;
-    @OneToMany(cascade=CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
-    private Collection<Target> targetRespondentList = new HashSet<Target>();
-    @OneToMany(cascade=CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
-    private Collection<Question> questionList = new ArrayList<Question>();
+    @ElementCollection
+    private Collection<Integer> targetRespondentIDList = new HashSet<Integer>();
+    @ElementCollection
+    private Collection<Integer> questionIDList = new HashSet<Integer>();
+    @ElementCollection
+    private Collection<Integer> responseIDList = new HashSet<Integer>();
+
+
     @NotNull(message = "required field")
     @Column(nullable = false)
     private String senderName;
@@ -57,31 +60,41 @@ public class Questionnaire implements Serializable {
     public Questionnaire() {
     }
 
-    public Questionnaire(@NotNull(message = "required field") String questionnaireTitle, @NotNull(message = "required field") String questionnaireDescription, String questionnaireRemarks, @NotNull(message = "required field") String senderName, @NotNull(message = "required field") String senderJobTitle, @NotNull(message = "required field") Integer questionnaireStatus) {
+    public Questionnaire(@NotNull String questionnaireTitle, @NotNull(message = "required field") String questionnaireDescription, String questionnaireRemarks, @NotNull(message = "required field") String senderName, @NotNull(message = "required field") String senderJobTitle) {
         this.questionnaireTitle = questionnaireTitle;
         this.questionnaireDescription = questionnaireDescription;
         this.questionnaireRemarks = questionnaireRemarks;
         this.senderName = senderName;
         this.senderJobTitle = senderJobTitle;
-        this.questionnaireStatus = questionnaireStatus;
-    }
-
-    
+        }
 
     /* (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
-	@Override
-	public String toString() {
-		return "Questionnaire [questionnaireID=" + questionnaireID + ", questionnaireTitle=" + questionnaireTitle
-				+ ", questionnaireDescription=" + questionnaireDescription + ", questionnaireRemarks="
-				+ questionnaireRemarks + ", postedDate=" + postedDate + ", dueDate=" + dueDate
-				+ ", targetRespondentList=" + targetRespondentList + ", questionList=" + questionList + ", senderName="
-				+ senderName + ", senderJobTitle=" + senderJobTitle + ", questionnaireStatus=" + questionnaireStatus
-				+ "]";
-	}
+         * @see java.lang.Object#toString()
+         */
 
-	public Integer getQuestionnaireID() {
+    @Override
+    public String toString() {
+        return "Questionnaire{" +
+                "questionnaireID=" + questionnaireID +
+                ", questionnaireTitle='" + questionnaireTitle + '\'' +
+                ", questionnaireDescription='" + questionnaireDescription + '\'' +
+                ", questionnaireRemarks='" + questionnaireRemarks + '\'' +
+                ", postedDate=" + postedDate +
+                ", dueDate=" + dueDate +
+                ", targetRespondentIDList=" + targetRespondentIDList +
+                ", questionIDList=" + questionIDList +
+                ", responseIDList=" + responseIDList +
+                ", senderName='" + senderName + '\'' +
+                ", senderJobTitle='" + senderJobTitle + '\'' +
+                ", questionnaireStatus=" + questionnaireStatus +
+                '}';
+    }
+
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
+
+    public Integer getQuestionnaireID() {
         return questionnaireID;
     }
 
@@ -129,39 +142,6 @@ public class Questionnaire implements Serializable {
         this.dueDate = dueDate;
     }
 
-    public static long getSerialVersionUID() {
-        return serialVersionUID;
-    }
-
-    /**
-	 * @return the targetRespondentList
-	 */
-	public Collection<Target> getTargetRespondentList() {
-		return targetRespondentList;
-	}
-
-	/**
-	 * @param targetRespondentList the targetRespondentList to set
-	 */
-	public void setTargetRespondentList(Collection<Target> targetRespondentList) {
-		this.targetRespondentList = targetRespondentList;
-	}
-
-	/**
-	 * @return the serialversionuid
-	 */
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
-
-	public Collection<Question> getQuestionList() {
-        return questionList;
-    }
-
-    public void setQuestionList(Collection<Question> questionList) {
-        this.questionList = questionList;
-    }
-
     public String getSenderName() {
         return senderName;
     }
@@ -184,5 +164,29 @@ public class Questionnaire implements Serializable {
 
     public void setQuestionnaireStatus(Integer questionnaireStatus) {
         this.questionnaireStatus = questionnaireStatus;
+    }
+
+    public Collection<Integer> getTargetRespondentIDList() {
+        return targetRespondentIDList;
+    }
+
+    public void setTargetRespondentIDList(Collection<Integer> targetRespondentIDList) {
+        this.targetRespondentIDList = targetRespondentIDList;
+    }
+
+    public Collection<Integer> getQuestionIDList() {
+        return questionIDList;
+    }
+
+    public void setQuestionIDList(Collection<Integer> questionIDList) {
+        this.questionIDList = questionIDList;
+    }
+
+    public Collection<Integer> getResponseIDList() {
+        return responseIDList;
+    }
+
+    public void setResponseIDList(Collection<Integer> responseIDList) {
+        this.responseIDList = responseIDList;
     }
 }

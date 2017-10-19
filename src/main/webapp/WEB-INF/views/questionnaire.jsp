@@ -43,8 +43,8 @@
 			<tr>
 				<th>Target Respondents</th>
 				<td>
-				<form:checkboxes items="${respondentList}" path="targetRespondentList" id="targetRespondentList" />
- 				<form:errors path="targetRespondentList" cssClass="error" />
+				<form:checkboxes items="${respondentList}" path="targetRespondentIDList" id="targetRespondentIDList" />
+ 				<form:errors path="targetRespondentIDList" cssClass="error" />
  				</td> 
 			</tr>
 			<tr>

@@ -39,13 +39,6 @@
 
 
 			<tr>
-				<th>Remarks</th>
-				<td><form:textarea path="questionRemarks" id="questionRemarks" rows = "2" cols = "50" />
-					<form:errors path="questionRemarks" cssClass="error" /></td>
-			</tr>
-
-
-			<tr>
 
 				<td><form:hidden path="questionnaireID"	id="questionnaireID" value="1" /> <form:errors
 						path="questionnaireID" cssClass="error" /></td>

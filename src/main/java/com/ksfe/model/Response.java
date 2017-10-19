@@ -7,6 +7,8 @@ package com.ksfe.model;
 /**
  * This is a Java Bean based class,used to hold the DB Details of KSFE
  *
+ * Answer class maps reply for individual Questions. Response class holds reply for Questionnaire.
+ * *
  * @author RNarendran
  * @since 1.0,
  */
@@ -14,7 +16,10 @@ package com.ksfe.model;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.Date;
+import java.util.HashSet;
 
 @Entity
 @Table(name="KSFE_Response")
@@ -29,9 +34,11 @@ public class Response implements Serializable {
     @NotNull(message = "required field")
     @Column(nullable = false)
 	private Integer unitID;
+
     @NotNull(message = "required field")
     @Column(nullable = false)
-	private String responseDescription;
+    private Integer questionnaireID;
+
     private String responseRemarks;
     private String attachmentDescription;
     private byte[] attachmentFile;
@@ -44,20 +51,19 @@ public class Response implements Serializable {
     @NotNull(message = "required field")
     @Column(nullable = false)
     private Date responseDate;
-    @NotNull(message = "required field")
-    @Column(nullable = false)
+    @ElementCollection
+    private Collection<Integer> answerIDList = new HashSet<Integer>();
+
 	private String responseStatus;
 
     public Response() {
     }
 
-    public Response(@NotNull(message = "required field") Integer unitID, @NotNull(message = "required field") String responseDescription, String responseRemarks, @NotNull(message = "required field") String respondentName, @NotNull(message = "required field") String respondentJobTitle, @NotNull(message = "required field") String responseStatus) {
+    public Response(@NotNull(message = "required field") Integer unitID, @NotNull(message = "required field") Integer questionnaireID, @NotNull(message = "required field") String respondentName, @NotNull(message = "required field") String respondentJobTitle) {
         this.unitID = unitID;
-        this.responseDescription = responseDescription;
-        this.responseRemarks = responseRemarks;
+        this.questionnaireID = questionnaireID;
         this.respondentName = respondentName;
         this.respondentJobTitle = respondentJobTitle;
-        this.responseStatus = responseStatus;
     }
 
     @Override
@@ -65,10 +71,14 @@ public class Response implements Serializable {
         return "Response{" +
                 "responseID=" + responseID +
                 ", unitID=" + unitID +
-                ", responseDescription='" + responseDescription + '\'' +
+                ", questionnaireID=" + questionnaireID +
                 ", responseRemarks='" + responseRemarks + '\'' +
+                ", attachmentDescription='" + attachmentDescription + '\'' +
+                ", attachmentFile=" + Arrays.toString(attachmentFile) +
                 ", respondentName='" + respondentName + '\'' +
                 ", respondentJobTitle='" + respondentJobTitle + '\'' +
+                ", responseDate=" + responseDate +
+                ", answerIDList=" + answerIDList +
                 ", responseStatus='" + responseStatus + '\'' +
                 '}';
     }
@@ -89,12 +99,12 @@ public class Response implements Serializable {
         this.unitID = unitID;
     }
 
-    public String getResponseDescription() {
-        return responseDescription;
+    public Integer getQuestionnaireID() {
+        return questionnaireID;
     }
 
-    public void setResponseDescription(String responseDescription) {
-        this.responseDescription = responseDescription;
+    public void setQuestionnaireID(Integer questionnaireID) {
+        this.questionnaireID = questionnaireID;
     }
 
     public String getResponseRemarks() {
@@ -103,30 +113,6 @@ public class Response implements Serializable {
 
     public void setResponseRemarks(String responseRemarks) {
         this.responseRemarks = responseRemarks;
-    }
-
-    public String getRespondentName() {
-        return respondentName;
-    }
-
-    public void setRespondentName(String respondentName) {
-        this.respondentName = respondentName;
-    }
-
-    public String getRespondentJobTitle() {
-        return respondentJobTitle;
-    }
-
-    public void setRespondentJobTitle(String respondentJobTitle) {
-        this.respondentJobTitle = respondentJobTitle;
-    }
-
-    public String getResponseStatus() {
-        return responseStatus;
-    }
-
-    public void setResponseStatus(String responseStatus) {
-        this.responseStatus = responseStatus;
     }
 
     public String getAttachmentDescription() {
@@ -145,11 +131,43 @@ public class Response implements Serializable {
         this.attachmentFile = attachmentFile;
     }
 
+    public String getRespondentName() {
+        return respondentName;
+    }
+
+    public void setRespondentName(String respondentName) {
+        this.respondentName = respondentName;
+    }
+
+    public String getRespondentJobTitle() {
+        return respondentJobTitle;
+    }
+
+    public void setRespondentJobTitle(String respondentJobTitle) {
+        this.respondentJobTitle = respondentJobTitle;
+    }
+
     public Date getResponseDate() {
         return responseDate;
     }
 
     public void setResponseDate(Date responseDate) {
         this.responseDate = responseDate;
+    }
+
+    public Collection<Integer> getAnswerIDList() {
+        return answerIDList;
+    }
+
+    public void setAnswerIDList(Collection<Integer> answerIDList) {
+        this.answerIDList = answerIDList;
+    }
+
+    public String getResponseStatus() {
+        return responseStatus;
+    }
+
+    public void setResponseStatus(String responseStatus) {
+        this.responseStatus = responseStatus;
     }
 }

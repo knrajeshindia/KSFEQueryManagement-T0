@@ -25,8 +25,8 @@ public class Unit implements Serializable {
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer unitID;
-    @ManyToOne
-    private UnitType unitType;
+
+    private Integer unitTypeID;
     //Duplicate unitID for binding branches to region-where applicable
     private Integer regionID;
     @NotNull(message = "required field")
@@ -81,7 +81,7 @@ public class Unit implements Serializable {
 	public String toString() {
 		return "Unit{" +
 				"unitID=" + unitID +
-				", unitType=" + unitType +
+				", unitTypeID=" + unitTypeID +
 				", regionID=" + regionID +
 				", password='" + password + '\'' +
 				", unitName='" + unitName + '\'' +
@@ -96,196 +96,107 @@ public class Unit implements Serializable {
 				'}';
 	}
 
-	/**
-	 * @return the unitID
-	 */
 	public Integer getUnitID() {
 		return unitID;
 	}
 
-
-	/**
-	 * @param unitID the unitID to set
-	 */
 	public void setUnitID(Integer unitID) {
 		this.unitID = unitID;
 	}
 
-
-	/**
-	 * @return the unitType
-	 */
-	public UnitType getUnitType() {
-		return unitType;
+	public Integer getUnitTypeID() {
+		return unitTypeID;
 	}
 
-
-	/**
-	 * @param unitType the unitType to set
-	 */
-	public void setUnitType(UnitType unitType) {
-		this.unitType = unitType;
+	public void setUnitTypeID(Integer unitTypeID) {
+		this.unitTypeID = unitTypeID;
 	}
 
-
-	/**
-	 * @return the regionID
-	 */
 	public Integer getRegionID() {
 		return regionID;
 	}
 
-
-	/**
-	 * @param regionID the regionID to set
-	 */
 	public void setRegionID(Integer regionID) {
 		this.regionID = regionID;
 	}
 
+	public String getPassword() {
+		return password;
+	}
 
-	/**
-	 * @return the unitName
-	 */
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
 	public String getUnitName() {
 		return unitName;
 	}
 
-
-	/**
-	 * @param unitName the unitName to set
-	 */
 	public void setUnitName(String unitName) {
 		this.unitName = unitName;
 	}
 
-
-	/**
-	 * @return the unitCode
-	 */
 	public String getUnitCode() {
 		return unitCode;
 	}
 
-
-	/**
-	 * @param unitCode the unitCode to set
-	 */
 	public void setUnitCode(String unitCode) {
 		this.unitCode = unitCode;
 	}
 
-
-	/**
-	 * @return the unitAddress
-	 */
 	public String getUnitAddress() {
 		return unitAddress;
 	}
 
-
-	/**
-	 * @param unitAddress the unitAddress to set
-	 */
 	public void setUnitAddress(String unitAddress) {
 		this.unitAddress = unitAddress;
 	}
 
-
-	/**
-	 * @return the unitDistrict
-	 */
 	public String getUnitDistrict() {
 		return unitDistrict;
 	}
 
-
-	/**
-	 * @param unitDistrict the unitDistrict to set
-	 */
 	public void setUnitDistrict(String unitDistrict) {
 		this.unitDistrict = unitDistrict;
 	}
 
-
-	/**
-	 * @return the unitManager
-	 */
 	public String getUnitManager() {
 		return unitManager;
 	}
 
-
-	/**
-	 * @param unitManager the unitManager to set
-	 */
 	public void setUnitManager(String unitManager) {
 		this.unitManager = unitManager;
 	}
 
-
-	/**
-	 * @return the unitEmail
-	 */
 	public String getUnitEmail() {
 		return unitEmail;
 	}
 
-
-	/**
-	 * @param unitEmail the unitEmail to set
-	 */
 	public void setUnitEmail(String unitEmail) {
 		this.unitEmail = unitEmail;
 	}
 
-
-	/**
-	 * @return the unitMobile
-	 */
 	public String getUnitMobile() {
 		return unitMobile;
 	}
 
-
-	/**
-	 * @param unitMobile the unitMobile to set
-	 */
 	public void setUnitMobile(String unitMobile) {
 		this.unitMobile = unitMobile;
 	}
 
-
-	/**
-	 * @return the unitTelephone
-	 */
 	public String getUnitTelephone() {
 		return unitTelephone;
 	}
 
-
-	/**
-	 * @param unitTelephone the unitTelephone to set
-	 */
 	public void setUnitTelephone(String unitTelephone) {
 		this.unitTelephone = unitTelephone;
 	}
 
-
-	/**
-	 * @return the unitStatus
-	 */
 	public String getUnitStatus() {
 		return unitStatus;
 	}
 
-
-	/**
-	 * @param unitStatus the unitStatus to set
-	 */
 	public void setUnitStatus(String unitStatus) {
 		this.unitStatus = unitStatus;
 	}
-
-
 }

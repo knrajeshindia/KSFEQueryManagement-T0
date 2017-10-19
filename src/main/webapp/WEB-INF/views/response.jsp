@@ -19,15 +19,12 @@
 	<hr />
 	<form:form action="insertResponse" method="post"
 		modelAttribute="response">
+		<form:hidden path="unitID"	id="unitID" value="1" />
+		<form:hidden path="questionnaireID"	id="questionnaireID" value="1" />
+		<form:hidden path="responseDate"	id="responseDate" value="2017-10-19" />
+		<form:hidden path="responseStatus"	id="complete" value="1" />
 		<table>
 
-
-			<tr>
-				<th>Response</th>
-				<td><form:input type="text" path="responseDescription"
-						id="responseDescription" /> <form:errors
-						path="responseDescription" cssClass="error" /></td>
-			</tr>
 			<tr>
 				<th>Remarks</th>
 				<td><form:textarea path="responseRemarks" id="responseRemarks" />

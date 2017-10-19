@@ -14,21 +14,19 @@ package com.ksfe.model;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 
 @Entity
 @Table(name = "KSFE_Question")
 public class Question implements Serializable {
-    /**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-	@Id
+
+    private static final long serialVersionUID = 1L;
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer questionID;
-    @NotNull(message = "required field")
-    @Column(nullable = false)
+
+    //Review
     private Integer questionnaireID;
     @NotNull(message = "required field")
     @Column(nullable = false)
@@ -36,20 +34,19 @@ public class Question implements Serializable {
     @NotNull(message = "required field")
     @Column(nullable = false)
     private String responseDataType;
-    private String questionRemarks;
-    @OneToMany(cascade=CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
-    private Collection<Response> responseList = new ArrayList<Response>();
+    //Review
+    private String questionStatus;
+    @ElementCollection
+    private Collection<Integer> answerIDList = new HashSet<Integer>();
 
 
     public Question() {
     }
 
-    public Question(@NotNull(message = "required field") Integer questionnaireID, @NotNull(message = "required field") String questionDescription, @NotNull(message = "required field") String responseDataType, String questionRemarks) {
-        this.questionnaireID = questionnaireID;
+    public Question(@NotNull(message = "required field") String questionDescription, @NotNull(message = "required field") String responseDataType) {
         this.questionDescription = questionDescription;
         this.responseDataType = responseDataType;
-        this.questionRemarks = questionRemarks;
-        }
+    }
 
     @Override
     public String toString() {
@@ -57,25 +54,10 @@ public class Question implements Serializable {
                 "questionID=" + questionID +
                 ", questionnaireID=" + questionnaireID +
                 ", questionDescription='" + questionDescription + '\'' +
-                ", questionRemarks='" + questionRemarks + '\'' +
-                ", responseList=" + responseList +
-               '}';
-    }
-
-    public String getResponseDataType() {
-        return responseDataType;
-    }
-
-    public void setResponseDataType(String responseDataType) {
-        this.responseDataType = responseDataType;
-    }
-
-    public Collection<Response> getResponseList() {
-        return responseList;
-    }
-
-    public void setResponseList(Collection<Response> responseList) {
-        this.responseList = responseList;
+                ", responseDataType='" + responseDataType + '\'' +
+                ", questionStatus='" + questionStatus + '\'' +
+                ", answerIDList=" + answerIDList +
+                '}';
     }
 
     public Integer getQuestionID() {
@@ -102,12 +84,27 @@ public class Question implements Serializable {
         this.questionDescription = questionDescription;
     }
 
-    public String getQuestionRemarks() {
-        return questionRemarks;
+    public String getResponseDataType() {
+        return responseDataType;
     }
 
-    public void setQuestionRemarks(String questionRemarks) {
-        this.questionRemarks = questionRemarks;
+    public void setResponseDataType(String responseDataType) {
+        this.responseDataType = responseDataType;
     }
 
+    public String getQuestionStatus() {
+        return questionStatus;
+    }
+
+    public void setQuestionStatus(String questionStatus) {
+        this.questionStatus = questionStatus;
+    }
+
+    public Collection<Integer> getAnswerIDList() {
+        return answerIDList;
+    }
+
+    public void setAnswerIDList(Collection<Integer> answerIDList) {
+        this.answerIDList = answerIDList;
+    }
 }

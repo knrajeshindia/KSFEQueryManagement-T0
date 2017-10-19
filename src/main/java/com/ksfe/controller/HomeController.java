@@ -39,167 +39,179 @@ import javax.validation.Valid;
 // @RequestMapping("/")
 
 public class HomeController {
-	@Autowired
-	private QuestionService questionService;
-	@Autowired
-	private UnitService unitService;
-	@Autowired
-	private UnitTypeService unitTypeService;
-	@Autowired
-	private QuestionnaireService questionnaireService;
-	@Autowired
-	private TargetService targetService;
-	@Autowired
-	private ResponseService responseService;
-	Target target1;
-	Response response;
+    @Autowired
+    private QuestionService questionService;
+    @Autowired
+    private UnitService unitService;
+    @Autowired
+    private UnitTypeService unitTypeService;
+    @Autowired
+    private QuestionnaireService questionnaireService;
+    @Autowired
+    private TargetService targetService;
+    @Autowired
+    private ResponseService responseService;
+
+    Response response;
+    Question question;
 
 	/*
-	 * @Autowired private QuestionnaireValidator questionnaireValidator;
+     * @Autowired private QuestionnaireValidator questionnaireValidator;
 	 */
 
-	@InitBinder
-	public void initBinder(WebDataBinder binder) {
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		sdf.setLenient(true);
-		binder.registerCustomEditor(Date.class, new CustomDateEditor(sdf, true));
+    @InitBinder
+    public void initBinder(WebDataBinder binder) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        sdf.setLenient(true);
+        binder.registerCustomEditor(Date.class, new CustomDateEditor(sdf, true));
 
-		// Add custom validators
-		// binder.addValidators(questionnaireValidator);
+        // Add custom validators
+        // binder.addValidators(questionnaireValidator);
 
-	}
+    }
 
-	/**
-	 * Simply selects the home view to render by returning its name.
-	 */
-	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String home(Locale locale, Model model) {
-		Date date = new Date();
-		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
-		String formattedDate = dateFormat.format(date);
-		model.addAttribute("serverTime", formattedDate);
-		return "home";
-	}
+    /**
+     * Simply selects the home view to render by returning its name.
+     */
+    @RequestMapping(value = "/", method = RequestMethod.GET)
+    public String home(Locale locale, Model model) {
+        Date date = new Date();
+        DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
+        String formattedDate = dateFormat.format(date);
+        model.addAttribute("serverTime", formattedDate);
+        return "home";
+    }
 
-	@RequestMapping(value = "/add", method = RequestMethod.GET)
-	public String insertQuestion(Model model) {
-		System.out.println(getClass());
-		UnitType unitType = new UnitType("UnitType", "Eligibility");
+    @RequestMapping(value = "/add", method = RequestMethod.GET)
+    public String insertQuestion(Model model) {
+        System.out.println(getClass());
 
-		Unit unit = new Unit(100, "Password", "UnitName", "Code", "Address", "District", "Manager", "Email", "Mobile",
-				"Telephone", "Status");
-		unit.setUnitType(unitType);
-		Question question1 = new Question(1, "Hi How are you","Data Type", "Remarks");
+        //UNIT TYPE
+        UnitType unitType = new UnitType("UnitType", "Eligibility");
+        unitTypeService.insertUnitType(unitType);
+        System.out.println("Unit Type inserted" + unitType);
 
-		target1 = new Target(1, "status");
+        //UNIT
+        Unit unit = new Unit(1, "Password", "UnitName", "Code", "Address", "District", "Manager", "Email", "Mobile",
+                "Telephone", "Status");
+        unit.setUnitTypeID(1);
+        unitService.insertUnit(unit);
+        System.out.println("Unit inserted" + unit);
 
-		Questionnaire questionnaire = new Questionnaire("QTitle", "QDesc", "QRemarks", "Rajesh", "Accounts Manager", 0);
-		questionnaire.setPostedDate(new Date());
-		questionnaire.setDueDate(StringToDate.convertString("20/10/2017"));
+        //QUESTIONNAIRE
+        Questionnaire questionnaire = new Questionnaire("QTitle", "QDesc", "QRemarks", "Rajesh", "Accounts Manager");
+        questionnaire.setPostedDate(new Date());
+        questionnaire.setDueDate(StringToDate.convertString("20/10/2017"));
+        questionnaire.getTargetRespondentIDList().add(1);
+        questionnaireService.insertQuestionnaire(questionnaire);
 
-		response = new Response(1, "ResponseDescription", "responseRemarks", "respondentName",
-				"respondentJobTitle", "responseStatus");
+        //QUESTION
+        question = new Question("Hi How are you", "Data Type");
+        question.setQuestionnaireID(1);
+        questionService.insertQuestion(question);
 
-		response.setResponseDate(new Date());
-		question1.getResponseList().add(response);
+        questionService.getAllQuestions();
+        questionService.getQuestion(1);
+        questionService.getMultipleQuestions(0);
+        questionService.updateQuestion("Good afternoon", 1);
 
-		questionnaire.getTargetRespondentList().add(target1);
-		questionnaire.getQuestionList().add(question1);
+        // questionService.deleteQuestion(5);
+        // questionnaireDAO.deleteQuestionnaire(1);
 
-		unitTypeService.insertUnitType(unitType);
-		unitService.insertUnit(unit);
-		responseService.insertResponse(response);
-		targetService.insertTarget(target1);
-		questionService.insertQuestion(question1);
-		questionnaireService.insertQuestionnaire(questionnaire);
+        //RESPONSE
+        response = new Response(1, 1, "respondentName", "respondentJobTitle");
+        response.setResponseDate(new Date());
+        response.setResponseRemarks("Remarks");
+        responseService.insertResponse(response);
 
-		questionService.getAllQuestions();
-		questionService.getQuestion(1);
-		questionService.getMultipleQuestions(0);
-		questionService.updateQuestion("Good afternoon", 1);
-		// questionService.deleteQuestion(5);
-		// questionnaireDAO.deleteQuestionnaire(1);
+        return "home";
+    }
 
-		return "home";
-	}
+    // Navigate to questionnaire generation form
+    @RequestMapping(value = "/createQuestionnaire", method = RequestMethod.GET)
+    public String createQuestionnaire(Model model) {
+        Questionnaire questionnaire = new Questionnaire();
+        model.addAttribute("questionnaire", questionnaire);
+        return "questionnaire";
+    }
 
-	// Navigate to questionnaire generation form
-	@RequestMapping(value = "/createQuestionnaire", method = RequestMethod.GET)
-	public String createQuestionnaire(Model model) {
-		Questionnaire questionnaire = new Questionnaire();
-		model.addAttribute("questionnaire", questionnaire);
-		return "questionnaire";
-	}
-
-	// Insert new questionnaire
-	@RequestMapping(value = "/insertQuestionnaire", method = RequestMethod.POST)
-	public String insertQuestionnaire(@ModelAttribute("questionnaire") @Valid Questionnaire questionnaire,
-			BindingResult result, Model model) {
-		/*
-		 * target1=new Target(1,"status"); Set<Target>targetRespondentList=new
+    // Insert new questionnaire
+    @RequestMapping(value = "/insertQuestionnaire", method = RequestMethod.POST)
+    public String insertQuestionnaire(@ModelAttribute("questionnaire") @Valid Questionnaire questionnaire,
+                                      BindingResult result, Model model) {
+        /*
+         * target1=new Target(1,"status"); Set<Target>targetRespondentList=new
 		 * HashSet<Target>(); targetRespondentList.add(target1);
 		 * questionnaire.setTargetRespondentList(targetRespondentList);
 		 */
 
-		System.out.println(questionnaire);
-		if (result.hasErrors()) {
-			System.out.println("Form has errors" + result.getAllErrors());
-			return "questionnaire";
+        System.out.println(questionnaire);
+        if (result.hasErrors()) {
+            System.out.println("Form has errors" + result.getAllErrors());
+            return "questionnaire";
 
-		}
-		System.out.println("Questionnaire" + questionnaire);
-		//Manual setting of question object-Change later
-		Question question = new Question();
-		model.addAttribute("question", question);
+        }
+        System.out.println("Questionnaire" + questionnaire);
+        //Manual setting of question object-Change later
+        question = new Question();
+        model.addAttribute("question", question);
+        question.setQuestionnaireID(1);
+        return "question";
 
-		question.setQuestionnaireID(1);
+    }
 
-		question.getResponseList().add(response);
-		return "question";
-		
-	}
+    // Insert new question
+    @RequestMapping(value = "/insertQuestion", method = RequestMethod.POST)
+    public String insertQuestion(@Valid @ModelAttribute("question") Question question, BindingResult result,
+                                 Model model) {
+        question.setQuestionnaireID(1);
+        if (result.hasErrors()) {
+            System.out.println("Form has errors" + result.getAllErrors());
+            System.out.println("Received question object" + question);
+            return "question";
+        }
+        System.out.println("Trying to insert Question" + question);
+        questionService.insertQuestion(question);
+        System.out.println("Question inserted");
 
-	// Insert new question
-	@RequestMapping(value = "/insertQuestion", method = RequestMethod.POST)
-	public String insertQuestion(@Valid @ModelAttribute("question") Question question, BindingResult result,
-			Model model) {
+        //Manual setting of Response object-Change later
 
-		question.setQuestionnaireID(1);
-		question.getResponseList().add(response);
-		
-		if (result.hasErrors()) {
-			System.out.println("Form has errors" + result.getAllErrors());
-			System.out.println("Received question object"+question);
-			return "question";
-		}
-		System.out.println("Trying to insert Question" + question);
-		questionService.insertQuestion(question);
-		System.out.println("Question inserted");
+        response = new Response(1, 1, "respondentName", "respondentJobTitle");
+        response.setResponseDate(new Date());
+        response.setResponseRemarks("Remarks");
+        model.addAttribute("response", response);
+        return "response";
+    }
 
-		//Manual setting of Response object-Change later
+    // Insert new Response
+    @RequestMapping(value = "/insertResponse", method = RequestMethod.POST)
+    public String insertResponse(@Valid @ModelAttribute("response") Response response, BindingResult result,
+                                 Model model) {
+        if (result.hasErrors()) {
+            System.out.println("Form has errors" + result.getAllErrors());
+            System.out.println("Received response object" + response);
+            return "response";
+        }
+        System.out.println("Trying to insert Response" + response);
+        response.setResponseDate(new Date());
+        response.setResponseRemarks("Remarks");
+        responseService.insertResponse(response);
+        System.out.println("Response inserted");
+        return "demo";
+    }
 
-        response = new Response(1, "ResponseDescription", "responseRemarks", "respondentName",
-                "respondentJobTitle", "responseStatus");
-
-
-        response.setResponseDescription("");
-        response.setResponseRemarks("");
-        response.setRespondentName("");
-        response.setRespondentJobTitle("");
-		model.addAttribute("response", response);
-		return "response";
-	}
 
     //List out target Respondants for Questionnaire
-	@ModelAttribute("respondentList")
-	public Set<String> getTargetRespondentList() {
-		Set<String> targetRespondentList = new HashSet<String>();
-		targetRespondentList.add("All Departments");
-		targetRespondentList.add("All Regions");
-		targetRespondentList.add("All Branches");
-		return targetRespondentList;
-	}
-//List out data types expected for response
+    @ModelAttribute("respondentList")
+    public Set<Integer> getTargetRespondentList() {
+        Set<Integer> targetRespondentList = new HashSet<Integer>();
+        targetRespondentList.add(1);
+        targetRespondentList.add(2);
+        targetRespondentList.add(3);
+        return targetRespondentList;
+    }
+
+    //List out data types expected for response
     @ModelAttribute("dataTypeList")
     public Set<String> getDataTypeList() {
         Set<String> dataTypeList = new HashSet<String>();

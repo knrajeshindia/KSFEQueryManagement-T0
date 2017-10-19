@@ -10,6 +10,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 
 /**
  * This is a Java Bean based class,used to hold the DB Details of KSFE
@@ -18,8 +20,7 @@ import javax.persistence.Table;
  * @since 1.0,
  */
 
-import javax.validation.constraints.NotNull;
-import java.io.Serializable;
+
 @Entity
 @Table(name="KSFE_Target")
 public class Target implements Serializable {
@@ -27,28 +28,29 @@ public class Target implements Serializable {
 	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer targetListID;
+	private Integer targetRespondentID;
 	@NotNull(message = "required field")
 	@Column(nullable = false)
 	private Integer unitID;
-	@NotNull(message = "required field")
-	@Column(nullable = false)
-	private String questionnaireStatus;
+
 
 	public Target() {
 	}
 
-	public Target(@NotNull(message = "required field") Integer unitID, @NotNull(message = "required field") String questionnaireStatus) {
-		this.unitID = unitID;
-		this.questionnaireStatus = questionnaireStatus;
+	@Override
+	public String toString() {
+		return "Target{" +
+				"targetRespondentID=" + targetRespondentID +
+				", unitID=" + unitID +
+				'}';
 	}
 
-	public Integer getTargetListID() {
-		return targetListID;
+	public Integer getTargetRespondentID() {
+		return targetRespondentID;
 	}
 
-	public void setTargetListID(Integer targetListID) {
-		this.targetListID = targetListID;
+	public void setTargetRespondentID(Integer targetRespondentID) {
+		this.targetRespondentID = targetRespondentID;
 	}
 
 	public Integer getUnitID() {
@@ -57,13 +59,5 @@ public class Target implements Serializable {
 
 	public void setUnitID(Integer unitID) {
 		this.unitID = unitID;
-	}
-
-	public String getQuestionnaireStatus() {
-		return questionnaireStatus;
-	}
-
-	public void setQuestionnaireStatus(String questionnaireStatus) {
-		this.questionnaireStatus = questionnaireStatus;
 	}
 }
