@@ -33,26 +33,23 @@ public class Question implements Serializable {
     @NotNull(message = "required field")
     @Column(nullable = false)
     private String questionDescription;
+    @NotNull(message = "required field")
+    @Column(nullable = false)
+    private String responseDataType;
     private String questionRemarks;
     @OneToMany(cascade=CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     private Collection<Response> responseList = new ArrayList<Response>();
-    //Delete - not required-review
-    @NotNull(message = "required field")
-    @Column(nullable = false)
-    private Integer unitID;
-    //Optional-review
-    private String questionStatus;
+
 
     public Question() {
     }
 
-    public Question(@NotNull(message = "required field") Integer questionnaireID, @NotNull(message = "required field") String questionDescription, String questionRemarks, @NotNull(message = "required field") Integer unitID, @NotNull(message = "required field") String questionStatus) {
+    public Question(@NotNull(message = "required field") Integer questionnaireID, @NotNull(message = "required field") String questionDescription, @NotNull(message = "required field") String responseDataType, String questionRemarks) {
         this.questionnaireID = questionnaireID;
         this.questionDescription = questionDescription;
+        this.responseDataType = responseDataType;
         this.questionRemarks = questionRemarks;
-        this.unitID = unitID;
-        this.questionStatus = questionStatus;
-    }
+        }
 
     @Override
     public String toString() {
@@ -62,9 +59,15 @@ public class Question implements Serializable {
                 ", questionDescription='" + questionDescription + '\'' +
                 ", questionRemarks='" + questionRemarks + '\'' +
                 ", responseList=" + responseList +
-                ", unitID=" + unitID +
-                ", questionStatus='" + questionStatus + '\'' +
-                '}';
+               '}';
+    }
+
+    public String getResponseDataType() {
+        return responseDataType;
+    }
+
+    public void setResponseDataType(String responseDataType) {
+        this.responseDataType = responseDataType;
     }
 
     public Collection<Response> getResponseList() {
@@ -107,19 +110,4 @@ public class Question implements Serializable {
         this.questionRemarks = questionRemarks;
     }
 
-    public Integer getUnitID() {
-        return unitID;
-    }
-
-    public void setUnitID(Integer unitID) {
-        this.unitID = unitID;
-    }
-
-    public String getQuestionStatus() {
-        return questionStatus;
-    }
-
-    public void setQuestionStatus(String questionStatus) {
-        this.questionStatus = questionStatus;
-    }
 }

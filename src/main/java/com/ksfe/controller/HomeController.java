@@ -52,7 +52,7 @@ public class HomeController {
 	@Autowired
 	private ResponseService responseService;
 	Target target1;
-	Response response1;
+	Response response;
 
 	/*
 	 * @Autowired private QuestionnaireValidator questionnaireValidator;
@@ -89,7 +89,7 @@ public class HomeController {
 		Unit unit = new Unit(100, "Password", "UnitName", "Code", "Address", "District", "Manager", "Email", "Mobile",
 				"Telephone", "Status");
 		unit.setUnitType(unitType);
-		Question question1 = new Question(1, "Hi How are you", "Remarks", 1, "draft");
+		Question question1 = new Question(1, "Hi How are you","Data Type", "Remarks");
 
 		target1 = new Target(1, "status");
 
@@ -97,18 +97,18 @@ public class HomeController {
 		questionnaire.setPostedDate(new Date());
 		questionnaire.setDueDate(StringToDate.convertString("20/10/2017"));
 
-		response1 = new Response(1, "ResponseDescription", "responseRemarks", "respondentName",
-				"respondentJobTitile", "responseStatus");
+		response = new Response(1, "ResponseDescription", "responseRemarks", "respondentName",
+				"respondentJobTitle", "responseStatus");
 
-		response1.setResponseDate(new Date());
-		question1.getResponseList().add(response1);
+		response.setResponseDate(new Date());
+		question1.getResponseList().add(response);
 
 		questionnaire.getTargetRespondentList().add(target1);
 		questionnaire.getQuestionList().add(question1);
 
 		unitTypeService.insertUnitType(unitType);
 		unitService.insertUnit(unit);
-		responseService.insertResponse(response1);
+		responseService.insertResponse(response);
 		targetService.insertTarget(target1);
 		questionService.insertQuestion(question1);
 		questionnaireService.insertQuestionnaire(questionnaire);
@@ -151,10 +151,10 @@ public class HomeController {
 		//Manual setting of question object-Change later
 		Question question = new Question();
 		model.addAttribute("question", question);
-		question.setUnitID(1);
+
 		question.setQuestionnaireID(1);
-		question.setQuestionStatus("status");
-		question.getResponseList().add(response1);
+
+		question.getResponseList().add(response);
 		return "question";
 		
 	}
@@ -163,10 +163,9 @@ public class HomeController {
 	@RequestMapping(value = "/insertQuestion", method = RequestMethod.POST)
 	public String insertQuestion(@Valid @ModelAttribute("question") Question question, BindingResult result,
 			Model model) {
-		question.setUnitID(1);
+
 		question.setQuestionnaireID(1);
-		question.setQuestionStatus("status");
-		question.getResponseList().add(response1);
+		question.getResponseList().add(response);
 		
 		if (result.hasErrors()) {
 			System.out.println("Form has errors" + result.getAllErrors());
@@ -176,15 +175,37 @@ public class HomeController {
 		System.out.println("Trying to insert Question" + question);
 		questionService.insertQuestion(question);
 		System.out.println("Question inserted");
+
+		//Manual setting of Response object-Change later
+
+        response = new Response(1, "ResponseDescription", "responseRemarks", "respondentName",
+                "respondentJobTitle", "responseStatus");
+
+
+        /*response.setResponseDescription("");
+        response.setResponseRemarks("");
+        response.setRespondentName("");
+        response.setRespondentJobTitle("");*/
+		model.addAttribute("response", response);
 		return "response";
 	}
 
+    //List out target Respondants for Questionnaire
 	@ModelAttribute("respondentList")
-	public Set<String> getStringRespondentList() {
+	public Set<String> getTargetRespondentList() {
 		Set<String> targetRespondentList = new HashSet<String>();
 		targetRespondentList.add("All Departments");
 		targetRespondentList.add("All Regions");
 		targetRespondentList.add("All Branches");
 		return targetRespondentList;
 	}
+//List out data types expected for response
+    @ModelAttribute("dataTypeList")
+    public Set<String> getDataTypeList() {
+        Set<String> dataTypeList = new HashSet<String>();
+        dataTypeList.add("Text");
+        dataTypeList.add("Number");
+        dataTypeList.add("Date");
+        return dataTypeList;
+    }
 }

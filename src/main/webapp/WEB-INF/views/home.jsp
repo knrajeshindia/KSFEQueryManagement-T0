@@ -11,6 +11,5 @@
 
 <P>  The time on the server is ${serverTime}. </P>
 <hr>
-<P>  QUERY DESCRIPTION ${query}. </P>
 </body>
 </html>

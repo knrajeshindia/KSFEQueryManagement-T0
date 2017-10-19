@@ -40,7 +40,7 @@ public class Response implements Serializable {
 	private String respondentName;
     @NotNull(message = "required field")
     @Column(nullable = false)
-    private String respondentJobTitile;
+    private String respondentJobTitle;
     @NotNull(message = "required field")
     @Column(nullable = false)
     private Date responseDate;
@@ -51,12 +51,12 @@ public class Response implements Serializable {
     public Response() {
     }
 
-    public Response(@NotNull(message = "required field") Integer unitID, @NotNull(message = "required field") String responseDescription, String responseRemarks, @NotNull(message = "required field") String respondentName, @NotNull(message = "required field") String respondentJobTitile, @NotNull(message = "required field") String responseStatus) {
+    public Response(@NotNull(message = "required field") Integer unitID, @NotNull(message = "required field") String responseDescription, String responseRemarks, @NotNull(message = "required field") String respondentName, @NotNull(message = "required field") String respondentJobTitle, @NotNull(message = "required field") String responseStatus) {
         this.unitID = unitID;
         this.responseDescription = responseDescription;
         this.responseRemarks = responseRemarks;
         this.respondentName = respondentName;
-        this.respondentJobTitile = respondentJobTitile;
+        this.respondentJobTitle = respondentJobTitle;
         this.responseStatus = responseStatus;
     }
 
@@ -68,7 +68,7 @@ public class Response implements Serializable {
                 ", responseDescription='" + responseDescription + '\'' +
                 ", responseRemarks='" + responseRemarks + '\'' +
                 ", respondentName='" + respondentName + '\'' +
-                ", respondentJobTitile='" + respondentJobTitile + '\'' +
+                ", respondentJobTitle='" + respondentJobTitle + '\'' +
                 ", responseStatus='" + responseStatus + '\'' +
                 '}';
     }
@@ -113,12 +113,12 @@ public class Response implements Serializable {
         this.respondentName = respondentName;
     }
 
-    public String getRespondentJobTitile() {
-        return respondentJobTitile;
+    public String getRespondentJobTitle() {
+        return respondentJobTitle;
     }
 
-    public void setRespondentJobTitile(String respondentJobTitile) {
-        this.respondentJobTitile = respondentJobTitile;
+    public void setRespondentJobTitle(String respondentJobTitle) {
+        this.respondentJobTitle = respondentJobTitle;
     }
 
     public String getResponseStatus() {
