@@ -182,10 +182,10 @@ public class HomeController {
                 "respondentJobTitle", "responseStatus");
 
 
-        /*response.setResponseDescription("");
+        response.setResponseDescription("");
         response.setResponseRemarks("");
         response.setRespondentName("");
-        response.setRespondentJobTitle("");*/
+        response.setRespondentJobTitle("");
 		model.addAttribute("response", response);
 		return "response";
 	}
