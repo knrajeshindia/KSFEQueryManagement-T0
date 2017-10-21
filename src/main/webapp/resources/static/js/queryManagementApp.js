@@ -9,11 +9,7 @@ angular.module('myApp', []).controller('namesCtrl',function($scope, $window, $ht
 					$scope.flag4 = false;
 
 					// POPULATE QUESTION ARRAY
-					$scope.questionArray = [ {
-						'questionID' : 1,
-						'questionDescription' : 'd',
-						'responseDataType' : 'd'
-					} ];
+					$scope.questionArray = [];
 
 					$scope.targetRespondentIDLists = [ {
 						name : 'All Departments',
@@ -143,5 +139,23 @@ angular.module('myApp', []).controller('namesCtrl',function($scope, $window, $ht
 													.alert("Server response-FAILURE! Please try again later");
 										});
 					};
+					
+					
+					
+					
+					
+					// REMOVE SELECTED ROW(s) FROM TABLE.
+			        $scope.removeRow = function () {
+			            var arrMovie = [];
+			            angular.forEach($scope.questionArray, function (value) {
+			                if (!value.Remove) {
+			                    arrMovie.push(value);
+			                }
+			            });
+			            $scope.movieArray = arrMovie;
+			        };
+					
+					
+					
 
 				});
