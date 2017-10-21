@@ -1,8 +1,4 @@
-angular
-		.module('myApp', [])
-		.controller(
-				'namesCtrl',
-				function($scope, $window, $http) {
+angular.module('myApp', []).controller('namesCtrl',function($scope, $window, $http) {
 					// Questionnaire form DIV
 					$scope.flag1 = false;
 					// Questionnaire response DIV
@@ -12,14 +8,11 @@ angular
 					// Question create DIV
 					$scope.flag4 = false;
 
-					$scope.questions = [ {
-						questionID : 1,
-						questionDescription : 'd',
-						responseDataType : 'd'
-					}, {
-						questionID : 1,
-						questionDescription : 'd',
-						responseDataType : 'd'
+					// POPULATE QUESTION ARRAY
+					$scope.questionArray = [ {
+						'questionID' : 1,
+						'questionDescription' : 'd',
+						'responseDataType' : 'd'
 					} ];
 
 					$scope.targetRespondentIDLists = [ {
@@ -78,21 +71,17 @@ angular
 							"senderJobTitle" : $scope.senderJobTitle
 						};
 
-						$http
-								.post('insertQ', questionnaireFormData)
-								.then(
+						$http.post('insertQ', questionnaireFormData).then(
 										function(result) {
-											// Questionnaire form DIV
-											$scope.flag1 = false;
-											// Questionnaire response DIV
-											$scope.flag2 = true;
-											$scope.response = angular
-													.fromJson(result.data);
+											$scope.response = angular.fromJson(result.data);
 											if ($scope.response.status === "SUCCESS") {
 												$scope.message = $scope.response.message;
 												$scope.questionnaireID = angular
 														.fromJson($scope.response.data).questionnaireID;
-
+												// Questionnaire form DIV
+												$scope.flag1 = false;
+												// Questionnaire response DIV
+												$scope.flag2 = true;
 												// Question create DIV
 												$scope.flag4 = true;
 
@@ -134,17 +123,20 @@ angular
 														.fromJson($scope.response.data).questionDescription;
 												$scope.responseDataType = angular
 														.fromJson($scope.response.data).responseDataType;
-												$scope.questions
-														.push({
-															'questionID' : $scope.questionID,
-															'questionDescription' : $scope.questionDescription,
-															'responseDataType' : $scope.responseDataType
-														})
-												$scope.questionID = "";
-												$scope.questionDescription = "";
-												$scope.responseDataType = "";
 
-											}
+												$scope.questionArray.push({
+														'questionID' : $scope.questionID,
+														'questionDescription' : $scope.questionDescription,
+														'responseDataType' : $scope.responseDataType
+													})
+
+													// CLEAR TEXTBOX.
+													$scope.questionID = "";
+													$scope.questionDescription = "";
+													$scope.responseDataType = "";
+												}
+
+											
 										},
 										function(result) {
 											$window

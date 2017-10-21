@@ -17,9 +17,7 @@
 <body ng-controller="namesCtrl as ctrl">
 
 	<button ng-click="changeVisibility()">Create Questionnaire</button>
-	<br>
-	<br>
-	<button ng-click="test()">Test Server</button>
+	
 
 	<h1>Angular Demo Page</h1>
 	<hr>
@@ -32,39 +30,34 @@
 		<table>
 			<tr>
 				<td>Title</td>
-				<td><input type="text" data-ng-model="questionnaireTitle" /></td>
+				<td><input type="text" ng-model="questionnaireTitle" /></td>
 			</tr>
-
-
-
-
 			<tr>
 				<td>Description</td>
-				<td><textarea data-ng-model="questionnaireDescription"></textarea>
-				</td>
+				<td><textarea ng-model="questionnaireDescription"></textarea></td>
 			</tr>
 			<tr>
 				<td>Remarks</td>
-				<td><input data-ng-model="questionnaireRemarks" /></td>
+				<td><input ng-model="questionnaireRemarks" /></td>
 			</tr>
 
 			<tr>
 				<td>Due Date</td>
-				<td><input type="date" data-ng-model="dueDate" /></td>
+				<td><input type="date" ng-model="dueDate" /></td>
 			</tr>
 
 			<!-- 				<tr> -->
 			<!-- 					<td>Target Respondents</td> -->
 			<%-- 					<td><input type="checkbox" items="${respondentList}" --%>
-			<!-- 							data-ng-model="targetRespondentIDList" data-ng-model="targetRespondentIDList" id="targetRespondentIDList" /> </td> -->
+			<!-- 							ng-model="targetRespondentIDList" ng-model="targetRespondentIDList" id="targetRespondentIDList" /> </td> -->
 			<!-- 				</tr> -->
 			<tr>
 				<td>Sender Name</td>
-				<td><input data-ng-model="senderName" /></td>
+				<td><input ng-model="senderName" /></td>
 			</tr>
 			<tr>
 				<td>Sender Job Title</td>
-				<td><input data-ng-model="senderJobTitle" /></td>
+				<td><input ng-model="senderJobTitle" /></td>
 			</tr>
 			<tr>
 				<td><button ng-click="insertQ()">Submit</button></td>
@@ -122,20 +115,18 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr ng-repeat="u in questions">
-					<td><span ng-bind="u.questionID"></span></td>
-					<td><span ng-bind="u.questionDescription"></span></td>
-					<td><span ng-bind="u.responseDataType"></span></td>
-
-					<td>
-						<button type="button" ng-click="ctrl.edit(u.id)"
-							class="btn btn-success custom-width">Edit</button>
-						<button type="button" ng-click="ctrl.remove(u.id)"
-							class="btn btn-danger custom-width">Remove</button>
-					</td>
+				<tr ng-repeat="u in questionArray">
+					<td><label>{{u.questionID}}</label></td>
+					<td><label>{{u.questionDescription}}</label></td>
+					<td><label>{{u.responseDataType}}</label></td>
+					<td><input type="checkbox" ng-model="u.Remove" /></td>
 				</tr>
 			</tbody>
 		</table>
+		<div>
+			<button ng-click="submit()">Submit Data</button>
+			<button ng-click="removeRow()">Remove Row</button>
+		</div>
 
 
 
@@ -164,12 +155,11 @@
 		<table>
 			<tr>
 				<td>Question</td>
-				<td><textarea data-ng-model="questionDescription" rows="2"
-						cols="50"> </textarea></td>
+				<td><textarea ng-model="questionDescription" rows="2" cols="50"> </textarea></td>
 			</tr>
 			<tr>
 				<td>Response data type</td>
-				<td><select data-ng-model="selectedResponseDataType"
+				<td><select ng-model="selectedResponseDataType"
 					ng-options="responseDataType.name for responseDataType in responseDataTypes"></select>
 				</td>
 			</tr>
