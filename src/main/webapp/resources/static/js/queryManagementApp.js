@@ -1,4 +1,8 @@
-angular.module('myApp', []).controller('namesCtrl',function($scope, $window, $http) {
+angular
+		.module('myApp', [])
+		.controller(
+				'namesCtrl',
+				function($scope, $window, $http) {
 					// Questionnaire form DIV
 					$scope.flag1 = false;
 					// Questionnaire response DIV
@@ -67,9 +71,12 @@ angular.module('myApp', []).controller('namesCtrl',function($scope, $window, $ht
 							"senderJobTitle" : $scope.senderJobTitle
 						};
 
-						$http.post('insertQ', questionnaireFormData).then(
+						$http
+								.post('insertQ', questionnaireFormData)
+								.then(
 										function(result) {
-											$scope.response = angular.fromJson(result.data);
+											$scope.response = angular
+													.fromJson(result.data);
 											if ($scope.response.status === "SUCCESS") {
 												$scope.message = $scope.response.message;
 												$scope.questionnaireID = angular
@@ -120,42 +127,43 @@ angular.module('myApp', []).controller('namesCtrl',function($scope, $window, $ht
 												$scope.responseDataType = angular
 														.fromJson($scope.response.data).responseDataType;
 
-												$scope.questionArray.push({
-														'questionID' : $scope.questionID,
-														'questionDescription' : $scope.questionDescription,
-														'responseDataType' : $scope.responseDataType
-													})
+												$scope.questionArray
+														.push({
+															'questionID' : $scope.questionID,
+															'questionDescription' : $scope.questionDescription,
+															'responseDataType' : $scope.responseDataType
+														})
 
-													// CLEAR TEXTBOX.
-													$scope.questionID = "";
-													$scope.questionDescription = "";
-													$scope.responseDataType = "";
-												}
+												// CLEAR TEXTBOX.
+												$scope.questionID = "";
+												$scope.questionDescription = "";
+												$scope.responseDataType = "";
+											}
 
-											
 										},
 										function(result) {
 											$window
 													.alert("Server response-FAILURE! Please try again later");
 										});
 					};
-					
-					
-					
-					
-					
+
 					// REMOVE SELECTED ROW(s) FROM TABLE.
-			        $scope.removeRow = function () {
-			            var arrMovie = [];
-			            angular.forEach($scope.questionArray, function (value) {
-			                if (!value.Remove) {
-			                    arrMovie.push(value);
-			                }
-			            });
-			            $scope.movieArray = arrMovie;
-			        };
-					
-					
-					
+					$scope.removeRow = function() {
+						var arrMovie = [];
+						angular.forEach($scope.questionArray, function(value) {
+							if (value.Remove) {
+								$http({
+									method : "post",
+									url : "/query/deleteQuest",
+									params : {
+										"questionID" : value.questionID
+									}
+								});
+							} else {
+								arrMovie.push(value);
+							}
+						});
+						$scope.questionArray = arrMovie;
+					};
 
 				});

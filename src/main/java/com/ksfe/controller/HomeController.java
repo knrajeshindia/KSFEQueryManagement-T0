@@ -94,6 +94,14 @@ public class HomeController {
         System.out.println("Question inserted"+question);
         return jsonResponse;
     }
+    
+  //Delete Question
+    @RequestMapping(value="/deleteQuest",method=RequestMethod.POST)
+    public @ResponseBody void deleteQuest(@RequestParam("questionID") Integer pk) {
+        System.out.println("Form data binded - Trying to DELETE Question-ID" + pk);
+        questionService.deleteQuestion(pk);
+        System.out.println("Question DELETED");
+        }
 
 
 
