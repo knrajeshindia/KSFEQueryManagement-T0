@@ -4,8 +4,7 @@
  */
 package com.ksfe.dao;
 
-import com.ksfe.model.Questionnaire;
-
+import com.ksfe.model.Answer;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -17,16 +16,16 @@ import org.springframework.stereotype.Repository;
  * @since 1.0,
  */
 @Repository
-public class QuestionnaireDAOImpl implements QuestionnaireDAO {
+public class AnswerDAOImpl implements AnswerDAO {
 	@Autowired
 	 private SessionFactory sessionFactory;
 	 
-    // Insert object
+    //Insert Answer
     @Override
-    public Questionnaire insertQuestionnaire(Questionnaire questionnaire) {
+    public void insertAnswer(Answer answer) {
     	System.out.println(getClass());
-        sessionFactory.getCurrentSession().save(questionnaire);
-        System.out.println("Inserted Question: "+ questionnaire);
-        return questionnaire;
+        sessionFactory.getCurrentSession().save(answer);
+        System.out.println("Inserted Answer: "+ answer);
+
     }
 }

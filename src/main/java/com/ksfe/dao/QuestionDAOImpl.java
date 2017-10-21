@@ -38,14 +38,15 @@ public class QuestionDAOImpl implements QuestionDAO {
     Root<Question> root;
     Query<Question> q;
 
-    //Insert question object
+    // Insert object object
     @Override
-    public void insertQuestion(Question question) {
+    public Question insertQuestion(Question question) {
         System.out.println(getClass());
         session = sessionFactory.getCurrentSession();
         session.save(question);
         System.out.println("Inserted Question: " + question);
 
+        return question;
     }
 
     //Retrieve All Question

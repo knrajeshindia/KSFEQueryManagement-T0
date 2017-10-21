@@ -16,7 +16,7 @@ import java.util.List;
  */
 public interface QuestionDAO {
     //insert Question
-    void insertQuestion(Question question);
+    Question insertQuestion(Question question);
     //Retrieve all Question
     List<Question> getAllQuestions();
     //Retrieve one Question

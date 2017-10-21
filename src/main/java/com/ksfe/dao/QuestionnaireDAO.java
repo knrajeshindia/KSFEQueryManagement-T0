@@ -4,7 +4,7 @@ import com.ksfe.model.Questionnaire;
 
 public interface QuestionnaireDAO {
 
-	public void insertQuestionnaire(Questionnaire questionnaire) ;
+	public Questionnaire insertQuestionnaire(Questionnaire questionnaire) ;
 
 	
 }

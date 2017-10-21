@@ -21,10 +21,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -51,9 +48,12 @@ public class HomeController {
     private TargetService targetService;
     @Autowired
     private ResponseService responseService;
+    @Autowired
+    private AnswerService answerService;
 
     Response response;
     Question question;
+    String jsonResponse;
 
 	/*
      * @Autowired private QuestionnaireValidator questionnaireValidator;
@@ -69,6 +69,34 @@ public class HomeController {
         // binder.addValidators(questionnaireValidator);
 
     }
+
+
+    @RequestMapping(value="/test",method=RequestMethod.GET)
+    @ResponseBody
+    public String showQuestionnaire() {
+        return "";
+    }
+
+    @RequestMapping(value="/insertQ",method=RequestMethod.POST)    
+    public @ResponseBody String insertQ(@RequestBody Questionnaire questionnaire) {
+        System.out.println("Form data binded - Trying to insert " + questionnaire);
+        jsonResponse = questionnaireService.insertQuestionnaire(questionnaire);
+        System.out.println("Questionnaire inserted"+questionnaire);
+        return jsonResponse;
+    }
+
+
+//Insert Question
+    @RequestMapping(value="/insertQuest",method=RequestMethod.POST)
+    public @ResponseBody String insertQuest(@RequestBody Question question) {
+        System.out.println("Form data binded - Trying to insert " + question);
+        jsonResponse = questionService.insertQuestion(question);
+        System.out.println("Question inserted"+question);
+        return jsonResponse;
+    }
+
+
+
 
     /**
      * Simply selects the home view to render by returning its name.
@@ -132,19 +160,25 @@ public class HomeController {
     public String createQuestionnaire(Model model) {
         Questionnaire questionnaire = new Questionnaire();
         model.addAttribute("questionnaire", questionnaire);
-        return "questionnaire";
+
+        //Manual setting of question object-Change later
+        question = new Question();
+        model.addAttribute("question", question);
+        question.setQuestionnaireID(1);
+
+        //Manual setting of Response object-Change later
+        response = new Response(1, 1, "respondentName", "respondentJobTitle");
+        response.setResponseDate(new Date());
+        response.setResponseRemarks("Remarks");
+        model.addAttribute("response", response);
+
+        return "demo";
     }
 
     // Insert new questionnaire
-    @RequestMapping(value = "/insertQuestionnaire", method = RequestMethod.POST)
+    /*@RequestMapping(value = "/insertQuestionnaire", method = RequestMethod.POST)
     public String insertQuestionnaire(@ModelAttribute("questionnaire") @Valid Questionnaire questionnaire,
                                       BindingResult result, Model model) {
-        /*
-         * target1=new Target(1,"status"); Set<Target>targetRespondentList=new
-		 * HashSet<Target>(); targetRespondentList.add(target1);
-		 * questionnaire.setTargetRespondentList(targetRespondentList);
-		 */
-
         System.out.println(questionnaire);
         if (result.hasErrors()) {
             System.out.println("Form has errors" + result.getAllErrors());
@@ -158,7 +192,7 @@ public class HomeController {
         question.setQuestionnaireID(1);
         return "question";
 
-    }
+    }*/
 
     // Insert new question
     @RequestMapping(value = "/insertQuestion", method = RequestMethod.POST)
@@ -175,7 +209,6 @@ public class HomeController {
         System.out.println("Question inserted");
 
         //Manual setting of Response object-Change later
-
         response = new Response(1, 1, "respondentName", "respondentJobTitle");
         response.setResponseDate(new Date());
         response.setResponseRemarks("Remarks");

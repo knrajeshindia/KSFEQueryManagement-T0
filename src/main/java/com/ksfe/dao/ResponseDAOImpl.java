@@ -20,7 +20,7 @@ public class ResponseDAOImpl implements ResponseDAO {
 	@Autowired
 	 private SessionFactory sessionFactory;
 	 
-    //Insert question
+    // Insert object
     @Override
     public void insertResponse(Response response) {
     	System.out.println(getClass());

@@ -5,8 +5,13 @@
 package com.ksfe.service;
 
 import com.ksfe.dao.QuestionDAO;
+import com.ksfe.model.JsonData;
 import com.ksfe.model.Question;
+import com.ksfe.util.JsonUtil;
+import com.ksfe.util.ResponseCode;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -23,11 +28,32 @@ import java.util.List;
 public class QuestionServiceImpl implements QuestionService {
     @Autowired
 	private QuestionDAO questionDAO;
+    Question question;
+    String jsonResponse;
+    static JsonData jsonData;
 
     @Transactional
-    public void insertQuestion(Question question) {
+    public String insertQuestion(Question question) {
         System.out.println(getClass());
-        questionDAO.insertQuestion(question);
+        jsonData = setJsonData();
+        System.out.println("Json Data :"+jsonData);
+        System.out.println("@ ServiceImpl :"+question);
+        try {
+        System.out.println(getClass());
+        question=questionDAO.insertQuestion(question);
+            System.out.println(question);
+            jsonResponse = JsonUtil.convertJavaToJson(question);
+            jsonData.setData(jsonResponse);
+            jsonData.setStatus(ResponseCode.STATUS_SUCCESS);
+            jsonData.setMessage(ResponseCode.MESSAGE_UPDATED);
+        } catch (EmptyResultDataAccessException e) {
+            jsonData.setMessage(ResponseCode.MESSAGE_FAILURE);
+        } catch (DataAccessException de) {
+            jsonData.setMessage(ResponseCode.MESSAGE_NETWORK);
+        }
+        jsonResponse = JsonUtil.convertJavaToJson(jsonData);
+        System.out.println(jsonResponse);
+        return jsonResponse;
     }
 
     @Override
@@ -61,5 +87,18 @@ public class QuestionServiceImpl implements QuestionService {
     public Question deleteQuestion(Integer pk) {
         return questionDAO.deleteQuestion(pk);
     }
+
+    //Set default JSON message data
+    public static JsonData setJsonData() {
+        if (jsonData == null) {
+            jsonData = new JsonData();
+        }
+        jsonData.setStatus(ResponseCode.STATUS_FAILURE);
+        jsonData.setMessage(ResponseCode.MESSAGE_INITIALISED);
+        return jsonData;
+    }
+
+
+
 
 }

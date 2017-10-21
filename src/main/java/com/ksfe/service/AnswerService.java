@@ -4,13 +4,16 @@
  */
 package com.ksfe.service;
 
-import com.ksfe.model.Questionnaire;;
+import com.ksfe.model.Answer;
+
+;
+
 /**
  * This is a Java Interface declaring Service methods
  *
  * @author RNarendran
  * @since 1.0,
  */
-public interface QuestionnaireService {
-    public String insertQuestionnaire(Questionnaire questionnaire);
+public interface AnswerService {
+    public void insertAnswer(Answer answer);
 }

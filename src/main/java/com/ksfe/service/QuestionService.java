@@ -15,7 +15,7 @@ import java.util.List;
  * @since 1.0,
  */
 public interface QuestionService {
-    public void insertQuestion(Question question);
+    public String insertQuestion(Question question);
     public Question getQuestion(int pk);
     //Retrieve Multiple Question based on condition -
     public List<Question> getMultipleQuestions(int pk);
