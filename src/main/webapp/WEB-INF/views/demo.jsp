@@ -13,11 +13,17 @@
 <script
 	src="<c:url value="/resources/static/js/queryManagementApp.js" />"></script>
 
+<style>
+input[type=checkbox] {
+	-webkit-appearance: checkbox;
+}
+</style>
+
 </head>
 <body ng-controller="namesCtrl as ctrl">
 
 	<button ng-click="changeVisibility()">Create Questionnaire</button>
-	
+
 
 	<h1>Angular Demo Page</h1>
 	<hr>
@@ -46,11 +52,20 @@
 				<td><input type="date" ng-model="dueDate" /></td>
 			</tr>
 
-			<!-- 				<tr> -->
-			<!-- 					<td>Target Respondents</td> -->
-			<%-- 					<td><input type="checkbox" items="${respondentList}" --%>
-			<!-- 							ng-model="targetRespondentIDList" ng-model="targetRespondentIDList" id="targetRespondentIDList" /> </td> -->
-			<!-- 				</tr> -->
+			<tr>
+				<td>Target Respondents</td>
+				<td>
+					<div ng-repeat="target in respondents">
+						<label for="chkCustomer_{{target.targetID}}"> <input
+							id="chkCustomer_{{target.targetID}}" type="checkbox"
+							ng-model="target.Selected" ng-click="getValue()" />
+							{{target.Name}}
+						</label>
+					</div>
+				</td>
+			</tr>
+
+
 			<tr>
 				<td>Sender Name</td>
 				<td><input ng-model="senderName" /></td>
@@ -87,13 +102,14 @@
 				<td><label>Questionnaire Remarks</label></td>
 				<td>{{questionnaireRemarks}}</td>
 			</tr>
-			<tr>
-				<td><label>Questionnaire Remarks</label></td>
-				<td>{{targetRespondentIDList}}</td>
-			</tr>
+			
 			<tr>
 				<td><label>Due date</label></td>
 				<td>{{dueDate}}</td>
+			</tr>
+			<tr>
+				<td><label>Respondents</label></td>
+				<td>{{selectedRespondents}}</td>
 			</tr>
 
 
@@ -124,8 +140,8 @@
 			</tbody>
 		</table>
 		<div>
-			<button ng-click="submit()">Submit Data</button>
-			<button ng-click="removeRow()">Remove Row</button>
+			<button ng-click="submit()">Publish Questionnaire</button>
+			<button ng-click="removeRow()">Remove Question</button>
 		</div>
 
 

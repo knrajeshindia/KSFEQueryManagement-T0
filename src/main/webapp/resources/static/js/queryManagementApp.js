@@ -14,17 +14,57 @@ angular
 
 					// POPULATE QUESTION ARRAY
 					$scope.questionArray = [];
-
-					$scope.targetRespondentIDLists = [ {
-						name : 'All Departments',
-						value : 1
+					
+					
+					
+					
+					
+					
+					//TARGET RESPONDENTS
+					$scope.respondents = [ {
+						targetID : 1,
+						Name : 'All Departments',
+						Selected : false
 					}, {
-						name : 'All Regions',
-						value : 2
+						targetID : 2,
+						Name : 'All Regions',
+						Selected : false
 					}, {
-						name : 'All Branches',
-						value : 3
+						targetID : 3,
+						Name : 'All Branches',
+						Selected : false
 					} ];
+
+					$scope.getValue = function() {
+						$scope.selectedRespondents = [];
+						$scope.message = "";
+						for (var i = 0; i < $scope.respondents.length; i++) {
+							if ($scope.respondents[i].Selected) {
+								var selectedTargetID = $scope.respondents[i].targetID;
+								var selectedTargetName = $scope.respondents[i].Name;
+								$scope.selectedRespondents.push(selectedTargetID);
+								$scope.message += "ID: " + selectedTargetID + " Name: "
+										+ selectedTargetName + "\n";
+								
+							}
+						}
+
+//						$window.alert($scope.message);
+					};
+					
+					
+					
+
+//					$scope.targetRespondentIDLists = [ {
+//						name : 'All Departments',
+//						value : 1
+//					}, {
+//						name : 'All Regions',
+//						value : 2
+//					}, {
+//						name : 'All Branches',
+//						value : 3
+//					} ];
 
 					$scope.responseDataTypes = [ {
 						name : 'Text',
@@ -66,7 +106,7 @@ angular
 							"questionnaireDescription" : $scope.questionnaireDescription,
 							"questionnaireRemarks" : $scope.questionnaireRemarks,
 							"dueDate" : $scope.dueDate,
-							"targetRespondentIDList" : $scope.targetRespondentIDList,
+							"targetRespondentIDList" : $scope.selectedRespondents,
 							"senderName" : $scope.senderName,
 							"senderJobTitle" : $scope.senderJobTitle
 						};
