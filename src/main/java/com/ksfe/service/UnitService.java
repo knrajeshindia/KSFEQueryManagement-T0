@@ -6,6 +6,9 @@ package com.ksfe.service;
 
 import com.ksfe.model.Unit;
 
+import javax.transaction.Transactional;
+import java.util.List;
+
 /**
  * This is a Java Interface declaring Service methods
  *
@@ -14,4 +17,5 @@ import com.ksfe.model.Unit;
  */
 public interface UnitService {
     public void insertUnit(Unit unit);
+    List<Integer> getUnitIDList(Integer unitTypeID);
 }

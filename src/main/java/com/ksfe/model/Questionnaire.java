@@ -16,9 +16,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.util.Collection;
-import java.util.Date;
-import java.util.HashSet;
+import java.util.*;
 
 @Entity
 @Table(name = "KSFE_Questionaire")
@@ -42,11 +40,11 @@ public class Questionnaire implements Serializable {
     @DateTimeFormat(pattern="dd/MM/yyyy")
     private Date dueDate;
     @ElementCollection
-    private Collection<Integer> targetRespondentIDList = new HashSet<Integer>();
+    private List<Integer> targetRespondentIDList = new ArrayList<Integer>();
     @ElementCollection
-    private Collection<Integer> questionIDList = new HashSet<Integer>();
+    private List<Integer> questionIDList = new ArrayList<Integer>();
     @ElementCollection
-    private Collection<Integer> responseIDList = new HashSet<Integer>();
+    private List<Integer> responseIDList = new ArrayList<Integer>();
 
 
     @NotNull(message = "required field")
@@ -56,6 +54,7 @@ public class Questionnaire implements Serializable {
     @Column(nullable = false)
     private String senderJobTitle;
     private Integer questionnaireStatus;
+    private String questionnairePhase;
 
     public Questionnaire() {
     }
@@ -67,10 +66,6 @@ public class Questionnaire implements Serializable {
         this.senderName = senderName;
         this.senderJobTitle = senderJobTitle;
         }
-
-    /* (non-Javadoc)
-         * @see java.lang.Object#toString()
-         */
 
     @Override
     public String toString() {
@@ -87,7 +82,16 @@ public class Questionnaire implements Serializable {
                 ", senderName='" + senderName + '\'' +
                 ", senderJobTitle='" + senderJobTitle + '\'' +
                 ", questionnaireStatus=" + questionnaireStatus +
+                ", questionnairePhase='" + questionnairePhase + '\'' +
                 '}';
+    }
+
+    public String getQuestionnairePhase() {
+        return questionnairePhase;
+    }
+
+    public void setQuestionnairePhase(String questionnairePhase) {
+        this.questionnairePhase = questionnairePhase;
     }
 
     public static long getSerialVersionUID() {
@@ -166,27 +170,27 @@ public class Questionnaire implements Serializable {
         this.questionnaireStatus = questionnaireStatus;
     }
 
-    public Collection<Integer> getTargetRespondentIDList() {
+    public List<Integer> getTargetRespondentIDList() {
         return targetRespondentIDList;
     }
 
-    public void setTargetRespondentIDList(Collection<Integer> targetRespondentIDList) {
+    public void setTargetRespondentIDList(List<Integer> targetRespondentIDList) {
         this.targetRespondentIDList = targetRespondentIDList;
     }
 
-    public Collection<Integer> getQuestionIDList() {
+    public List<Integer> getQuestionIDList() {
         return questionIDList;
     }
 
-    public void setQuestionIDList(Collection<Integer> questionIDList) {
+    public void setQuestionIDList(List<Integer> questionIDList) {
         this.questionIDList = questionIDList;
     }
 
-    public Collection<Integer> getResponseIDList() {
+    public List<Integer> getResponseIDList() {
         return responseIDList;
     }
 
-    public void setResponseIDList(Collection<Integer> responseIDList) {
+    public void setResponseIDList(List<Integer> responseIDList) {
         this.responseIDList = responseIDList;
     }
 }

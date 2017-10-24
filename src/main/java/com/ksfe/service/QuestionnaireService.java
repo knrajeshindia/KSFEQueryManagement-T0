@@ -4,7 +4,9 @@
  */
 package com.ksfe.service;
 
-import com.ksfe.model.Questionnaire;;
+import com.ksfe.model.Questionnaire;
+import java.util.List;
+
 /**
  * This is a Java Interface declaring Service methods
  *
@@ -13,4 +15,6 @@ import com.ksfe.model.Questionnaire;;
  */
 public interface QuestionnaireService {
     public String insertQuestionnaire(Questionnaire questionnaire);
+    //Update Question
+    public Questionnaire updateQuestionnaire(List<Integer> questionnaire, Integer pk);
 }

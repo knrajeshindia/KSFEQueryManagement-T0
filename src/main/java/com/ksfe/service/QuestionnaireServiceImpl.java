@@ -16,6 +16,9 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 /**
  * This is a Spring Service class - for implementing Service requirements
@@ -28,7 +31,10 @@ import javax.transaction.Transactional;
 public class QuestionnaireServiceImpl implements QuestionnaireService {
     @Autowired
     private QuestionnaireDAO questionnaireDAO;
+    @Autowired
+    private RespondentService respondentService;
     Questionnaire questionnaire;
+    List<Integer> unitIDList = new ArrayList<Integer>();
     String jsonResponse;
     static JsonData jsonData;
 
@@ -36,9 +42,13 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
     public String insertQuestionnaire(Questionnaire questionnaire) {
         System.out.println(getClass());
         jsonData = setJsonData();
-        System.out.println("Json Data :"+jsonData);
-        System.out.println("Questionnaire @ ServiceImpl :"+questionnaire);
+        System.out.println("Json Data :" + jsonData);
+        System.out.println("Questionnaire @ ServiceImpl :" + questionnaire);
         try {
+            getAllRespondents(questionnaire);
+            questionnaire.setQuestionnaireTitle(questionnaire.getQuestionnaireTitle().toUpperCase());
+            questionnaire.setQuestionnaireDescription(questionnaire.getQuestionnaireDescription().toUpperCase());
+            questionnaire.setQuestionnairePhase(ResponseCode.STATUS_DRAFT);
             questionnaire = questionnaireDAO.insertQuestionnaire(questionnaire);
             System.out.println(questionnaire);
             jsonResponse = JsonUtil.convertJavaToJson(questionnaire);
@@ -54,6 +64,27 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
         System.out.println(jsonResponse);
         return jsonResponse;
     }
+
+    @Override
+    @Transactional
+    public Questionnaire updateQuestionnaire(List<Integer> questionIDList, Integer pk) {
+    	System.out.println(getClass());
+    	questionnaire=new Questionnaire();
+    	questionnaire.setQuestionnaireID(pk);
+        questionnaire.setQuestionIDList(questionIDList);
+        questionnaire.setPostedDate(new Date());
+        questionnaire.setQuestionnairePhase(ResponseCode.STATUS_PUBLISHED);
+        System.out.println("@service - redirecting to DAO : "+questionnaire);
+        return questionnaireDAO.updateQuestionnaire(questionnaire,pk);
+    }
+
+    //Get all UnitIDs for selected UnitTypeID
+    private Questionnaire getAllRespondents(Questionnaire questionnaire) {
+        unitIDList = respondentService.getUnitIDList(questionnaire.getTargetRespondentIDList());
+        questionnaire.setTargetRespondentIDList(unitIDList);
+        return questionnaire;
+    }
+
 
     //Set default message data
     public static JsonData setJsonData() {

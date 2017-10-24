@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 /**
  * This is a Spring Service class - for implementating Service requirements
@@ -21,11 +22,20 @@ import javax.transaction.Transactional;
 @Service
 public class UnitServiceImpl implements UnitService {
     @Autowired
-	private UnitDAO UnitDao;
+	private UnitDAO unitDAO;
 
     @Transactional
+    @Override
     public void insertUnit(Unit unit) {
         System.out.println(getClass());
-        UnitDao.insertUnit(unit);
+        unitDAO.insertUnit(unit);
     }
+
+    @Override
+    @Transactional
+    public List<Integer> getUnitIDList(Integer unitTypeID) {
+        return unitDAO.getUnitIDList(unitTypeID);
+    }
+
+
 }

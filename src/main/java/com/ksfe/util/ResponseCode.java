@@ -12,6 +12,9 @@ package com.ksfe.util;
 public class ResponseCode {
     public static String STATUS_FAILURE="FAILURE";
     public static String STATUS_SUCCESS="SUCCESS";
+    public static String STATUS_DRAFT="DRAFT";
+    public static String STATUS_COMPLETE="COMPLETE";
+    public static String STATUS_PUBLISHED="PUBLISHED";
     public static String MESSAGE_NETWORK="UNABLE TO PROCESS; PLEASE TRY AGAIN";
     public static String MESSAGE_FOUND="RECORD EXISTS";
     public static String MESSAGE_UPDATED="UPDATED SUCCESFULLY";

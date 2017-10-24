@@ -14,13 +14,8 @@ angular
 
 					// POPULATE QUESTION ARRAY
 					$scope.questionArray = [];
-					
-					
-					
-					
-					
-					
-					//TARGET RESPONDENTS
+
+					// TARGET RESPONDENTS
 					$scope.respondents = [ {
 						targetID : 1,
 						Name : 'All Departments',
@@ -42,29 +37,16 @@ angular
 							if ($scope.respondents[i].Selected) {
 								var selectedTargetID = $scope.respondents[i].targetID;
 								var selectedTargetName = $scope.respondents[i].Name;
-								$scope.selectedRespondents.push(selectedTargetID);
-								$scope.message += "ID: " + selectedTargetID + " Name: "
-										+ selectedTargetName + "\n";
-								
+								$scope.selectedRespondents
+										.push(selectedTargetID);
+								$scope.message += "ID: " + selectedTargetID
+										+ " Name: " + selectedTargetName + "\n";
+
 							}
 						}
 
-//						$window.alert($scope.message);
+						//$window.alert($scope.message);
 					};
-					
-					
-					
-
-//					$scope.targetRespondentIDLists = [ {
-//						name : 'All Departments',
-//						value : 1
-//					}, {
-//						name : 'All Regions',
-//						value : 2
-//					}, {
-//						name : 'All Branches',
-//						value : 3
-//					} ];
 
 					$scope.responseDataTypes = [ {
 						name : 'Text',
@@ -81,25 +63,9 @@ angular
 					$scope.changeVisibility = function() {
 						// Questionnaire form DIV
 						$scope.flag1 = true;
-
 					};
 
-					$scope.test = function() {
-						$http({
-							method : "get",
-							url : "/query/test",
-						})
-								.then(
-										function(result) {
-											// Questionnaire form DIV
-											$scope.flag1 = false;
-										},
-										function(result) {
-											$window
-													.alert("Server response-FAILURE! Please try again later");
-										});
-					};
-
+					// INSERT QUESTIONNAIRE
 					$scope.insertQ = function() {
 						var questionnaireFormData = {
 							"questionnaireTitle" : $scope.questionnaireTitle,
@@ -115,18 +81,19 @@ angular
 								.post('insertQ', questionnaireFormData)
 								.then(
 										function(result) {
-											$scope.response = angular
-													.fromJson(result.data);
+											// Questionnaire form DIV
+											$scope.flag1 = false;
+											// Questionnaire response DIV
+											$scope.flag2 = true;
+											// Question create DIV
+											$scope.flag4 = true;
+
+											//$window.alert("Questionnaire created");
+											$scope.response = angular.fromJson(result.data);
 											if ($scope.response.status === "SUCCESS") {
 												$scope.message = $scope.response.message;
 												$scope.questionnaireID = angular
 														.fromJson($scope.response.data).questionnaireID;
-												// Questionnaire form DIV
-												$scope.flag1 = false;
-												// Questionnaire response DIV
-												$scope.flag2 = true;
-												// Question create DIV
-												$scope.flag4 = true;
 
 											}
 										},
@@ -172,7 +139,7 @@ angular
 															'questionID' : $scope.questionID,
 															'questionDescription' : $scope.questionDescription,
 															'responseDataType' : $scope.responseDataType
-														})
+														});
 
 												// CLEAR TEXTBOX.
 												$scope.questionID = "";
@@ -187,6 +154,36 @@ angular
 										});
 					};
 
+					
+					// PUBLISH QUESTIONNAIRE
+					$scope.publish = function() {
+						//$window.alert("Publish invoked");
+
+						$scope.questionIDList = [];
+						for (var i = 0; i < $scope.questionArray.length; i++) {
+							var questionID = $scope.questionArray[i].questionID;
+							$scope.questionIDList.push(questionID);
+						}
+						$http({
+							method : "post",
+							url : "/query/updateQ",
+							params : {
+								"questionIDList" : $scope.questionIDList,
+								"questionnaireID" : $scope.questionnaireID
+							}
+						});
+
+					};
+
+					
+					
+					
+					
+					
+					
+					
+					
+					
 					// REMOVE SELECTED ROW(s) FROM TABLE.
 					$scope.removeRow = function() {
 						var arrMovie = [];
