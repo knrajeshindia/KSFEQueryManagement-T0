@@ -6,6 +6,8 @@ package com.ksfe.dao;
 
 import com.ksfe.model.Unit;
 
+import java.util.List;
+
 /**
  * This is a Java interface for defining DAO operations
  *
@@ -14,4 +16,6 @@ import com.ksfe.model.Unit;
  */
 public interface UnitDAO {
     void insertUnit(Unit unit);
+
+    List<Integer> getUnitIDList(Integer unitTypeID);
 }

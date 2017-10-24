@@ -1,0 +1,42 @@
+Code for uploading files-Spring
+
+ @RequestMapping(value="savefile",method=RequestMethod.POST)
+    public ModelAndView saveimage( @RequestParam CommonsMultipartFile file,
+           HttpSession session) throws Exception{
+
+    ServletContext context = session.getServletContext();
+    String path = context.getRealPath(UPLOAD_DIRECTORY);
+    String filename = file.getOriginalFilename();
+
+    System.out.println(path+" "+filename);
+
+    byte[] bytes = file.getBytes();
+    BufferedOutputStream stream =new BufferedOutputStream(new FileOutputStream(
+         new File(path + File.separator + filename)));
+    stream.write(bytes);
+    stream.flush();
+    stream.close();
+    ------------------------------------------------------------------------------
+    Hibernate criteria-manipulation
+    https://www.boraji.com/hibernate-5-criteria-query-example
+https://www.javacodegeeks.com/2013/04/jpa-2-0-criteria-query-with-hibernate.html
+    https://docs.oracle.com/cd/E19226-01/820-7627/gjixa/index.html
+    https://www.tutorialspoint.com/jpa/jpa_criteria_api.htm
+
+    ------------------------------------------------------------------------
+    Hibernate fetch type
+
+    (fetch =  FetchType.LAZY)
+
+    ----------------------------------------------------------------------------
+    Angular file sgtructure
+    https://github.com/joeLloyd/DoingAngularRight
+
+    ----------------------------------------------------------------------------
+    Spring MVC Form tags
+    http://www.baeldung.com/spring-mvc-form-tutorial
+-------------------------------------------------------------------------------------
+Angular-Spring Form binding
+https://stackoverflow.com/questions/30919914/submitting-a-form-with-angular-js-and-spring-mvc
+http://javahonk.com/angularjs-form-post-spring-mvc-json/
+http://www.encodedna.com/angularjs/tutorial/add-remove-table-rows-dynamically-in-angularjs.htm

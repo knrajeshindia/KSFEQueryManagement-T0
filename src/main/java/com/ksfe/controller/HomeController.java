@@ -6,11 +6,9 @@ package com.ksfe.controller;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Locale;
-import java.util.Set;
+import java.util.*;
 
+import com.ksfe.dao.UnitDAOImpl;
 import com.ksfe.model.*;
 import com.ksfe.service.*;
 import com.ksfe.util.StringToDate;
@@ -40,6 +38,8 @@ public class HomeController {
     private QuestionService questionService;
     @Autowired
     private UnitService unitService;
+    @Autowired
+    private UnitDAOImpl unitDAOImpl;
     @Autowired
     private UnitTypeService unitTypeService;
     @Autowired
@@ -83,6 +83,15 @@ public class HomeController {
         jsonResponse = questionnaireService.insertQuestionnaire(questionnaire);
         System.out.println("Questionnaire inserted"+questionnaire);
         return jsonResponse;
+    }
+
+    //Update Questionnaire
+    @RequestMapping(value="/updateQ",method=RequestMethod.POST)
+    public @ResponseBody void updateQ(@RequestParam("questionIDList") List<Integer> questionIDList,
+                                      @RequestParam("questionnaireID") Integer pk ) {
+        System.out.println("Update Questionnaire data binded - Trying to UPDATE Questionnaire : " + pk +" | "+questionIDList);
+        questionnaireService.updateQuestionnaire(questionIDList,pk);
+        System.out.println("Questionnaire UPDATED");
     }
 
 
@@ -240,8 +249,27 @@ public class HomeController {
         System.out.println("Response inserted");
         return "demo";
     }
+    
+    
+    
+    
+    
 
+ // DUMMY
+    @RequestMapping(value = "/dumy", method = RequestMethod.GET)
+    public String dummy() {
+        System.out.println("Trying to call UNITDAOIMPL");
+        unitDAOImpl.getClass();
+        System.out.println("ID List");
+        return "";
+    }
 
+    
+    
+    
+    
+    
+    
     //List out target Respondants for Questionnaire
     @ModelAttribute("respondentList")
     public Set<Integer> getTargetRespondentList() {

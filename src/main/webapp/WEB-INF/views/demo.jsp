@@ -102,10 +102,10 @@ input[type=checkbox] {
 				<td><label>Questionnaire Remarks</label></td>
 				<td>{{questionnaireRemarks}}</td>
 			</tr>
-			
+
 			<tr>
 				<td><label>Due date</label></td>
-				<td>{{dueDate}}</td>
+				<td>{{dueDate|date : "dd/MM/yyyy"}}</td>
 			</tr>
 			<tr>
 				<td><label>Respondents</label></td>
@@ -140,7 +140,7 @@ input[type=checkbox] {
 			</tbody>
 		</table>
 		<div>
-			<button ng-click="submit()">Publish Questionnaire</button>
+			<button ng-click="publish()">Publish Questionnaire</button>
 			<button ng-click="removeRow()">Remove Question</button>
 		</div>
 

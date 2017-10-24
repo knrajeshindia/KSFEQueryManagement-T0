@@ -5,6 +5,8 @@
 package com.ksfe.dao;
 
 import com.ksfe.model.UnitType;
+import com.ksfe.util.SessionUtil;
+
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
