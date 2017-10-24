@@ -2,7 +2,9 @@
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%-- <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%> --%>
-<%@ page session="false"%>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
 <html ng-app="myApp">
@@ -22,10 +24,10 @@ input[type=checkbox] {
 </head>
 <body ng-controller="namesCtrl as ctrl">
 
-	<button ng-click="changeVisibility()">Create Questionnaire</button>
+	<button ng-click="changeVisibility()" ng-show="flag1Button1">Create Questionnaire</button>
 
 
-	<h1>Angular Demo Page</h1>
+	<h1>KSFE</h1>
 	<hr>
 
 	<div id="1" ng-show="flag1">
@@ -75,7 +77,7 @@ input[type=checkbox] {
 				<td><input ng-model="senderJobTitle" /></td>
 			</tr>
 			<tr>
-				<td><button ng-click="insertQ()">Submit</button></td>
+				<td><button ng-click="insertQ()">Create Questionnaire</button></td>
 			</tr>
 		</table>
 		</form>
@@ -83,7 +85,6 @@ input[type=checkbox] {
 	</div>
 
 	<div ng-show="flag2">
-		<h3>Questionnaire saved view (View for adding Question)</h3>
 
 		<table>
 			<tr>
@@ -118,8 +119,8 @@ input[type=checkbox] {
 	</div>
 
 	<div id="3" ng-show="flag3">
-		DIV-3
-		<h3>Inserted Question view</h3>
+
+		<h3>Questions in current questionnaire</h3>
 
 		<table>
 			<thead>
@@ -143,30 +144,12 @@ input[type=checkbox] {
 			<button ng-click="publish()">Publish Questionnaire</button>
 			<button ng-click="removeRow()">Remove Question</button>
 		</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 		</table>
 		<hr>
-
-
-
-
 	</div>
 
-	<div id="4" ng-show="flag4">
-		Question adding DIV
+<div id="4" ng-show="flag4">
+<h3>Add Question</h3>
 		<hr>
 		<table>
 			<tr>
@@ -187,6 +170,17 @@ input[type=checkbox] {
 
 		</table>
 
+		<hr>
+
+
+
+
+	</div>
+
+
+
+	<div id="5" ng-show="flag5">
+		<h3>Questionnaire - {{questionnaireID}} published successfully</h3>
 		<hr>
 
 

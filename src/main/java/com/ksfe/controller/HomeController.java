@@ -189,7 +189,7 @@ public class HomeController {
         response.setResponseRemarks("Remarks");
         model.addAttribute("response", response);
 
-        return "demo";
+        return "home-admin";
     }
 
     // Insert new questionnaire

@@ -9,9 +9,8 @@
 package com.ksfe.dao;
 
 import com.ksfe.model.Questionnaire;
-import com.ksfe.model.Questionnaire;
 
-import com.ksfe.util.SessionUtil;
+import com.ksfe.util.ResponseCode;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
@@ -22,9 +21,8 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
-
-import static antlr.build.ANTLR.root;
 
 /**
  * This is a Spring Repository bean class - DAO
@@ -67,13 +65,13 @@ public class QuestionnaireDAOImpl implements QuestionnaireDAO {
 
 
     @Override
-    public Questionnaire updateQuestionnaire(Questionnaire questionnaire, Integer pk) {
+    public Questionnaire updateQuestionnaire(List<Integer> questionIDList, Integer pk) {
         System.out.println(getClass());
-        System.out.println("@updateQuestionnaire : " + questionnaire);
         this.questionnaire = getQuestionnaire(pk);
         System.out.println("Retrieved fr DB questionnaire : " + this.questionnaire);
-        this.questionnaire.setPostedDate(questionnaire.getPostedDate());
-        this.questionnaire.setQuestionIDList(questionnaire.getQuestionIDList());
+        this.questionnaire.setQuestionIDList(questionIDList);
+        this.questionnaire.setPostedDate(new Date());
+        this.questionnaire.setQuestionnairePhase(ResponseCode.STATUS_PUBLISHED);
         session.update(this.questionnaire);
         System.out.println("Questionnaire- Updated Description: " + this.questionnaire);
         return questionnaire;

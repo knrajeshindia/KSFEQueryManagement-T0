@@ -68,14 +68,8 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
     @Override
     @Transactional
     public Questionnaire updateQuestionnaire(List<Integer> questionIDList, Integer pk) {
-    	System.out.println(getClass());
-    	questionnaire=new Questionnaire();
-    	questionnaire.setQuestionnaireID(pk);
-        questionnaire.setQuestionIDList(questionIDList);
-        questionnaire.setPostedDate(new Date());
-        questionnaire.setQuestionnairePhase(ResponseCode.STATUS_PUBLISHED);
-        System.out.println("@service - redirecting to DAO : "+questionnaire);
-        return questionnaireDAO.updateQuestionnaire(questionnaire,pk);
+    	System.out.println("@service - redirecting to DAO : "+questionnaire);
+        return questionnaireDAO.updateQuestionnaire(questionIDList,pk);
     }
 
     //Get all UnitIDs for selected UnitTypeID
