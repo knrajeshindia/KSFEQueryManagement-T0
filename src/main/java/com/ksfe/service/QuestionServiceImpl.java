@@ -15,6 +15,7 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -29,6 +30,7 @@ public class QuestionServiceImpl implements QuestionService {
     @Autowired
 	private QuestionDAO questionDAO;
     Question question;
+    List<Question> questionList;
     String jsonResponse;
     static JsonData jsonData;
 
@@ -86,6 +88,32 @@ public class QuestionServiceImpl implements QuestionService {
     @Transactional
     public Question deleteQuestion(Integer pk) {
         return questionDAO.deleteQuestion(pk);
+    }
+
+    //Retrieve multiple Question from questionID List
+    @Override
+    @Transactional
+    public String viewPendingQuestionList(List<Integer> questionIDList) {
+        questionList=new ArrayList<Question>();
+        System.out.println(getClass());
+        jsonData = setJsonData();
+        System.out.println("Json Data :"+jsonData);
+        System.out.println("@ ServiceImpl :"+questionIDList);
+        try {
+            questionList=questionDAO.getMultipleQuestions(questionIDList);
+            System.out.println(question);
+            jsonResponse = JsonUtil.convertJavaToJson(questionList);
+            jsonData.setData(jsonResponse);
+            jsonData.setStatus(ResponseCode.STATUS_SUCCESS);
+            jsonData.setMessage(ResponseCode.MESSAGE_UPDATED);
+        } catch (EmptyResultDataAccessException e) {
+            jsonData.setMessage(ResponseCode.MESSAGE_FAILURE);
+        } catch (DataAccessException de) {
+            jsonData.setMessage(ResponseCode.MESSAGE_NETWORK);
+        }
+        jsonResponse = JsonUtil.convertJavaToJson(jsonData);
+        System.out.println(jsonResponse);
+        return jsonResponse;
     }
 
     //Set default JSON message data

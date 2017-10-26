@@ -18,7 +18,11 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
+import java.util.logging.Logger;
 
 /**
  * This is a Spring Repository bean class - DAO
@@ -28,11 +32,13 @@ import java.util.List;
  */
 @Repository
 public class QuestionDAOImpl implements QuestionDAO {
+
     @Autowired
     private SessionFactory sessionFactory;
     private Session session;
     Question question;
-    List<Question> questionList = new ArrayList<Question>();
+    List<Question> questionList;
+    Set<Question> questionListSet;
     CriteriaBuilder criteriaBuilder;
     CriteriaQuery<Question> query;
     Root<Question> root;
@@ -62,6 +68,7 @@ public class QuestionDAOImpl implements QuestionDAO {
     //Retrieve one Question
     @Override
     public Question getQuestion(int pk) {
+//    	question=new Question();
         System.out.println(getClass());
         bindDB();
         query.where(criteriaBuilder.equal(root.get("questionID"), pk));
@@ -108,6 +115,20 @@ public class QuestionDAOImpl implements QuestionDAO {
         return question;
     }
 
+    //Retrieve List<Question> from List of questionID
+    @Override
+    public List<Question> getMultipleQuestions(List<Integer> questionIDList) {
+        questionListSet = new HashSet<Question>();
+        for (Integer qID : questionIDList) {
+            question = new Question();
+            question = (Question) getQuestion(qID);
+            questionListSet.add(question);
+        }
+        questionList = new ArrayList<>(questionListSet);
+        System.out.println("Question List retrieved : " + questionList);
+        return questionList;
+    }
+
     //Delete Questionnaire-TEMPORARY -MOVE TO QUESIONNAIREDAO
 
     public Questionnaire deleteQuestionnaire(Integer pk) {
@@ -117,7 +138,7 @@ public class QuestionDAOImpl implements QuestionDAO {
         Questionnaire questionnaire = session.load(Questionnaire.class, id);
         if (questionnaire != null) {
             session.delete(questionnaire);
-            System.out.println("Questionnaire- Deletedn: " + questionnaire.getQuestionnaireTitle());
+            System.out.println("DELETED : " + questionnaire.getQuestionnaireTitle());
         }
         return questionnaire;
     }

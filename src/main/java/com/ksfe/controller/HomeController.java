@@ -7,6 +7,7 @@ package com.ksfe.controller;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.stream.Collectors;
 
 import com.ksfe.dao.UnitDAOImpl;
 import com.ksfe.model.*;
@@ -54,6 +55,7 @@ public class HomeController {
     Response response;
     Question question;
     String jsonResponse;
+    List<Integer> questionIDList;
 
 	/*
      * @Autowired private QuestionnaireValidator questionnaireValidator;
@@ -101,6 +103,26 @@ public class HomeController {
         System.out.println(getClass()+" | "+userID);
         jsonResponse=questionnaireService.viewPendingQuestionnaireList(userID);
         System.out.println("Questionnaire:"+jsonResponse);
+        return jsonResponse;
+    }
+
+    //Retrieve Question List
+    @RequestMapping(value="/viewQuest",method=RequestMethod.POST)
+    public @ResponseBody String viewQuest(@RequestParam("questionIDList") String questionIDListString) {
+        questionIDList=new ArrayList<Integer>();
+        System.out.println(getClass()+" | "+questionIDListString);
+        questionIDList=Arrays.asList(questionIDListString.split(",")).stream()
+        		  .map(s -> Integer.parseInt(s))
+        		  .collect(Collectors.toList());       
+        System.out.println(questionIDList);
+        
+        
+        
+        /*for(String a:questionIDListString){
+            questionIDList.add(Integer.parseInt(a));
+        }*/
+        jsonResponse=questionService.viewPendingQuestionList(questionIDList);
+        System.out.println("Question List:"+jsonResponse);
         return jsonResponse;
     }
 

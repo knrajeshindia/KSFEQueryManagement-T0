@@ -81,7 +81,7 @@ public class QuestionnaireDAOImpl implements QuestionnaireDAO {
         return questionnaire;
     }
 
-    //Retrieve all pending questionnaire List
+    //Retrieve all pending questionnaire List for userID
     @Override
     public List<Questionnaire> viewPendingQuestionnaireList(Integer userID) {
         System.out.println(getClass() + "USER ID:" + userID);

@@ -17,10 +17,12 @@ angular
 					$scope.flag5 = false;
 
 					$scope.questionnaireList = [];
+					$scope.questionList = [];
 					$scope.userID = "";
 
 					// INSERT QUESTIONNAIRE
 					$scope.viewQuestionnaire = function() {
+						$scope.flag1=true;
 						$scope.userID = 1;
 						$http({
 							method : "post",
@@ -29,30 +31,64 @@ angular
 								"userID" : $scope.userID
 							}
 						})
-								.then(function(result) {
-											$scope.response = angular.fromJson(result.data);
+								.then(
+										function(result) {
+											$scope.response = angular
+													.fromJson(result.data);
 											if ($scope.response.status === "SUCCESS") {
 												$scope.message = $scope.response.message;
-												$scope.data = angular.fromJson($scope.response.data);
-												$scope.questionnaireList = angular.fromJson($scope.response.data);
+												$scope.data = angular
+														.fromJson($scope.response.data);
+												$scope.questionnaireList = angular
+														.fromJson($scope.response.data);
 												$scope.userID = "";
-												// $window.alert("Success"+$scope.questionnaireList);
+												//$window.alert("Success"+$scope.questionnaireList);
 											}
 										},
 										function(result) {
-											$window.alert("Server response-FAILURE! Please try again later");
-										});};
+											$window
+													.alert("Server response-FAILURE! Please try again later");
+										});
+					};
 					// Pull UP QUESTIONS
-                    					$scope.open = function(index) {
-                    					$window.alert("INDEX");
-                    					}
-                    					// TEMP DUMMY			
-                    					$scope.view = function() {
-                    						$scope.userID = 1;
-alert($scope.userID);
-                    					};
-                    					
-                    					
-                    					
-                    					
+
+					$scope.viewQuest = function(index) {
+						$scope.selectedQuestionIDList = [];
+						$scope.questionList = [];
+						$scope.userID = 1;
+
+						var len = $scope.questionnaireList[index].questionIDList.length;
+						for (var i = 0; i < len; i++) {
+							var qID = parseInt($scope.questionnaireList[index].questionIDList[i]);
+							$scope.selectedQuestionIDList.push(qID);
+						}
+
+						$http(
+								{
+									method : "post",
+									url : "/query/viewQuest",
+									params : {
+										"questionIDList" : $scope.selectedQuestionIDList
+									}
+								})
+								.then(
+										function(result) {
+											$scope.response = angular.fromJson(result.data);
+											if ($scope.response.status === "SUCCESS") {
+												$scope.message = $scope.response.message;
+												$scope.data = angular
+														.fromJson($scope.response.data);
+												$scope.questionList = angular
+														.fromJson($scope.response.data);
+												$window.alert("Success"
+														+ $scope.questionList);
+											}
+										},
+										function(result) {
+											$window
+													.alert("Server response-FAILURE! Please try again later");
+										});
+
+					};
+
 				});
