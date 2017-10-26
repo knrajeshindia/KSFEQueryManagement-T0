@@ -95,6 +95,16 @@ public class HomeController {
     }
 
 
+    //Retrieve Questionnaire List
+    @RequestMapping(value="/viewQ",method=RequestMethod.POST)
+    public @ResponseBody String viewQ(@RequestParam("userID") Integer userID) {
+        System.out.println(getClass()+" | "+userID);
+        jsonResponse=questionnaireService.viewPendingQuestionnaireList(userID);
+        System.out.println("Questionnaire:"+jsonResponse);
+        return jsonResponse;
+    }
+
+
 //Insert Question
     @RequestMapping(value="/insertQuest",method=RequestMethod.POST)
     public @ResponseBody String insertQuest(@RequestBody Question question) {
@@ -262,6 +272,13 @@ public class HomeController {
         unitDAOImpl.getClass();
         System.out.println("ID List");
         return "";
+    }
+    
+ // RESPONSE
+    @RequestMapping(value = "/response", method = RequestMethod.GET)
+    public String response() {
+        System.out.println("Trying to call Response");
+        return "home-branch";
     }
 
     

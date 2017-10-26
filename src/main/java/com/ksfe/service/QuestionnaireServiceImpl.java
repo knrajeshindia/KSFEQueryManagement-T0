@@ -17,7 +17,6 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -34,6 +33,7 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
     @Autowired
     private RespondentService respondentService;
     Questionnaire questionnaire;
+    List<Questionnaire> questionnaireList;
     List<Integer> unitIDList = new ArrayList<Integer>();
     String jsonResponse;
     static JsonData jsonData;
@@ -70,6 +70,31 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
     public Questionnaire updateQuestionnaire(List<Integer> questionIDList, Integer pk) {
     	System.out.println("@service - redirecting to DAO : "+questionnaire);
         return questionnaireDAO.updateQuestionnaire(questionIDList,pk);
+    }
+
+    //Get all pending questionnaire list
+    @Override
+    @Transactional
+    public String viewPendingQuestionnaireList(Integer userID) {
+        System.out.println(getClass());
+        jsonData = setJsonData();
+        System.out.println("Json Data :" + jsonData);
+
+        try {
+            questionnaireList = questionnaireDAO.viewPendingQuestionnaireList(userID);
+            System.out.println(questionnaireList);
+            jsonResponse = JsonUtil.convertJavaToJson(questionnaireList);
+            jsonData.setData(jsonResponse);
+            jsonData.setStatus(ResponseCode.STATUS_SUCCESS);
+            jsonData.setMessage(ResponseCode.MESSAGE_UPDATED);
+        } catch (EmptyResultDataAccessException e) {
+            jsonData.setMessage(ResponseCode.MESSAGE_FAILURE);
+        } catch (DataAccessException de) {
+            jsonData.setMessage(ResponseCode.MESSAGE_NETWORK);
+        }
+        jsonResponse = JsonUtil.convertJavaToJson(jsonData);
+        System.out.println(jsonResponse);
+        return jsonResponse;
     }
 
     //Get all UnitIDs for selected UnitTypeID

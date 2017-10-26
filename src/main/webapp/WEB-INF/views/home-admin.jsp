@@ -51,9 +51,8 @@ input[type=checkbox] {
 
 			<tr>
 				<td>Due Date</td>
-				<td><input type="date" ng-model="dueDate" /></td>
+				<td><input type="date" ng-model="dueDate" min ={{today|date:'yyyy-MM-dd'}} required /></td>
 			</tr>
-
 			<tr>
 				<td>Target Respondents</td>
 				<td>

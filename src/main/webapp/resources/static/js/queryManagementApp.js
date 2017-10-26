@@ -16,6 +16,9 @@ angular
 					// Questionnaire publish message DIV
 					$scope.flag5 = false;
 
+					//Define min due date
+					$scope.today=new Date();
+
 					// POPULATE QUESTION ARRAY
 					$scope.questionArray = [];
 
