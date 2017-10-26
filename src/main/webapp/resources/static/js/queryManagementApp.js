@@ -5,12 +5,19 @@ angular
 				function($scope, $window, $http) {
 					// Questionnaire form DIV
 					$scope.flag1 = false;
+					// Create Questionnaire button
+					$scope.flag1Button1 = true;
 					// Questionnaire response DIV
 					$scope.flag2 = false;
 					// Question display DIV
 					$scope.flag3 = false;
 					// Question create DIV
 					$scope.flag4 = false;
+					// Questionnaire publish message DIV
+					$scope.flag5 = false;
+
+					//Define min due date
+					$scope.today=new Date();
 
 					// POPULATE QUESTION ARRAY
 					$scope.questionArray = [];
@@ -45,7 +52,7 @@ angular
 							}
 						}
 
-						//$window.alert($scope.message);
+						// $window.alert($scope.message);
 					};
 
 					$scope.responseDataTypes = [ {
@@ -60,9 +67,31 @@ angular
 					} ];
 					$scope.responseDataType = $scope.responseDataTypes[0]; // String
 
+                    //Create questionnaire
 					$scope.changeVisibility = function() {
 						// Questionnaire form DIV
 						$scope.flag1 = true;
+						// Create Questionnaire button
+						$scope.flag1Button1 = false;
+						// Questionnaire response DIV
+						$scope.flag2 = false;
+						// Question display DIV
+						$scope.flag3 = false;
+						// Question create DIV
+						$scope.flag4 = false;
+						// Questionnaire publish message DIV
+						$scope.flag5 = false;
+
+						$scope.questionnaireTitle="";
+						$scope.questionnaireDescription="";
+						$scope.questionnaireRemarks="";
+						$scope.dueDate="";
+						$scope.senderName="";
+						$scope.senderJobTitle="";
+						$scope.questionArray=[];
+						for (var i = 0; i < $scope.respondents.length; i++) {
+                        	$scope.respondents[i].Selected=false;
+                        	 }
 					};
 
 					// INSERT QUESTIONNAIRE
@@ -84,12 +113,17 @@ angular
 											// Questionnaire form DIV
 											$scope.flag1 = false;
 											// Questionnaire response DIV
+											// Create Questionnaire button
+											$scope.flag1Button1 = false;
 											$scope.flag2 = true;
 											// Question create DIV
 											$scope.flag4 = true;
+											$scope.flag5 = false;
 
-											//$window.alert("Questionnaire created");
-											$scope.response = angular.fromJson(result.data);
+											// $window.alert("Questionnaire
+											// created");
+											$scope.response = angular
+													.fromJson(result.data);
 											if ($scope.response.status === "SUCCESS") {
 												$scope.message = $scope.response.message;
 												$scope.questionnaireID = angular
@@ -116,6 +150,8 @@ angular
 											// Questionnaire form DIV
 											$scope.flag1 = false;
 											// Questionnaire response DIV
+											// Create Questionnaire button
+											$scope.flag1Button1 = false;
 											$scope.flag2 = true;
 											// Question display DIV
 											$scope.flag3 = true;
@@ -154,16 +190,16 @@ angular
 										});
 					};
 
-					
 					// PUBLISH QUESTIONNAIRE
 					$scope.publish = function() {
-						//$window.alert("Publish invoked");
+						// $window.alert("Publish invoked");
 
 						$scope.questionIDList = [];
 						for (var i = 0; i < $scope.questionArray.length; i++) {
 							var questionID = $scope.questionArray[i].questionID;
 							$scope.questionIDList.push(questionID);
 						}
+
 						$http({
 							method : "post",
 							url : "/query/updateQ",
@@ -171,19 +207,29 @@ angular
 								"questionIDList" : $scope.questionIDList,
 								"questionnaireID" : $scope.questionnaireID
 							}
-						});
+						})
+								.then(
+										function(result) {
+											// Questionnaire form DIV
+											$scope.flag1 = false;
+											// Create Questionnaire button
+											$scope.flag1Button1 = true;
+											// Questionnaire response DIV
+											$scope.flag2 = false;
+											// Question display DIV
+											$scope.flag3 = false;
+											// Question Adding DIV
+											$scope.flag4 = false;
+											// Questionnaire publish message DIV
+											$scope.flag5 = true;
 
+										},
+										function(result) {
+											$window
+													.alert("Server response-FAILURE! Please try again later");
+										});
 					};
 
-					
-					
-					
-					
-					
-					
-					
-					
-					
 					// REMOVE SELECTED ROW(s) FROM TABLE.
 					$scope.removeRow = function() {
 						var arrMovie = [];

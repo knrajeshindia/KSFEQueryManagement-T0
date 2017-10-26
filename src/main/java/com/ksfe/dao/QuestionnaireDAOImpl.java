@@ -9,9 +9,8 @@
 package com.ksfe.dao;
 
 import com.ksfe.model.Questionnaire;
-import com.ksfe.model.Questionnaire;
 
-import com.ksfe.util.SessionUtil;
+import com.ksfe.util.ResponseCode;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
@@ -20,11 +19,12 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
-import static antlr.build.ANTLR.root;
 
 /**
  * This is a Spring Repository bean class - DAO
@@ -38,11 +38,13 @@ public class QuestionnaireDAOImpl implements QuestionnaireDAO {
     private SessionFactory sessionFactory;
     private Questionnaire questionnaire;
     private Session session;
-    List<Questionnaire> questionList = new ArrayList<Questionnaire>();
+    List<Questionnaire> questionnaireList = new ArrayList<Questionnaire>();
     CriteriaBuilder criteriaBuilder;
     CriteriaQuery<Questionnaire> query;
     Root<Questionnaire> root;
     Query<Questionnaire> q;
+    Date today = new Date();
+
 
     // Insert object
     @Override
@@ -67,16 +69,39 @@ public class QuestionnaireDAOImpl implements QuestionnaireDAO {
 
 
     @Override
-    public Questionnaire updateQuestionnaire(Questionnaire questionnaire, Integer pk) {
+    public Questionnaire updateQuestionnaire(List<Integer> questionIDList, Integer pk) {
         System.out.println(getClass());
-        System.out.println("@updateQuestionnaire : " + questionnaire);
         this.questionnaire = getQuestionnaire(pk);
         System.out.println("Retrieved fr DB questionnaire : " + this.questionnaire);
-        this.questionnaire.setPostedDate(questionnaire.getPostedDate());
-        this.questionnaire.setQuestionIDList(questionnaire.getQuestionIDList());
+        this.questionnaire.setQuestionIDList(questionIDList);
+        this.questionnaire.setPostedDate(new Date());
+        this.questionnaire.setQuestionnairePhase(ResponseCode.STATUS_PUBLISHED);
         session.update(this.questionnaire);
         System.out.println("Questionnaire- Updated Description: " + this.questionnaire);
         return questionnaire;
+    }
+
+    //Retrieve all pending questionnaire List for userID
+    @Override
+    public List<Questionnaire> viewPendingQuestionnaireList(Integer userID) {
+        System.out.println(getClass() + "USER ID:" + userID);
+        bindDB();
+        Predicate filter =  criteriaBuilder.and(
+                criteriaBuilder.isMember(userID, root.get("targetRespondentIDList")),
+        criteriaBuilder.greaterThanOrEqualTo(root.get("dueDate"), today),
+                criteriaBuilder.equal(root.get("questionnairePhase"), "PUBLISHED"));
+        query.where(criteriaBuilder.and(filter));
+        /*
+
+                query.where(criteriaBuilder.isMember(userID, root.<List<Integer>>get("targetRespondentIDList")));
+        query.where(criteriaBuilder.greaterThanOrEqualTo(root.get("dueDate"), today));
+        query.where(criteriaBuilder.equal(root.get("questionnairePhase"), "PUBLISHED"));*/
+        questionnaireList = session.createQuery(query).getResultList();
+        System.out.println("Questionnairelist-Complete records for userID: " + questionnaireList);
+
+
+
+        return questionnaireList;
     }
 
 
@@ -88,8 +113,8 @@ public class QuestionnaireDAOImpl implements QuestionnaireDAO {
         root = query.from(Questionnaire.class);
         query.select(root);
         q = null;
-        questionnaire = null;
-        questionList = null;
+        //questionnaire = null;
+        questionnaireList = null;
     }
 
 

@@ -7,6 +7,7 @@ package com.ksfe.controller;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.stream.Collectors;
 
 import com.ksfe.dao.UnitDAOImpl;
 import com.ksfe.model.*;
@@ -54,6 +55,7 @@ public class HomeController {
     Response response;
     Question question;
     String jsonResponse;
+    List<Integer> questionIDList;
 
 	/*
      * @Autowired private QuestionnaireValidator questionnaireValidator;
@@ -92,6 +94,36 @@ public class HomeController {
         System.out.println("Update Questionnaire data binded - Trying to UPDATE Questionnaire : " + pk +" | "+questionIDList);
         questionnaireService.updateQuestionnaire(questionIDList,pk);
         System.out.println("Questionnaire UPDATED");
+    }
+
+
+    //Retrieve Questionnaire List
+    @RequestMapping(value="/viewQ",method=RequestMethod.POST)
+    public @ResponseBody String viewQ(@RequestParam("userID") Integer userID) {
+        System.out.println(getClass()+" | "+userID);
+        jsonResponse=questionnaireService.viewPendingQuestionnaireList(userID);
+        System.out.println("Questionnaire:"+jsonResponse);
+        return jsonResponse;
+    }
+
+    //Retrieve Question List
+    @RequestMapping(value="/viewQuest",method=RequestMethod.POST)
+    public @ResponseBody String viewQuest(@RequestParam("questionIDList") String questionIDListString) {
+        questionIDList=new ArrayList<Integer>();
+        System.out.println(getClass()+" | "+questionIDListString);
+        questionIDList=Arrays.asList(questionIDListString.split(",")).stream()
+        		  .map(s -> Integer.parseInt(s))
+        		  .collect(Collectors.toList());       
+        System.out.println(questionIDList);
+        
+        
+        
+        /*for(String a:questionIDListString){
+            questionIDList.add(Integer.parseInt(a));
+        }*/
+        jsonResponse=questionService.viewPendingQuestionList(questionIDList);
+        System.out.println("Question List:"+jsonResponse);
+        return jsonResponse;
     }
 
 
@@ -189,7 +221,7 @@ public class HomeController {
         response.setResponseRemarks("Remarks");
         model.addAttribute("response", response);
 
-        return "demo";
+        return "home-admin";
     }
 
     // Insert new questionnaire
@@ -262,6 +294,13 @@ public class HomeController {
         unitDAOImpl.getClass();
         System.out.println("ID List");
         return "";
+    }
+    
+ // RESPONSE
+    @RequestMapping(value = "/response", method = RequestMethod.GET)
+    public String response() {
+        System.out.println("Trying to call Response");
+        return "home-branch";
     }
 
     
