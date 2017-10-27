@@ -19,10 +19,11 @@ angular
 					$scope.questionnaireList = [];
 					$scope.questionList = [];
 					$scope.userID = "";
+					$scope.dataType = "text";
 
 					// INSERT QUESTIONNAIRE
 					$scope.viewQuestionnaire = function() {
-						$scope.flag1=true;
+						$scope.flag1 = true;
 						$scope.userID = 1;
 						$http({
 							method : "post",
@@ -42,7 +43,7 @@ angular
 												$scope.questionnaireList = angular
 														.fromJson($scope.response.data);
 												$scope.userID = "";
-												//$window.alert("Success"+$scope.questionnaireList);
+												// $window.alert("Success"+$scope.questionnaireList);
 											}
 										},
 										function(result) {
@@ -56,6 +57,7 @@ angular
 						$scope.selectedQuestionIDList = [];
 						$scope.questionList = [];
 						$scope.userID = 1;
+						$scope.dataType = "date";
 
 						var len = $scope.questionnaireList[index].questionIDList.length;
 						for (var i = 0; i < len; i++) {
@@ -73,15 +75,14 @@ angular
 								})
 								.then(
 										function(result) {
-											$scope.response = angular.fromJson(result.data);
+											$scope.response = angular
+													.fromJson(result.data);
 											if ($scope.response.status === "SUCCESS") {
 												$scope.message = $scope.response.message;
 												$scope.data = angular
 														.fromJson($scope.response.data);
 												$scope.questionList = angular
 														.fromJson($scope.response.data);
-												$window.alert("Success"
-														+ $scope.questionList);
 											}
 										},
 										function(result) {

@@ -4,10 +4,16 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
 <!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+	integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+	crossorigin="anonymous">
 
 <!-- Optional theme -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+	integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
+	crossorigin="anonymous">
 
 <html ng-app="myApp">
 
@@ -27,8 +33,6 @@
 input[type=checkbox] {
 	-webkit-appearance: checkbox;
 }
-
-
 </style>
 
 </head>
@@ -53,7 +57,7 @@ input[type=checkbox] {
 			<th>JobTitle</th>
 
 		</tr>
-		<tr  ng-repeat="u in questionnaireList">
+		<tr ng-repeat="u in questionnaireList">
 
 			<td><label>{{u.questionnaireID}}</label></td>
 			<td><label>{{u.questionnaireTitle}}</label></td>
@@ -66,18 +70,17 @@ input[type=checkbox] {
 			<td><label>{{u.senderName}}</label></td>
 			<td><label>{{u.senderJobTitle}}</label></td>
 			<td>
-				<button ng-click="viewQuest($index)">OPEN</button>
-				<br>
-			<br>
+				<button ng-click="viewQuest($index)">OPEN</button> <br> <br>
 			</td>
 		</tr>
 	</table>
-	
-	<br><br>
+
+	<br>
+	<br>
 
 	<table class="table table-bordered" width="50%">
 
-		<tr "text-align: center">
+		<tr"text-align:center">
 			<th>QuestionID</th>
 			<th>Description</th>
 			<th>Data Type</th>
@@ -89,10 +92,11 @@ input[type=checkbox] {
 			<td><label>{{q.questionDescription}}</label></td>
 			<td><label>{{q.responseDataType}}</label></td>
 			<td>
-				<button ng-click="#">OPEN</button>
-				<br>
-			<br>
+				<button ng-click="#">OPEN</button> <br> <br>
 			</td>
+		</tr>
+		<tr>
+			<td><input type={{dataType}} ng-model="response"></td>
 		</tr>
 
 
