@@ -91,12 +91,16 @@ input[type=checkbox] {
 			<td><label>{{q.questionID}}</label></td>
 			<td><label>{{q.questionDescription}}</label></td>
 			<td><label>{{q.responseDataType}}</label></td>
-			<td>
-				<button ng-click="#">OPEN</button> <br> <br>
+			<td class="btn-group btn-group-xs">
+				<button type="button" class="btn btn-primary" ng-click="getAnswerBox(q)">OPEN</button> <br> <br>
 			</td>
 		</tr>
-		<tr>
-			<td><input type={{dataType}} ng-model="response"></td>
+		<tr ng-show="flagAnswer">
+			<td><input type={{dataType}} ng-model="answer"></td>
+			<td class="btn-group btn-group-xs">
+			<button type="button" class="btn btn-primary" ng-click="saveAnswer()">SAVE</button>&nbsp
+			<button type="button" class="btn btn-primary" ng-click="modifyAnswer()">MODIFY</button>
+			</td>
 		</tr>
 
 

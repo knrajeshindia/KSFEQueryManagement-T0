@@ -15,9 +15,11 @@ angular
 					$scope.flag4 = false;
 					// Questionnaire publish message DIV
 					$scope.flag5 = false;
+					$scope.flagAnswer=false;
 
 					$scope.questionnaireList = [];
 					$scope.questionList = [];
+					$scope.answerList=[];
 					$scope.userID = "";
 					$scope.dataType = "text";
 
@@ -91,5 +93,26 @@ angular
 										});
 
 					};
+
+
+					//Show anwser window
+					$scope.getAnswerBox=function(index){
+					$scope.questionID=index.questionID;
+					$scope.flagAnswer=true;
+					
+					}
+
+					//Save answer
+					$scope.saveAnswer=function(){
+                    $scope.answerDescription=$scope.answer;
+                    alert($scope.questionID+" | "+$scope.answerDescription);
+
+
+
+
+
+					}
+
+
 
 				});
