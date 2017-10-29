@@ -5,10 +5,13 @@
 package com.ksfe.dao;
 
 import com.ksfe.model.Answer;
+import com.ksfe.util.ResponseCode;
 import com.ksfe.util.SessionUtil;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
+import java.util.ArrayList;
 
 /**
  * This is a Spring Repository bean class - DAO
@@ -20,6 +23,7 @@ import org.springframework.stereotype.Repository;
 public class AnswerDAOImpl implements AnswerDAO {
 	@Autowired
 	 private SessionFactory sessionFactory;
+	private ArrayList<Answer> answerList;
 	 
     //Insert Answer
     @Override
@@ -28,5 +32,16 @@ public class AnswerDAOImpl implements AnswerDAO {
         sessionFactory.getCurrentSession().save(answer);
         System.out.println("Inserted Answer: "+ answer);
 
+    }
+
+    @Override
+    public ArrayList<Answer> saveAnswerList(ArrayList<Answer> answerList) {
+        this.answerList=new ArrayList<>();
+        for(Answer a:answerList){
+            a.setAnswerStatus(ResponseCode.STATUS_DRAFT);
+            insertAnswer(a);
+            this.answerList.add(a);
+        }
+        return this.answerList;
     }
 }
