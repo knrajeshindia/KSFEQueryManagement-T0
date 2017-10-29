@@ -100,7 +100,7 @@ input[type=checkbox] {
 			<td><label>{{q.questionID}}</label></td>
 			<td><label>{{q.questionDescription}}</label></td>
 			<td><label>{{q.responseDataType}}</label></td>
-			<td><input type={{dataType}} ng-model="answerList[$index]" /></td>						
+			<td><input type={{q.responseDataType}} ng-model="answerList[$index]" /></td>						
 		</tr>
 		
 		<tr ng-show="flagQuestionView">

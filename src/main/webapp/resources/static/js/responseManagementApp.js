@@ -70,7 +70,7 @@ angular
 						$scope.selectedQuestionIDList = [];
 						$scope.questionList = [];
 						$scope.userID = 1;
-						$scope.dataType = "date";
+						$scope.dataType = "";
 						$scope.flagQuestionnaireView=false;
 						$scope.flagQuestionView=true;
 						$scope.answerProcess=true;
