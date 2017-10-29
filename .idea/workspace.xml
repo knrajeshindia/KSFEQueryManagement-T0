@@ -30,8 +30,8 @@
       <file leaf-file-name="responseManagementApp.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/webapp/resources/static/js/responseManagementApp.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-130">
-              <caret line="75" column="53" lean-forward="true" selection-start-line="75" selection-start-column="53" selection-end-line="75" selection-end-column="53" />
+            <state relative-caret-position="414">
+              <caret line="107" column="71" lean-forward="true" selection-start-line="107" selection-start-column="71" selection-end-line="107" selection-end-column="71" />
               <folding />
             </state>
           </provider>
@@ -895,7 +895,14 @@
       <option name="project" value="LOCAL" />
       <updated>1509279475738</updated>
     </task>
-    <option name="localTasksCounter" value="42" />
+    <task id="LOCAL-00042" summary="1.Answer LIST DAO functional.&#10;&#10;Application CHECKED-WORKING.">
+      <created>1509281288788</created>
+      <option name="number" value="00042" />
+      <option name="presentableId" value="LOCAL-00042" />
+      <option name="project" value="LOCAL" />
+      <updated>1509281288788</updated>
+    </task>
+    <option name="localTasksCounter" value="43" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -1346,8 +1353,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/resources/static/js/responseManagementApp.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-130">
-          <caret line="75" column="53" lean-forward="true" selection-start-line="75" selection-start-column="53" selection-end-line="75" selection-end-column="53" />
+        <state relative-caret-position="414">
+          <caret line="107" column="71" lean-forward="true" selection-start-line="107" selection-start-column="71" selection-end-line="107" selection-end-column="71" />
           <folding />
         </state>
       </provider>

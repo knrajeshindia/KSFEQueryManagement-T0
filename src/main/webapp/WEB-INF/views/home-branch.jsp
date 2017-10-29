@@ -106,19 +106,19 @@ input[type=checkbox] {
 			</tr>
 			<tr>
 				<td>Attach File</td>
-				<td><input type="file" ng-model="response.file" /></td>
+				<td><input type="file" ng-model="file" /></td>
 			</tr>
 			<tr>
 				<td>File Description</td>
-				<td><input type="text" ng-model="response.fileDescription" /></td>
+				<td><input type="text" ng-model="fileDescription" /></td>
 			</tr>
 			<tr>
 				<td>Sender Name</td>
-				<td><input type="text" ng-model="response.senderName" /></td>
+				<td><input type="text" ng-model="senderName" /></td>
 			</tr>
 			<tr>
 				<td>Sender Job Title</td>
-				<td><input type="text" ng-model="response.jobTitle" /></td>
+				<td><input type="text" ng-model="jobTitle" /></td>
 			</tr>
 			<tr ng-show="flagQuestionView">
 
