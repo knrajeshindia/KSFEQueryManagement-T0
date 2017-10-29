@@ -4,10 +4,20 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
 <!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+	integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+	crossorigin="anonymous">
 
 <!-- Optional theme -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+	integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
+	crossorigin="anonymous">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 <html ng-app="myApp">
 
@@ -16,6 +26,7 @@
 	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
 <script
 	src="<c:url value="/resources/static/js/responseManagementApp.js" />"></script>
+
 
 <title>Response</title>
 
@@ -27,8 +38,6 @@
 input[type=checkbox] {
 	-webkit-appearance: checkbox;
 }
-
-
 </style>
 
 </head>
@@ -40,7 +49,8 @@ input[type=checkbox] {
 	<br>
 	<br>
 
-	<table class="table table-bordered" width="90%">
+	<table class="table table-bordered" width="90%"
+		ng-show="flagQuestionnaireView">
 		<tr style="text-align: center">
 			<th>ID</th>
 			<th>Title</th>
@@ -53,7 +63,7 @@ input[type=checkbox] {
 			<th>JobTitle</th>
 
 		</tr>
-		<tr  ng-repeat="u in questionnaireList">
+		<tr ng-repeat="u in questionnaireList">
 
 			<td><label>{{u.questionnaireID}}</label></td>
 			<td><label>{{u.questionnaireTitle}}</label></td>
@@ -66,21 +76,23 @@ input[type=checkbox] {
 			<td><label>{{u.senderName}}</label></td>
 			<td><label>{{u.senderJobTitle}}</label></td>
 			<td>
-				<button ng-click="viewQuest($index)">OPEN</button>
-				<br>
-			<br>
+				<button ng-click="viewQuest($index)">OPEN</button> <br> <br>
 			</td>
 		</tr>
 	</table>
-	
-	<br><br>
 
-	<table class="table table-bordered" width="50%">
+	<br>
+	<br>
 
-		<tr "text-align: center">
+<div class="table-responsive">
+	<table class="table table-bordered" width="50%"
+		ng-show="flagQuestionView">
+
+		<tr"text-align:center">
 			<th>QuestionID</th>
 			<th>Description</th>
 			<th>Data Type</th>
+			<th>Answer</th>
 		</tr>
 
 		<tr ng-repeat="q in questionList">
@@ -88,15 +100,27 @@ input[type=checkbox] {
 			<td><label>{{q.questionID}}</label></td>
 			<td><label>{{q.questionDescription}}</label></td>
 			<td><label>{{q.responseDataType}}</label></td>
-			<td>
-				<button ng-click="#">OPEN</button>
-				<br>
-			<br>
+			<td><input type={{q.responseDataType}} ng-model="answerList[$index]" /></td>						
+		</tr>
+		
+		<tr ng-show="flagQuestionView">
+			
+			<td class="btn-group btn-group-xs">
+				<button type="button" class="btn btn-primary"
+					ng-click="saveAnswer()" ng-show="answerProcess">SAVE</button>&nbsp
+				<button type="button" class="btn btn-primary"
+					ng-click="modifyAnswer()" ng-hide="answerProcess">PUBLISH</button>
 			</td>
 		</tr>
 
 
 	</table>
+
+
+	</div>
+
+
+
 
 
 </body>

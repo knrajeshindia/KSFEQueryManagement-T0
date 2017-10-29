@@ -56,6 +56,8 @@ public class HomeController {
     Question question;
     String jsonResponse;
     List<Integer> questionIDList;
+    private Answer answer;
+    private ArrayList<Answer> answerList;
 
 	/*
      * @Autowired private QuestionnaireValidator questionnaireValidator;
@@ -147,6 +149,23 @@ public class HomeController {
 
 
 
+    //Insert Answers
+    @RequestMapping(value="/saveResponse",method=RequestMethod.POST)
+    public @ResponseBody String saveResponse(@RequestParam("questionIDList") Integer[] questionIDList,
+                                             @RequestParam("answerDescriptionList") String[] answerDescriptionList) {
+        System.out.println("Form data binded - Trying to insert " + questionIDList);
+        if(questionIDList.length==answerDescriptionList.length) {
+            answerList=new ArrayList<Answer>();
+            for(int i=0;i<questionIDList.length;i++){
+                answer = new Answer();
+                answer.setQuestionID(questionIDList[i]);
+                answer.setAnswerDescription(answerDescriptionList[i]);
+                answerList.add(answer);
+            }}
+        jsonResponse = answerService.insertAnswer(answerList);
+        System.out.println("DATA inserted :"+jsonResponse);
+        return jsonResponse;
+    }
     /**
      * Simply selects the home view to render by returning its name.
      */
