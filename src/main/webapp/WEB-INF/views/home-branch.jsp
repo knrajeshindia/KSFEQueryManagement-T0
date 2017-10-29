@@ -84,37 +84,54 @@ input[type=checkbox] {
 	<br>
 	<br>
 
-<div class="table-responsive">
-	<table class="table table-bordered" width="50%"
-		ng-show="flagQuestionView">
+	<div class="table-responsive">
+		<table class="table table-bordered" width="50%"
+			ng-show="flagQuestionView">
+			<div ng-show="flagQuestionView"><strong>QUESTIONNAIRE - ID :{{questionnaireID}}</strong></div><br><br>
 
-		<tr"text-align:center">
-			<th>QuestionID</th>
-			<th>Description</th>
-			<th>Data Type</th>
-			<th>Answer</th>
-		</tr>
+			<tr"text-align:center">
+				<th>QuestionID</th>
+				<th>Description</th>
+				<th>Data Type</th>
+				<th>Answer</th>
+			</tr>
 
-		<tr ng-repeat="q in questionList">
+			<tr ng-repeat="q in questionList">
 
-			<td><label>{{q.questionID}}</label></td>
-			<td><label>{{q.questionDescription}}</label></td>
-			<td><label>{{q.responseDataType}}</label></td>
-			<td><input type={{q.responseDataType}} ng-model="answerList[$index]" /></td>						
-		</tr>
-		
-		<tr ng-show="flagQuestionView">
-			
-			<td class="btn-group btn-group-xs">
-				<button type="button" class="btn btn-primary"
-					ng-click="saveAnswer()" ng-show="answerProcess">SAVE</button>&nbsp
-				<button type="button" class="btn btn-primary"
-					ng-click="modifyAnswer()" ng-hide="answerProcess">PUBLISH</button>
-			</td>
-		</tr>
+				<td><label>{{q.questionID}}</label></td>
+				<td><label>{{q.questionDescription}}</label></td>
+				<td><label>{{q.responseDataType}}</label></td>
+				<td><input type={{q.responseDataType}}
+					ng-model="answerList[$index]" /></td>
+			</tr>
+			<tr>
+				<td>Attach File</td>
+				<td><input type="file" ng-model="file" /></td>
+			</tr>
+			<tr>
+				<td>File Description</td>
+				<td><input type="text" ng-model="fileDescription" /></td>
+			</tr>
+			<tr>
+				<td>Sender Name</td>
+				<td><input type="text" ng-model="senderName" /></td>
+			</tr>
+			<tr>
+				<td>Sender Job Title</td>
+				<td><input type="text" ng-model="jobTitle" /></td>
+			</tr>
+			<tr ng-show="flagQuestionView">
+
+				<td class="btn-group btn-group-xs">
+					<button type="button" class="btn btn-primary"
+						ng-click="saveAnswer()" ng-show="answerProcess">SAVE</button>&nbsp
+					<button type="button" class="btn btn-primary"
+						ng-click="modifyAnswer()" ng-hide="answerProcess">PUBLISH</button>
+				</td>
+			</tr>
 
 
-	</table>
+		</table>
 
 
 	</div>
