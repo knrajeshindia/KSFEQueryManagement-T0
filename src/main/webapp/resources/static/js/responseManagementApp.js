@@ -71,6 +71,7 @@ angular
 						$scope.questionList = [];
 						$scope.userID = 1;
 						$scope.dataType = "";
+						$scope.questionnaireID=$scope.questionnaireList[index].questionnaireID;
 						$scope.flagQuestionnaireView=false;
 						$scope.flagQuestionView=true;
 						$scope.answerProcess=true;
