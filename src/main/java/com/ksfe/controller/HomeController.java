@@ -101,9 +101,9 @@ public class HomeController {
 
     //Retrieve Questionnaire List
     @RequestMapping(value="/viewQ",method=RequestMethod.POST)
-    public @ResponseBody String viewQ(@RequestParam("userID") Integer userID) {
-        System.out.println(getClass()+" | "+userID);
-        jsonResponse=questionnaireService.viewPendingQuestionnaireList(userID);
+    public @ResponseBody String viewQ(@RequestParam("unitID") Integer unitID) {
+        System.out.println(getClass()+" | "+unitID);
+        jsonResponse=questionnaireService.viewPendingQuestionnaireList(unitID);
         System.out.println("Questionnaire:"+jsonResponse);
         return jsonResponse;
     }
@@ -168,47 +168,35 @@ public class HomeController {
     }
 
 
-
-
-    //Insert Answers
-    @RequestMapping(value="/saveAnswer1",method=RequestMethod.POST)
-    public @ResponseBody String saveAnswer1(@RequestBody Response response) {
-        System.out.println("Form data binded - Trying to insert " + response);
-        /*answerList=new ArrayList<Answer>();
-        for (Object a:answerListString){
-            answer = new Answer();
-            answer.setQuestionID(a.questionID);
-            answer.setAnswerDescription(answerDescriptionList[i]);
-            answerList.add(answer);
-        }*/
-
-
-        jsonResponse = answerService.insertAnswer(answerList);
-        System.out.println("DATA inserted :"+jsonResponse);
-        return jsonResponse;
-    }
-
-
-
-
-
-
-
-
     //Insert Response
     @RequestMapping(value="/saveResponse",method=RequestMethod.POST)
-    public @ResponseBody String saveResponse(@RequestBody Response response) {
-        System.out.println("Form data binded - Trying to insert " + response);
+    public @ResponseBody String saveResponse(
+    		@RequestParam("unitID") Integer unitID,
+    		@RequestParam("questionnaireID") Integer questionnaireID,
+    		@RequestParam("responseRemarks") String responseRemarks,
+    		@RequestParam("attachmentDescription") String attachmentDescription,
+    		@RequestParam("attachmentFile") byte[] attachmentFile,
+    		@RequestParam("respondentName") String respondentName,
+    		@RequestParam("respondentJobTitle") String respondentJobTitle,
+    		
+    		@RequestParam("answerIDList") ArrayList<Integer>answerIDList,
+    		@RequestParam("responseStatus") String responseStatus){
+    	System.out.println("Form data binded - Trying to insert " + response);
+    	response=new Response();
+    	response.setUnitID(unitID);
+    	response.setQuestionnaireID(questionnaireID);
+    	response.setResponseRemarks(responseRemarks);
+    	response.setAttachmentDescription(attachmentDescription);
+    	response.setAttachmentFile(attachmentFile);
+    	response.setRespondentName(respondentName);
+    	response.setRespondentJobTitle(respondentJobTitle);
+    	response.setResponseDate(new Date());
+    	response.setAnswerIDList(answerIDList);
+    	response.setResponseStatus(responseStatus);
         jsonResponse = responseService.insertResponse(response);
         System.out.println("DATA inserted :"+jsonResponse);
         return jsonResponse;
     }
-
-
-
-
-
-
 
 
     /**

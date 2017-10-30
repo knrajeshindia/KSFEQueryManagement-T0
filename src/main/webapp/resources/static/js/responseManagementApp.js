@@ -21,7 +21,7 @@ angular
             $scope.file = "";
             $scope.respondentName = "";
             $scope.respondentJobTitle = "";
-            $scope.responseDate = "";
+           
             $scope.answerIDList = [];
             $scope.responseStatus = "";
             
@@ -41,7 +41,7 @@ angular
             $scope.questionList = [];
             $scope.answerList = [];
             $scope.answerObjectList = [];
-            $scope.userID = "";
+            $scope.unitID = 1;
             $scope.dataType = "text";
             $scope.response = [{
                 questionId: '',
@@ -72,7 +72,7 @@ angular
 				$scope.flagQuestionnaireView = true;
 				$scope.flagQuestionView = false;
 				//Variables
-				$scope.userID = 1;
+				$scope.unitID = 1;
 				$scope.message="";
 				$scope.response="";
 				$scope.data="";
@@ -81,14 +81,14 @@ angular
 					method : "post",
 					url : "/query/viewQ",
 					params : {
-						"userID" : $scope.userID
+						"unitID" : $scope.unitID
 					}}).then(function(result) {
 									$scope.response = angular.fromJson(result.data);
 									if ($scope.response.status === "SUCCESS") {
 										$scope.message = $scope.response.message;
 										$scope.data = angular.fromJson($scope.response.data);
 										$scope.questionnaireList = angular.fromJson($scope.response.data);
-										$scope.userID = "";
+										//$scope.unitID = "";
 										}
 								},
 								function(result) {
@@ -120,7 +120,7 @@ angular
 				$scope.file="";
 				$scope.respondentName="";
 				$scope.respondentJobTitle="";
-				$scope.responseDate="";
+				
 				$scope.answerIDList=[];
 				$scope.responseStatus="";						
 				$scope.message="";
@@ -190,7 +190,7 @@ angular
 															}
 															alert($scope.message);
 															//Call save-response
-															saveResponse();
+															$scope.saveResponse();
 															}},
 													function(result) {
 														$window.alert("Server response-FAILURE! Please try again later");
@@ -206,13 +206,16 @@ angular
 													
 													// SAVE RESPONSE
 													$scope.saveResponse = function() {
+														
 														//Flags
 														$scope.flagQuestionnaireView = false;														
 														//Variables
 														$scope.message="";
 														$scope.response="";
-														$scope.responseDate = new Date();
+														
 														$scope.responseStatus="DRAFT";
+//														alert($scope.responseStatus+"|"+$scope.unitID+"|"+$scope.questionnaireID+"|"+$scope.responseRemarks+"|"+
+//																$scope.fileDescription+"|"+$scope.respondentName+"|"+$scope.respondentJobTitle+"|"+$scope.answerIDList);
 														//Service
 														$http({		method : "post",
 																	url : "/query/saveResponse",
@@ -224,7 +227,6 @@ angular
 																		"attachmentFile" : $scope.file,
 																		"respondentName" : $scope.respondentName,
 																		"respondentJobTitle" : $scope.respondentJobTitle,
-																		"responseDate" : $scope.responseDate,
 																		"answerIDList" : $scope.answerIDList,
 																		"responseStatus" : $scope.responseStatus
 																	}}).then(function(result) {
