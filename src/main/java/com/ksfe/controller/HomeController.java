@@ -150,8 +150,8 @@ public class HomeController {
 
 
     //Insert Answers
-    @RequestMapping(value="/saveResponse",method=RequestMethod.POST)
-    public @ResponseBody String saveResponse(@RequestParam("questionIDList") Integer[] questionIDList,
+    @RequestMapping(value="/saveAnswer",method=RequestMethod.POST)
+    public @ResponseBody String saveAnswer(@RequestParam("questionIDList") Integer[] questionIDList,
                                              @RequestParam("answerDescriptionList") String[] answerDescriptionList) {
         System.out.println("Form data binded - Trying to insert " + questionIDList);
         if(questionIDList.length==answerDescriptionList.length) {
@@ -166,6 +166,51 @@ public class HomeController {
         System.out.println("DATA inserted :"+jsonResponse);
         return jsonResponse;
     }
+
+
+
+
+    //Insert Answers
+    @RequestMapping(value="/saveAnswer1",method=RequestMethod.POST)
+    public @ResponseBody String saveAnswer1(@RequestBody Response response) {
+        System.out.println("Form data binded - Trying to insert " + response);
+        /*answerList=new ArrayList<Answer>();
+        for (Object a:answerListString){
+            answer = new Answer();
+            answer.setQuestionID(a.questionID);
+            answer.setAnswerDescription(answerDescriptionList[i]);
+            answerList.add(answer);
+        }*/
+
+
+        jsonResponse = answerService.insertAnswer(answerList);
+        System.out.println("DATA inserted :"+jsonResponse);
+        return jsonResponse;
+    }
+
+
+
+
+
+
+
+
+    //Insert Response
+    @RequestMapping(value="/saveResponse",method=RequestMethod.POST)
+    public @ResponseBody String saveResponse(@RequestBody Response response) {
+        System.out.println("Form data binded - Trying to insert " + response);
+        jsonResponse = responseService.insertResponse(response);
+        System.out.println("DATA inserted :"+jsonResponse);
+        return jsonResponse;
+    }
+
+
+
+
+
+
+
+
     /**
      * Simply selects the home view to render by returning its name.
      */

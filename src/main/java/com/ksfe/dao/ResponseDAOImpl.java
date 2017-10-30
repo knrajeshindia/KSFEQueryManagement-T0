@@ -5,7 +5,6 @@
 package com.ksfe.dao;
 
 import com.ksfe.model.Response;
-import com.ksfe.util.SessionUtil;
 
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,10 +23,10 @@ public class ResponseDAOImpl implements ResponseDAO {
 	 
     // Insert object
     @Override
-    public void insertResponse(Response response) {
+    public Response insertResponse(Response response) {
     	System.out.println(getClass());
         sessionFactory.getCurrentSession().save(response);
         System.out.println("Inserted Response: "+ response);
-
+        return response;
     }
 }

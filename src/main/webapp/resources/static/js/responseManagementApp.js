@@ -1,170 +1,245 @@
 angular
-		.module('myApp', [])
-		.controller(
-				'responseController',
-				function($scope, $window, $http) {
-					// Questionnaire form DIV
-					$scope.flag1 = false;
-					// Create Questionnaire button
-					$scope.flag1Button1 = true;
-					// Questionnaire response DIV
-					$scope.flag2 = false;
-					// Question display DIV
-					$scope.flag3 = false;
-					// Question create DIV
-					$scope.flag4 = false;
-					// Questionnaire publish message DIV
-					$scope.flag5 = false;
-					$scope.flagAnswer = false;
-					$scope.flagQuestionnaireView = false;
-					$scope.flagQuestionView = false;
-					$scope.answerSave = false;
-					$scope.answerPublish = false;
+    .module('myApp', [])
+    .controller(
+        'responseController',
+        function($scope, $window, $http) {
+        	
+        	 // Variables
+            $scope.message = "";
+            $scope.response = "";
+            $scope.data = "";
+            $scope.questionnaireList = [];
+            $scope.responseDataType = "";
+            $scope.answerList = [];
+            $scope.answerIDList = [];
+            $scope.selectedQuestionIDList = [];
+            $scope.questionList = [];
+            $scope.questionnaireID = "";
+            $scope.responseDataType = "";
+            $scope.responseRemarks = "";
+            $scope.fileDescription = "";
+            $scope.file = "";
+            $scope.respondentName = "";
+            $scope.respondentJobTitle = "";
+            $scope.responseDate = "";
+            $scope.answerIDList = [];
+            $scope.responseStatus = "";
+            
+            
+            //FLAGS
+            $scope.flagQuestionnaireView = false;
+            $scope.flagQuestionView = false;
+            $scope.answerProcess = false;
+            
+            //---------------------------------
+            
+            $scope.flagAnswer = false;
+            $scope.answerSave = false;
+            $scope.answerPublish = false;
 
-					$scope.questionnaireList = [];
-					$scope.questionList = [];
-					$scope.answerList = [];
-					$scope.answerObjectList = [];
-					$scope.userID = "";
-					$scope.dataType = "text";
-					$scope.response = [ {
-						questionId : '',
-						answerDescription : "",
-						file : '',
-						fileDescription : "",
-						sender : "",
-						jobTitle : ""
+            $scope.questionnaireList = [];
+            $scope.questionList = [];
+            $scope.answerList = [];
+            $scope.answerObjectList = [];
+            $scope.userID = "";
+            $scope.dataType = "text";
+            $scope.response = [{
+                questionId: '',
+                answerDescription: "",
+                file: '',
+                fileDescription: "",
+                sender: "",
+                jobTitle: ""
 
-					} ];
+            }];
+            $scope.file = "";
+            $scope.fileDescription = "";
+            $scope.responseRemarks = "";
+            $scope.sender = "";
+            $scope.jobTitle = "";
 
-					// INSERT QUESTIONNAIRE
-					$scope.viewQuestionnaire = function() {
-						$scope.flag1 = true;
-						$scope.flagQuestionnaireView = true;
-						$scope.flagQuestionView = false;
-						$scope.userID = 1;
-						$http({
-							method : "post",
-							url : "/query/viewQ",
+//----------------------------------------------------------------------------------------------------
+         // QUESTIONNAIRE
+			// Variables
+			$scope.message="";
+			$scope.response="";
+			$scope.data="";
+			$scope.questionnaireList = [];
+			// Functions
+			// INSERT QUESTIONNAIRE
+			$scope.viewQuestionnaire = function() {
+				//Flag
+				$scope.flagQuestionnaireView = true;
+				$scope.flagQuestionView = false;
+				//Variables
+				$scope.userID = 1;
+				$scope.message="";
+				$scope.response="";
+				$scope.data="";
+				//Service
+				$http({
+					method : "post",
+					url : "/query/viewQ",
+					params : {
+						"userID" : $scope.userID
+					}}).then(function(result) {
+									$scope.response = angular.fromJson(result.data);
+									if ($scope.response.status === "SUCCESS") {
+										$scope.message = $scope.response.message;
+										$scope.data = angular.fromJson($scope.response.data);
+										$scope.questionnaireList = angular.fromJson($scope.response.data);
+										$scope.userID = "";
+										}
+								},
+								function(result) {
+									$window.alert("Server response-FAILURE! Please try again later");
+								});
+			};
+
+			// -------------------------------------------------------------------------------------
+			// QUESTION
+			
+			// Variables
+			$scope.selectedQuestionIDList = [];
+			$scope.questionList = [];
+			$scope.responseDataType = "";
+			// Functions
+			// Pull UP QUESTIONS
+			$scope.viewQuest = function(index) {
+				//Flags
+				$scope.flagQuestionnaireView = false;
+				$scope.flagQuestionView = true;
+				$scope.answerProcess = true;
+				//Variables
+				$scope.selectedQuestionIDList = [];
+				$scope.questionList = [];
+				$scope.questionnaireID ="";
+				$scope.responseDataType = "";
+				$scope.responseRemarks="";
+				$scope.fileDescription="";
+				$scope.file="";
+				$scope.respondentName="";
+				$scope.respondentJobTitle="";
+				$scope.responseDate="";
+				$scope.answerIDList=[];
+				$scope.responseStatus="";						
+				$scope.message="";
+				$scope.response="";
+				var len="";
+				var qID="";
+				$scope.questionnaireID = $scope.questionnaireList[index].questionnaireID;
+				len = $scope.questionnaireList[index].questionIDList.length;
+				for (var i = 0; i < len; i++) {
+					qID = parseInt($scope.questionnaireList[index].questionIDList[i]);
+					$scope.selectedQuestionIDList.push(qID);
+				}
+				//Service
+				$http({		method : "post",
+							url : "/query/viewQuest",
 							params : {
-								"userID" : $scope.userID
-							}
-						})
-								.then(
-										function(result) {
-											$scope.response = angular
-													.fromJson(result.data);
-											if ($scope.response.status === "SUCCESS") {
-												$scope.message = $scope.response.message;
-												$scope.data = angular
-														.fromJson($scope.response.data);
-												$scope.questionnaireList = angular
-														.fromJson($scope.response.data);
-												$scope.userID = "";
-												// $window.alert("Success"+$scope.questionnaireList);
-											}
-										},
-										function(result) {
-											$window
-													.alert("Server response-FAILURE! Please try again later");
-										});
-					};
-					// Pull UP QUESTIONS
+								"questionIDList" : $scope.selectedQuestionIDList
+							}}).then(function(result) {
+									$scope.response = angular
+											.fromJson(result.data);
+									if ($scope.response.status === "SUCCESS") {
+										$scope.message = $scope.response.message;
+										$scope.questionList = angular.fromJson($scope.response.data);
+									}},
+								function(result) {
+									$window.alert("Server response-FAILURE! Please try again later");
+								});};
 
-					$scope.viewQuest = function(index) {
-						$scope.selectedQuestionIDList = [];
-						$scope.questionList = [];
-						$scope.userID = 1;
-						$scope.dataType = "";
-						$scope.questionnaireID = $scope.questionnaireList[index].questionnaireID;
-						$scope.flagQuestionnaireView = false;
-						$scope.flagQuestionView = true;
-						$scope.answerProcess = true;
+			// -------------------------------------------------------------------------------------
 
-						var len = $scope.questionnaireList[index].questionIDList.length;
-						for (var i = 0; i < len; i++) {
-							var qID = parseInt($scope.questionnaireList[index].questionIDList[i]);
-							$scope.selectedQuestionIDList.push(qID);
-						}
+								// ANSWER
+								
+								// #Variables#
+								$scope.answerList = [];					
+								$scope.answerIDList = [];
+								// #Functions#
+								
+								// SAVE ANSWER
+								$scope.saveAnswer = function() {
+									//Flags
+									$scope.flagQuestionnaireView = false;
+									$scope.flagAnswerProcess = false;
+									//Variables
+									$scope.message="";
+									$scope.response="";
+									var len="";
+									var aID="";
+									
+									
+									//Service
+									$http({		method : "post",
+												url : "/query/saveAnswer",
+												params : {	"questionIDList" : $scope.selectedQuestionIDList,
+															"answerDescriptionList" : $scope.answerList
+												}}).then(function(result) {
+														$scope.response = angular
+																.fromJson(result.data);
+														if ($scope.response.status === "SUCCESS") {
+															$scope.message = $scope.response.message;
+															$scope.answerList=[];
+															$scope.answerList = angular.fromJson($scope.response.data);
+															//extract answerIDs from JSON
+															len=$scope.answerList.length;
+															for (var i = 0; i < len; i++) {
+																aID = parseInt($scope.answerList[i].answerID);
+																$scope.answerIDList.push(aID);
+															}
+															alert($scope.message);
+															//Call save-response
+															saveResponse();
+															}},
+													function(result) {
+														$window.alert("Server response-FAILURE! Please try again later");
+													});};
+									
+								// -------------------------------------------------------------------------------------
+								
+													// RESPONSE
+													// #Flags#
+													
+													// #Variables#
+													// #Functions#
+													
+													// SAVE RESPONSE
+													$scope.saveResponse = function() {
+														//Flags
+														$scope.flagQuestionnaireView = false;														
+														//Variables
+														$scope.message="";
+														$scope.response="";
+														$scope.responseDate = new Date();
+														$scope.responseStatus="DRAFT";
+														//Service
+														$http({		method : "post",
+																	url : "/query/saveResponse",
+																	params : {
+																		"unitID" : $scope.unitID,
+																		"questionnaireID" : $scope.questionnaireID,
+																		"responseRemarks" : $scope.responseRemarks,
+																		"attachmentDescription" : $scope.fileDescription,
+																		"attachmentFile" : $scope.file,
+																		"respondentName" : $scope.respondentName,
+																		"respondentJobTitle" : $scope.respondentJobTitle,
+																		"responseDate" : $scope.responseDate,
+																		"answerIDList" : $scope.answerIDList,
+																		"responseStatus" : $scope.responseStatus
+																	}}).then(function(result) {
+																			$scope.response = angular
+																					.fromJson(result.data);
+																			if ($scope.response.status === "SUCCESS") {
+																				$scope.message = $scope.response.message;
+																				$scope.responseID = angular.fromJson($scope.response.data).responseID;
+																				alert($scope.message);
+																				alert($scope.responseID);}},
+																		function(result) {
+																			$window.alert("Server response-FAILURE! Please try again later");
+																		});};
 
-						$http(
-								{
-									method : "post",
-									url : "/query/viewQuest",
-									params : {
-										"questionIDList" : $scope.selectedQuestionIDList
-									}
-								})
-								.then(
-										function(result) {
-											$scope.response = angular
-													.fromJson(result.data);
-											if ($scope.response.status === "SUCCESS") {
-												$scope.message = $scope.response.message;
-												$scope.data = angular
-														.fromJson($scope.response.data);
-												$scope.questionList = angular
-														.fromJson($scope.response.data);
-												$scope.answerSave = true;
-											}
-										},
-										function(result) {
-											$window
-													.alert("Server response-FAILURE! Please try again later");
-										});
-
-					};
-
-					// Save answer
-					$scope.saveAnswer = function() {
-						$scope.answerProcess = false;
-						$scope.response = [];
-						$scope.answerObjectList = [];
-						
-						//BIND ANSWER OBJECT
-						for (var i = 0; i < $scope.answerList.length; i++) {
-							$scope.answerObjectList.push({
-								questionID : $scope.selectedQuestionIDList[i],
-								answerDescription : $scope.answerList[i]
-							});
-						}
-
-						//BIND RESPONSE OBJECT
-						$scope.response.push({
-							file : $scope.file,
-							fileDescription : $scope.fileDescription,
-							sender : $scope.sender,
-							jobTitle : $scope.jobTitle
-						});
-
-						//alert($scope.response[0].fileDescription);
-						
-
-						$http(
-								{
-									method : "post",
-									url : "/query/saveResponse",
-									params : {
-										"questionIDList" : $scope.selectedQuestionIDList,
-										"answerDescriptionList" : $scope.answerList,
-										"answerList": $scope.answerObjectList,
-										"response":$scope.response
-									}
-								})
-								.then(
-										function(result) {
-											$scope.response = angular
-													.fromJson(result.data);
-											if ($scope.response.status === "SUCCESS") {
-												$scope.message = $scope.response.message;
-												alert($scope.message);
-											}
-										},
-										function(result) {
-											$window
-													.alert("Server response-FAILURE! Please try again later");
-										});
-
-					}
-
-				});
+										//-----------------------------------------------------------------------------------------------------------------------------			
+													
+													
+												});

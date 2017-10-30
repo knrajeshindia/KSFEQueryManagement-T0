@@ -15,5 +15,5 @@ import com.ksfe.model.Response;
  * @since 1.0,
  */
 public interface ResponseService {
-    public void insertResponse(Response response);
+    public String insertResponse(Response response);
 }
