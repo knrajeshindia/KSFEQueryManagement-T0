@@ -15,6 +15,7 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 
 /**
  * This is a Spring Service class - for implementing Service requirements
@@ -26,7 +27,7 @@ import javax.transaction.Transactional;
 @Service
 public class ResponseServiceImpl implements ResponseService {
     @Autowired
-	private ResponseDAO responseDAO;
+    private ResponseDAO responseDAO;
     Response response;
     String jsonResponse;
     static JsonData jsonData;
@@ -41,6 +42,37 @@ public class ResponseServiceImpl implements ResponseService {
             this.response = responseDAO.insertResponse(response);
             System.out.println(response);
             jsonResponse = JsonUtil.convertJavaToJson(this.response);
+            jsonData.setData(jsonResponse);
+            jsonData.setStatus(ResponseCode.STATUS_SUCCESS);
+            jsonData.setMessage(ResponseCode.MESSAGE_UPDATED);
+        } catch (EmptyResultDataAccessException e) {
+            jsonData.setMessage(ResponseCode.MESSAGE_FAILURE);
+        } catch (DataAccessException de) {
+            jsonData.setMessage(ResponseCode.MESSAGE_NETWORK);
+        }
+        jsonResponse = JsonUtil.convertJavaToJson(jsonData);
+        System.out.println(jsonResponse);
+        return jsonResponse;
+    }
+
+    //Method to verify if a response exist for questionnaireID
+    @Override
+    @Transactional
+    public Response verifyResponse(Integer questionnaireID) {
+        return responseDAO.verifyResponse(questionnaireID);
+    }
+
+    //Method to get One response object in JSON
+    @Override
+    @Transactional
+    public String getResponse(Integer responseID) {
+        System.out.println(getClass());
+        jsonData = setJsonData();
+        System.out.println("Json Data :" + jsonData);
+        try {
+            response = responseDAO.getResponse(responseID);
+            System.out.println(response);
+            jsonResponse = JsonUtil.convertJavaToJson(response);
             jsonData.setData(jsonResponse);
             jsonData.setStatus(ResponseCode.STATUS_SUCCESS);
             jsonData.setMessage(ResponseCode.MESSAGE_UPDATED);

@@ -6,5 +6,8 @@ public interface ResponseDAO {
 
 	public Response insertResponse(Response response) ;
 
-	
+
+    Response verifyResponse(Integer questionnaireID);
+
+    Response getResponse(Integer responseID);
 }

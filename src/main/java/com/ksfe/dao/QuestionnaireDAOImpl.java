@@ -10,6 +10,8 @@ package com.ksfe.dao;
 
 import com.ksfe.model.Questionnaire;
 
+import com.ksfe.model.Response;
+import com.ksfe.service.ResponseService;
 import com.ksfe.util.ResponseCode;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -36,14 +38,19 @@ import java.util.List;
 public class QuestionnaireDAOImpl implements QuestionnaireDAO {
     @Autowired
     private SessionFactory sessionFactory;
+    @Autowired
+    private ResponseService responseService;
     private Questionnaire questionnaire;
     private Session session;
     List<Questionnaire> questionnaireList = new ArrayList<Questionnaire>();
+    List<Questionnaire> questionnaireListFiltered = new ArrayList<Questionnaire>();
     CriteriaBuilder criteriaBuilder;
     CriteriaQuery<Questionnaire> query;
     Root<Questionnaire> root;
     Query<Questionnaire> q;
     Date today = new Date();
+    private Response response;
+    private String responseStatus;
 
 
     // Insert object
@@ -81,27 +88,40 @@ public class QuestionnaireDAOImpl implements QuestionnaireDAO {
         return questionnaire;
     }
 
-    //Retrieve all pending questionnaire List for userID
+    //Retrieve all pending questionnaireList for userID
     @Override
     public List<Questionnaire> viewPendingQuestionnaireList(Integer userID) {
         System.out.println(getClass() + "USER ID:" + userID);
         bindDB();
-        Predicate filter =  criteriaBuilder.and(
+
+        Predicate filter = criteriaBuilder.and(
                 criteriaBuilder.isMember(userID, root.get("targetRespondentIDList")),
-        criteriaBuilder.greaterThanOrEqualTo(root.get("dueDate"), today),
+                criteriaBuilder.greaterThanOrEqualTo(root.get("dueDate"), today),
                 criteriaBuilder.equal(root.get("questionnairePhase"), "PUBLISHED"));
         query.where(criteriaBuilder.and(filter));
-        /*
-
-                query.where(criteriaBuilder.isMember(userID, root.<List<Integer>>get("targetRespondentIDList")));
-        query.where(criteriaBuilder.greaterThanOrEqualTo(root.get("dueDate"), today));
-        query.where(criteriaBuilder.equal(root.get("questionnairePhase"), "PUBLISHED"));*/
+        //ORDER BY
+        query.orderBy(criteriaBuilder.asc(root.get("dueDate")));
         questionnaireList = session.createQuery(query).getResultList();
-        System.out.println("Questionnairelist-Complete records for userID: " + questionnaireList);
+        questionnaireListFiltered.clear();
+        //Filter-out answered questionnaire
+        for (Questionnaire questionnaire : questionnaireList) {
+            response = responseService.verifyResponse(questionnaire.getQuestionnaireID());
+            responseStatus=response.getResponseStatus();
+            questionnaire.setResponseStatus(responseStatus);
+            questionnaire.setResponseID(response.getResponseID());
 
-
-
-        return questionnaireList;
+            if (!responseStatus.equalsIgnoreCase(ResponseCode.STATUS_PUBLISHED)) {
+                //Set flag for questionnaire OPEN/MODIFY button view
+                if (responseStatus.equalsIgnoreCase(ResponseCode.STATUS_NOT_RESPONDED)) {
+                    questionnaire.setResponseFlag(false);
+                } else {
+                    questionnaire.setResponseFlag(true);
+                }
+                questionnaireListFiltered.add(questionnaire);
+            }
+        }
+        System.out.println("Questionnairelist-Complete records for userID: " + questionnaireListFiltered);
+        return questionnaireListFiltered;
     }
 
 

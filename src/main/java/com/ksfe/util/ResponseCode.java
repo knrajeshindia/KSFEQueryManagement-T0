@@ -10,6 +10,8 @@ package com.ksfe.util;
  * @author MyPc
  */
 public class ResponseCode {
+    public static final String STATUS_NOT_FOUND ="NOT FOUND" ;
+    public static final String STATUS_NOT_RESPONDED = "NOT RESPONDED";
     public static String STATUS_FAILURE="FAILURE";
     public static String STATUS_SUCCESS="SUCCESS";
     public static String STATUS_DRAFT="DRAFT";

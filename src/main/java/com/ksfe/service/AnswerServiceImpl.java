@@ -16,6 +16,8 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 /**
  * This is a Spring Service class - for implementing Service requirements
@@ -27,8 +29,8 @@ import java.util.ArrayList;
 @Service
 public class AnswerServiceImpl implements AnswerService {
     @Autowired
-	private AnswerDAO answerDAO;
-    ArrayList<Answer> answerList;
+    private AnswerDAO answerDAO;
+    private List<Answer> answerList=new ArrayList<>();
     String jsonResponse;
     static JsonData jsonData;
 
@@ -62,6 +64,38 @@ public class AnswerServiceImpl implements AnswerService {
         System.out.println(jsonResponse);
         return jsonResponse;
     }
+
+    //Update response ID in answers
+    @Override
+    @Transactional
+    public void updateAnswerList(Collection<Integer> answerIDList, Integer responseID) {
+        answerDAO.updateAnswerList(answerIDList,responseID);
+    }
+
+    //Retrieve answerList from responseID
+    @Override
+    @Transactional
+    public String getAnswerList(int responseID) {
+        System.out.println(getClass());
+        jsonData = setJsonData();
+        System.out.println("Json Data :" + jsonData);
+
+        try {
+            answerList = answerDAO.getAnswerList(responseID);
+            System.out.println(answerList);
+            jsonResponse = JsonUtil.convertJavaToJson(answerList);
+            jsonData.setData(jsonResponse);
+            jsonData.setStatus(ResponseCode.STATUS_SUCCESS);
+            jsonData.setMessage(ResponseCode.MESSAGE_UPDATED);
+        } catch (EmptyResultDataAccessException e) {
+            jsonData.setMessage(ResponseCode.MESSAGE_FAILURE);
+        } catch (DataAccessException de) {
+            jsonData.setMessage(ResponseCode.MESSAGE_NETWORK);
+        }
+        jsonResponse = JsonUtil.convertJavaToJson(jsonData);
+        System.out.println(jsonResponse);
+        return jsonResponse;
+        }
 
     //Set default message data
     public static JsonData setJsonData() {
