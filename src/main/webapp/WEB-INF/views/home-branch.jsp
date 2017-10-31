@@ -88,7 +88,7 @@ input[type=checkbox] {
 
 			<tr>
 				<td>Attach File</td>
-				<td><input type="file" ng-model="file" /></td>
+				<td><input type="file" ng-model="file" enctype="multipart/form-data" /></td>
 			</tr>
 			<tr>
 				<td>File Description</td>
@@ -118,6 +118,12 @@ input[type=checkbox] {
 		</table>
 
 
+	</div>
+	
+	<div ng-show="flagResponseConfirmation" >
+	
+	<strong>Response Saved: ID - {{responseID}}</strong>
+	
 	</div>
 
 

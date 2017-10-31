@@ -30,6 +30,7 @@ angular
             $scope.flagQuestionnaireView = false;
             $scope.flagQuestionView = false;
             $scope.answerProcess = false;
+            $scope.flagResponseConfirmation=false;
             
             //---------------------------------
             
@@ -235,8 +236,9 @@ angular
 																			if ($scope.response.status === "SUCCESS") {
 																				$scope.message = $scope.response.message;
 																				$scope.responseID = angular.fromJson($scope.response.data).responseID;
-																				alert($scope.message);
-																				alert($scope.responseID);}},
+																				//Flags
+																				$scope.flagQuestionView = false;
+																				$scope.flagResponseConfirmation=true;}},
 																		function(result) {
 																			$window.alert("Server response-FAILURE! Please try again later");
 																		});};
