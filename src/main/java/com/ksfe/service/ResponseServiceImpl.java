@@ -57,7 +57,7 @@ public class ResponseServiceImpl implements ResponseService {
     //Method to verify if a response exist for questionnaireID
     @Override
     @Transactional
-    public boolean verifyResponse(Integer questionnaireID) {
+    public String verifyResponse(Integer questionnaireID) {
         return responseDAO.verifyResponse(questionnaireID);
     }
 

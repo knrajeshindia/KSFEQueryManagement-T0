@@ -4,13 +4,11 @@
  */
 package com.ksfe.dao;
 
-import com.ksfe.model.Question;
-import com.ksfe.model.Questionnaire;
 import com.ksfe.model.Response;
 
+import com.ksfe.util.ResponseCode;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -19,9 +17,6 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import java.io.Serializable;
 import java.util.List;
-import java.util.Set;
-
-import static antlr.build.ANTLR.root;
 
 /**
  * This is a Spring Repository bean class - DAO
@@ -37,6 +32,7 @@ public class ResponseDAOImpl implements ResponseDAO {
     CriteriaBuilder criteriaBuilder;
     CriteriaQuery<Response> query;
     Root<Response> root;
+    String responseStatus;
 
     // Insert object
     @Override
@@ -49,19 +45,25 @@ public class ResponseDAOImpl implements ResponseDAO {
 
     //Verify response status for questionnaireID
     @Override
-    public boolean verifyResponse(Integer questionnaireID) {
+    public String verifyResponse(Integer questionnaireID) {
         System.out.println(getClass());
         bindDB();
         Serializable id = new Integer(questionnaireID);
         query.where(criteriaBuilder.equal(root.get("questionnaireID"), id));
         List<Response> responseList = session.createQuery(query).getResultList();
-        if(responseList.size()>0){
-            for(Response response:responseList){
-                if(response.getResponseStatus().equalsIgnoreCase("PUBLISHED")){
-                    return true;
+
+        if (responseList.size() > 0) {
+            for (Response response : responseList) {
+                if (response.getResponseStatus().equalsIgnoreCase("PUBLISHED")) {
+                    responseStatus = ResponseCode.STATUS_PUBLISHED;
+                    return responseStatus;
+                } else {
+                    responseStatus = ResponseCode.STATUS_DRAFT;
+                    return responseStatus;
                 }
             }
         }
+        responseStatus = ResponseCode.STATUS_NOT_RESPONDED;
        /* Response response = session.createQuery(query).getSingleResult();
         System.out.println("Response object"+response);
         if(response !=null){
@@ -69,7 +71,7 @@ public class ResponseDAOImpl implements ResponseDAO {
                 return true;
             }
         }*/
-        return false;
+        return responseStatus;
     }
 
     //Critieria builder instantiation

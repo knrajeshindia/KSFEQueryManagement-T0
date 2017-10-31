@@ -99,7 +99,16 @@ public class QuestionnaireDAOImpl implements QuestionnaireDAO {
 
         //Filter-out answered questionnaire
         for (Questionnaire questionnaire : questionnaireList) {
-            if (!responseService.verifyResponse(questionnaire.getQuestionnaireID())) {
+            String responseStatus = responseService.verifyResponse(questionnaire.getQuestionnaireID());
+            questionnaire.setResponseStatus(responseStatus);
+            //Set flag for questionnaire OPEN/MODIFY button view
+            if (responseStatus.equalsIgnoreCase(ResponseCode.STATUS_NOT_RESPONDED)) {
+                questionnaire.setResponseFlag(false);
+            } else {
+                questionnaire.setResponseFlag(true);
+            }
+
+            if (!responseStatus.equalsIgnoreCase(ResponseCode.STATUS_PUBLISHED)) {
                 questionnaireListFiltered.add(questionnaire);
             }
         }

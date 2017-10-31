@@ -46,6 +46,13 @@ public class Questionnaire implements Serializable {
     @ElementCollection
     private List<Integer> responseIDList = new ArrayList<Integer>();
 
+    //to hold responseStatus for each Questionnaire for a userID - to fileter answered questionnaire
+    @Transient
+    private String responseStatus;
+
+    @Transient
+    private boolean responseFlag;
+
 
     @NotNull(message = "required field")
     @Column(nullable = false)
@@ -79,6 +86,8 @@ public class Questionnaire implements Serializable {
                 ", targetRespondentIDList=" + targetRespondentIDList +
                 ", questionIDList=" + questionIDList +
                 ", responseIDList=" + responseIDList +
+                ", responseStatus='" + responseStatus + '\'' +
+                ", responseFlag=" + responseFlag +
                 ", senderName='" + senderName + '\'' +
                 ", senderJobTitle='" + senderJobTitle + '\'' +
                 ", questionnaireStatus=" + questionnaireStatus +
@@ -192,5 +201,21 @@ public class Questionnaire implements Serializable {
 
     public void setResponseIDList(List<Integer> responseIDList) {
         this.responseIDList = responseIDList;
+    }
+
+    public String getResponseStatus() {
+        return responseStatus;
+    }
+
+    public void setResponseStatus(String responseStatus) {
+        this.responseStatus = responseStatus;
+    }
+
+    public boolean isResponseFlag() {
+        return responseFlag;
+    }
+
+    public void setResponseFlag(boolean responseFlag) {
+        this.responseFlag = responseFlag;
     }
 }
