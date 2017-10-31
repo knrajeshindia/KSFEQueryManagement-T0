@@ -8,4 +8,6 @@ public interface ResponseDAO {
 
 
     Response verifyResponse(Integer questionnaireID);
+
+    Response getResponse(Integer responseID);
 }

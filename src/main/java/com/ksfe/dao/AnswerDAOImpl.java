@@ -15,8 +15,10 @@ import org.springframework.stereotype.Repository;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 /**
  * This is a Spring Repository bean class - DAO
@@ -32,6 +34,7 @@ public class AnswerDAOImpl implements AnswerDAO {
     private ArrayList<Answer> answerList;
     CriteriaBuilder criteriaBuilder;
     CriteriaQuery<Answer> query;
+    List<Answer> answerListRev1=new ArrayList<Answer>();
     Root<Answer> root;
     Query<Answer> q;
     Answer answer;
@@ -78,6 +81,15 @@ public class AnswerDAOImpl implements AnswerDAO {
             answer.setResponseID(responseID);
             session.update(answer);
         }
+    }
+//Retrieve answer List for responseID
+    @Override
+    public List<Answer> getAnswerList(Integer responseID) {
+        Serializable id = new Integer(responseID);
+        query.where(criteriaBuilder.equal(root.get("responseID"), id));
+        answerListRev1 = session.createQuery(query).getResultList();
+        System.out.println("Answer List: "+answerList);
+        return answerListRev1;
     }
 
     //Critieria builder instantiation

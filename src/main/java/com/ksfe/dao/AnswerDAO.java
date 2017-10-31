@@ -4,6 +4,7 @@ import com.ksfe.model.Answer;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 public interface AnswerDAO {
 
@@ -16,4 +17,6 @@ public interface AnswerDAO {
     Answer getAnswer(int pk);
 
     void updateAnswerList(Collection<Integer> answerIDList, Integer responseID);
+
+    List<Answer> getAnswerList(Integer responseID);
 }

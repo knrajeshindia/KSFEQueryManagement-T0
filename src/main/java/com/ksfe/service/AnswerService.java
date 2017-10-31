@@ -21,4 +21,6 @@ public interface AnswerService {
     String insertAnswer(ArrayList<Answer> answerList);
 
     void updateAnswerList(Collection<Integer> answerIDList, Integer responseID);
+
+    String getAnswerList(Integer responseID);
 }

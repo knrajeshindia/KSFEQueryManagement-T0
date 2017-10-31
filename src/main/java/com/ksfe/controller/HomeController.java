@@ -170,6 +170,16 @@ public class HomeController {
     }
 
 
+    //Retrieve Answer List
+    @RequestMapping(value="/getAnswerList",method=RequestMethod.POST)
+    public @ResponseBody String getAnswerList(@RequestParam("responseID") Integer responseID) {
+        System.out.println(getClass()+" | "+responseID);
+        jsonResponse=answerService.getAnswerList(responseID);
+        System.out.println("Answer List:"+jsonResponse);
+        return jsonResponse;
+    }
+
+
     //Insert Response
     @RequestMapping(value="/saveResponse",method=RequestMethod.POST)
     public @ResponseBody String saveResponse(
@@ -199,6 +209,16 @@ public class HomeController {
     	response.setResponseStatus(responseStatus);
         jsonResponse = responseService.insertResponse(response);
         System.out.println("DATA inserted :"+jsonResponse);
+        return jsonResponse;
+    }
+
+
+    //Retrieve Response
+    @RequestMapping(value="/getResponse",method=RequestMethod.POST)
+    public @ResponseBody String getResponse(@RequestParam("responseID") Integer responseID) {
+        System.out.println(getClass()+" | "+responseID);
+        jsonResponse=responseService.getResponse(responseID);
+        System.out.println("Response: "+jsonResponse);
         return jsonResponse;
     }
 

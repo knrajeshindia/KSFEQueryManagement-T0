@@ -10,8 +10,10 @@ import com.ksfe.service.AnswerService;
 import com.ksfe.util.ResponseCode;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -37,9 +39,11 @@ public class ResponseDAOImpl implements ResponseDAO {
     CriteriaBuilder criteriaBuilder;
     CriteriaQuery<Response> query;
     Root<Response> root;
+    Query<Response> q;
     String responseStatus;
     private Collection<Integer> answerIDList=new ArrayList<Integer>();
     private Response responseDummy;
+    private Response response;
 
     // Insert object
     @Override
@@ -85,6 +89,18 @@ public class ResponseDAOImpl implements ResponseDAO {
         }*/
         return responseDummy;
     }
+
+    //Get single Response object
+    @Override
+    public Response getResponse(Integer responseID) {
+        System.out.println(getClass());
+        bindDB();
+        query.where(criteriaBuilder.equal(root.get("responseID"), responseID));
+        q = session.createQuery(query);
+        response = q.getSingleResult();
+        System.out.println("Response: " + response);
+        return response;
+       }
 
     //Critieria builder instantiation
     void bindDB() {
