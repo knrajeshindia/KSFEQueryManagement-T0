@@ -849,7 +849,14 @@
       <option name="project" value="LOCAL" />
       <updated>1509439874375</updated>
     </task>
-    <option name="localTasksCounter" value="49" />
+    <task id="LOCAL-00049" summary="1.Response data inserted ID publish incorporated, &#10;2.File Attachment to be incorporated.&#10;&#10;Application CHECKED-WORKING.">
+      <created>1509440377309</created>
+      <option name="number" value="00049" />
+      <option name="presentableId" value="LOCAL-00049" />
+      <option name="project" value="LOCAL" />
+      <updated>1509440377309</updated>
+    </task>
+    <option name="localTasksCounter" value="50" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -915,7 +922,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Unit and Unit type association done -@ManytoOne&#10;Model Working -WORKING." />
     <MESSAGE value="1. password field added to unit;&#10;2. attachment fields added to response;&#10;3. response date added to response&#10;Model CHECKED-WORKING." />
     <MESSAGE value="1.Retrieve all Questions added-all modules&#10;Model CHECKED-WORKING." />
     <MESSAGE value="1.Retrieve single Question added-all modules&#10;Model CHECKED-WORKING." />
@@ -940,7 +946,8 @@
     <MESSAGE value="1.Answer LIST DAO functional.&#10;&#10;Application CHECKED-WORKING." />
     <MESSAGE value="1.Response DAO started.&#10;&#10;Application CHECKED-WORKING." />
     <MESSAGE value="1.Response DAO incorporated, File transfer to be checked.&#10;&#10;Application CHECKED-WORKING." />
-    <option name="LAST_COMMIT_MESSAGE" value="1.Response DAO incorporated, File transfer to be checked.&#10;&#10;Application CHECKED-WORKING." />
+    <MESSAGE value="1.Response data inserted ID publish incorporated, &#10;2.File Attachment to be incorporated.&#10;&#10;Application CHECKED-WORKING." />
+    <option name="LAST_COMMIT_MESSAGE" value="1.Response data inserted ID publish incorporated, &#10;2.File Attachment to be incorporated.&#10;&#10;Application CHECKED-WORKING." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
