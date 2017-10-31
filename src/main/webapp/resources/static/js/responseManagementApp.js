@@ -34,30 +34,7 @@ angular
             
             //---------------------------------
             
-            $scope.flagAnswer = false;
-            $scope.answerSave = false;
-            $scope.answerPublish = false;
-
-            $scope.questionnaireList = [];
-            $scope.questionList = [];
-            $scope.answerList = [];
-            $scope.answerObjectList = [];
-            $scope.unitID = 1;
-            $scope.dataType = "text";
-            $scope.response = [{
-                questionId: '',
-                answerDescription: "",
-                file: '',
-                fileDescription: "",
-                sender: "",
-                jobTitle: ""
-
-            }];
-            $scope.file = "";
-            $scope.fileDescription = "";
-            $scope.responseRemarks = "";
-            $scope.sender = "";
-            $scope.jobTitle = "";
+            
 
 //----------------------------------------------------------------------------------------------------
          // QUESTIONNAIRE

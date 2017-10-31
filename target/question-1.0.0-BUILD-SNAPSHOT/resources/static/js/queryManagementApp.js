@@ -57,13 +57,13 @@ angular
 
 					$scope.responseDataTypes = [ {
 						name : 'Text',
-						value : 'String'
+						value : 'text'
 					}, {
 						name : 'Number',
-						value : 'double'
+						value : 'number'
 					}, {
 						name : 'Date',
-						value : 'Date'
+						value : 'date'
 					} ];
 					$scope.responseDataType = $scope.responseDataTypes[0]; // String
 

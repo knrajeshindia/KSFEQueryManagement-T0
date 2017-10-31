@@ -1,4 +1,4 @@
-'use strict';
+/*use strict';
 
 angular.module('myApp').controller('UserController', ['$scope', 'UserService', function($scope, UserService) {
     var self = this;
@@ -91,3 +91,4 @@ angular.module('myApp').controller('UserController', ['$scope', 'UserService', f
     }
 
 }]);
+*/
