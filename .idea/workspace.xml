@@ -2,22 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ffa6b4bc-b049-4433-b992-00d00f8635c0" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/ksfe/dao/QuestionnaireDAOImpl.class" afterPath="$PROJECT_DIR$/target/classes/com/ksfe/dao/QuestionnaireDAOImpl.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/ksfe/dao/ResponseDAO.class" afterPath="$PROJECT_DIR$/target/classes/com/ksfe/dao/ResponseDAO.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/ksfe/dao/ResponseDAOImpl.class" afterPath="$PROJECT_DIR$/target/classes/com/ksfe/dao/ResponseDAOImpl.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/ksfe/model/Questionnaire.class" afterPath="$PROJECT_DIR$/target/classes/com/ksfe/model/Questionnaire.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/ksfe/service/ResponseService.class" afterPath="$PROJECT_DIR$/target/classes/com/ksfe/service/ResponseService.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/ksfe/service/ResponseServiceImpl.class" afterPath="$PROJECT_DIR$/target/classes/com/ksfe/service/ResponseServiceImpl.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/ksfe/dao/QuestionnaireDAOImpl.java" afterPath="$PROJECT_DIR$/src/main/java/com/ksfe/dao/QuestionnaireDAOImpl.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/ksfe/dao/ResponseDAO.java" afterPath="$PROJECT_DIR$/src/main/java/com/ksfe/dao/ResponseDAO.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/ksfe/dao/ResponseDAOImpl.java" afterPath="$PROJECT_DIR$/src/main/java/com/ksfe/dao/ResponseDAOImpl.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/ksfe/model/Questionnaire.java" afterPath="$PROJECT_DIR$/src/main/java/com/ksfe/model/Questionnaire.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/ksfe/service/ResponseService.java" afterPath="$PROJECT_DIR$/src/main/java/com/ksfe/service/ResponseService.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/ksfe/service/ResponseServiceImpl.java" afterPath="$PROJECT_DIR$/src/main/java/com/ksfe/service/ResponseServiceImpl.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/home-branch.jsp" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/home-branch.jsp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/resources/static/js/responseManagementApp.js" afterPath="$PROJECT_DIR$/src/main/webapp/resources/static/js/responseManagementApp.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/m2e-wtp/web-resources/META-INF/maven/com.ksfe/question/pom.properties" afterPath="$PROJECT_DIR$/target/m2e-wtp/web-resources/META-INF/maven/com.ksfe/question/pom.properties" />
     </list>
     <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -550,13 +535,6 @@
       <option name="presentableId" value="Default" />
       <updated>1508035558007</updated>
     </task>
-    <task id="LOCAL-00005" summary="UnitType bean and associated service/dao created;&#10;MOdel Working OK.">
-      <created>1508073881199</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
-      <option name="project" value="LOCAL" />
-      <updated>1508073881199</updated>
-    </task>
     <task id="LOCAL-00006" summary="questionnaire + Target bean and associated service/dao created;&#10;MOdel Working .">
       <created>1508146941807</created>
       <option name="number" value="00006" />
@@ -893,7 +871,14 @@
       <option name="project" value="LOCAL" />
       <updated>1509475877190</updated>
     </task>
-    <option name="localTasksCounter" value="54" />
+    <task id="LOCAL-00054" summary="1. OPEN/MODIFY Buttons and Response status for individuall questionnaires functional&#10;&#10;Application CHECKED-WORKING.">
+      <created>1509477280079</created>
+      <option name="number" value="00054" />
+      <option name="presentableId" value="LOCAL-00054" />
+      <option name="project" value="LOCAL" />
+      <updated>1509477280079</updated>
+    </task>
+    <option name="localTasksCounter" value="55" />
     <servers />
   </component>
   <component name="ToolWindowManager">
