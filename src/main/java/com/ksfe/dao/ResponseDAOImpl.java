@@ -6,6 +6,7 @@ package com.ksfe.dao;
 
 import com.ksfe.model.Response;
 
+import com.ksfe.service.AnswerService;
 import com.ksfe.util.ResponseCode;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -16,6 +17,8 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -28,11 +31,14 @@ import java.util.List;
 public class ResponseDAOImpl implements ResponseDAO {
     @Autowired
     private SessionFactory sessionFactory;
+    @Autowired
+    private AnswerService answerService;
     private Session session;
     CriteriaBuilder criteriaBuilder;
     CriteriaQuery<Response> query;
     Root<Response> root;
     String responseStatus;
+    private Collection<Integer> answerIDList=new ArrayList<Integer>();
 
     // Insert object
     @Override
@@ -40,6 +46,8 @@ public class ResponseDAOImpl implements ResponseDAO {
         System.out.println(getClass());
         sessionFactory.getCurrentSession().save(response);
         System.out.println("Inserted Response: " + response);
+        answerIDList=response.getAnswerIDList();
+        answerService.updateAnswerList(answerIDList,response.getResponseID());
         return response;
     }
 

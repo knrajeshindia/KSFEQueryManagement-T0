@@ -48,6 +48,7 @@ public class QuestionnaireDAOImpl implements QuestionnaireDAO {
     Root<Questionnaire> root;
     Query<Questionnaire> q;
     Date today = new Date();
+    String responseStatus;
 
 
     // Insert object
@@ -90,25 +91,28 @@ public class QuestionnaireDAOImpl implements QuestionnaireDAO {
     public List<Questionnaire> viewPendingQuestionnaireList(Integer userID) {
         System.out.println(getClass() + "USER ID:" + userID);
         bindDB();
+
         Predicate filter = criteriaBuilder.and(
                 criteriaBuilder.isMember(userID, root.get("targetRespondentIDList")),
                 criteriaBuilder.greaterThanOrEqualTo(root.get("dueDate"), today),
                 criteriaBuilder.equal(root.get("questionnairePhase"), "PUBLISHED"));
         query.where(criteriaBuilder.and(filter));
+        //ORDER BY
+        query.orderBy(criteriaBuilder.asc(root.get("dueDate")));
         questionnaireList = session.createQuery(query).getResultList();
-
+        questionnaireListFiltered.clear();
         //Filter-out answered questionnaire
         for (Questionnaire questionnaire : questionnaireList) {
-            String responseStatus = responseService.verifyResponse(questionnaire.getQuestionnaireID());
+            responseStatus = responseService.verifyResponse(questionnaire.getQuestionnaireID());
             questionnaire.setResponseStatus(responseStatus);
-            //Set flag for questionnaire OPEN/MODIFY button view
-            if (responseStatus.equalsIgnoreCase(ResponseCode.STATUS_NOT_RESPONDED)) {
-                questionnaire.setResponseFlag(false);
-            } else {
-                questionnaire.setResponseFlag(true);
-            }
 
             if (!responseStatus.equalsIgnoreCase(ResponseCode.STATUS_PUBLISHED)) {
+                //Set flag for questionnaire OPEN/MODIFY button view
+                if (responseStatus.equalsIgnoreCase(ResponseCode.STATUS_NOT_RESPONDED)) {
+                    questionnaire.setResponseFlag(false);
+                } else {
+                    questionnaire.setResponseFlag(true);
+                }
                 questionnaireListFiltered.add(questionnaire);
             }
         }

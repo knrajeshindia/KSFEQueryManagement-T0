@@ -7,6 +7,7 @@ package com.ksfe.service;
 import com.ksfe.model.Answer;
 
 import java.util.ArrayList;
+import java.util.Collection;
 
 /**
  * This is a Java Interface declaring Service methods
@@ -18,4 +19,6 @@ public interface AnswerService {
     public void insertAnswer(Answer answer);
 
     String insertAnswer(ArrayList<Answer> answerList);
+
+    void updateAnswerList(Collection<Integer> answerIDList, Integer responseID);
 }

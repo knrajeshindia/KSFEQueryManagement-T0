@@ -173,6 +173,57 @@ angular
 													function(result) {
 														$window.alert("Server response-FAILURE! Please try again later");
 													});};
+													
+													
+													
+													// VIEW/MODIFY RESPONSE
+//													$scope.modifyResponse = function(index) {
+//														//Flags
+//														$scope.flagQuestionnaireView = false;
+//														$scope.flagQuestionView = true;
+//														$scope.flagAnswerProcess = true;
+//														//Variables
+//														$scope.selectedQuestionIDList = [];
+//														$scope.questionList = [];
+//														$scope.questionnaireID ="";
+//														$scope.responseDataType = "";
+//														$scope.responseRemarks="";
+//														$scope.fileDescription="";
+//														$scope.file="";
+//														$scope.respondentName="";
+//														$scope.respondentJobTitle="";
+//														
+//														$scope.answerIDList=[];
+//														$scope.responseStatus="";						
+//														$scope.message="";
+//														$scope.response="";
+//														var len="";
+//														var qID="";
+//														$scope.questionnaireID = $scope.questionnaireList[index].questionnaireID;
+//														len = $scope.questionnaireList[index].questionIDList.length;
+//														for (var i = 0; i < len; i++) {
+//															qID = parseInt($scope.questionnaireList[index].questionIDList[i]);
+//															$scope.selectedQuestionIDList.push(qID);
+//														}
+//														//Service
+//														$http({		method : "post",
+//																	url : "/query/viewQuest",
+//																	params : {
+//																		"questionIDList" : $scope.selectedQuestionIDList
+//																	}}).then(function(result) {
+//																			$scope.response = angular
+//																					.fromJson(result.data);
+//																			if ($scope.response.status === "SUCCESS") {
+//																				$scope.message = $scope.response.message;
+//																				$scope.questionList = angular.fromJson($scope.response.data);
+//																				
+//																				
+//																				
+//																				
+//																			}},
+//																		function(result) {
+//																			$window.alert("Server response-FAILURE! Please try again later");
+//																		});};
 									
 								// ---------------------------------------------------------------------------------
 								

@@ -61,7 +61,7 @@ input[type=checkbox] {
 				<td><label>{{questionnaire.responseStatus}}</label></td>
 				<td>
 				<button ng-click="viewQuest($index)" ng-hide={{questionnaire.responseFlag}} >OPEN</button> 
-				<button ng-click="#" ng-show={{questionnaire.responseFlag}} >MODIFY</button><br></td>
+				<button ng-click="modifyAnswer($index)" ng-show={{questionnaire.responseFlag}} >MODIFY</button><br></td>
 			</tr>
 		</table>
 	</div>
