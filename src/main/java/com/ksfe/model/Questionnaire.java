@@ -49,9 +49,10 @@ public class Questionnaire implements Serializable {
     //to hold responseStatus for each Questionnaire for a userID - to fileter answered questionnaire
     @Transient
     private String responseStatus;
-
     @Transient
     private boolean responseFlag;
+    @Transient
+    private Integer responseID;
 
 
     @NotNull(message = "required field")
@@ -88,6 +89,7 @@ public class Questionnaire implements Serializable {
                 ", responseIDList=" + responseIDList +
                 ", responseStatus='" + responseStatus + '\'' +
                 ", responseFlag=" + responseFlag +
+                ", responseID=" + responseID +
                 ", senderName='" + senderName + '\'' +
                 ", senderJobTitle='" + senderJobTitle + '\'' +
                 ", questionnaireStatus=" + questionnaireStatus +
@@ -217,5 +219,13 @@ public class Questionnaire implements Serializable {
 
     public void setResponseFlag(boolean responseFlag) {
         this.responseFlag = responseFlag;
+    }
+
+    public Integer getResponseID() {
+        return responseID;
+    }
+
+    public void setResponseID(Integer responseID) {
+        this.responseID = responseID;
     }
 }

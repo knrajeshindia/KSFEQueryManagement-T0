@@ -43,6 +43,7 @@ input[type=checkbox] {
 				<th>QuestionID</th>
 				<th>Sender</th>
 				<th>JobTitle</th>
+				<th>ResponseID</th>
 				<th>Status</th>
 			</tr>
 
@@ -58,10 +59,11 @@ input[type=checkbox] {
 				<td><label>{{questionnaire.questionIDList}}</label></td>
 				<td><label>{{questionnaire.senderName}}</label></td>
 				<td><label>{{questionnaire.senderJobTitle}}</label></td>
+				<td><label>{{questionnaire.responseID}}</label></td>
 				<td><label>{{questionnaire.responseStatus}}</label></td>
 				<td>
 				<button ng-click="viewQuest($index)" ng-hide={{questionnaire.responseFlag}} >OPEN</button> 
-				<button ng-click="modifyAnswer($index)" ng-show={{questionnaire.responseFlag}} >MODIFY</button><br></td>
+				<button ng-click="modifyResponse($index)" ng-show={{questionnaire.responseFlag}} >MODIFY</button><br></td>
 			</tr>
 		</table>
 	</div>

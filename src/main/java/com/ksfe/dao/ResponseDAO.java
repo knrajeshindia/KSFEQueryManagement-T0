@@ -7,5 +7,5 @@ public interface ResponseDAO {
 	public Response insertResponse(Response response) ;
 
 
-    String verifyResponse(Integer questionnaireID);
+    Response verifyResponse(Integer questionnaireID);
 }

@@ -39,6 +39,7 @@ public class ResponseDAOImpl implements ResponseDAO {
     Root<Response> root;
     String responseStatus;
     private Collection<Integer> answerIDList=new ArrayList<Integer>();
+    private Response responseDummy;
 
     // Insert object
     @Override
@@ -53,25 +54,28 @@ public class ResponseDAOImpl implements ResponseDAO {
 
     //Verify response status for questionnaireID
     @Override
-    public String verifyResponse(Integer questionnaireID) {
+    public Response verifyResponse(Integer questionnaireID) {
         System.out.println(getClass());
         bindDB();
         Serializable id = new Integer(questionnaireID);
         query.where(criteriaBuilder.equal(root.get("questionnaireID"), id));
         List<Response> responseList = session.createQuery(query).getResultList();
+        responseDummy=new Response();
 
         if (responseList.size() > 0) {
             for (Response response : responseList) {
                 if (response.getResponseStatus().equalsIgnoreCase("PUBLISHED")) {
-                    responseStatus = ResponseCode.STATUS_PUBLISHED;
-                    return responseStatus;
+                    responseDummy.setResponseStatus(ResponseCode.STATUS_PUBLISHED);
+                    responseDummy.setResponseID(response.getResponseID());
+                    return responseDummy;
                 } else {
-                    responseStatus = ResponseCode.STATUS_DRAFT;
-                    return responseStatus;
+                    responseDummy.setResponseStatus(ResponseCode.STATUS_DRAFT);
+                    responseDummy.setResponseID(response.getResponseID());
+                    return responseDummy;
                 }
             }
         }
-        responseStatus = ResponseCode.STATUS_NOT_RESPONDED;
+        responseDummy.setResponseStatus(ResponseCode.STATUS_NOT_RESPONDED);
        /* Response response = session.createQuery(query).getSingleResult();
         System.out.println("Response object"+response);
         if(response !=null){
@@ -79,7 +83,7 @@ public class ResponseDAOImpl implements ResponseDAO {
                 return true;
             }
         }*/
-        return responseStatus;
+        return responseDummy;
     }
 
     //Critieria builder instantiation

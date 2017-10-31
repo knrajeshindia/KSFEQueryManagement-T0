@@ -10,6 +10,7 @@ package com.ksfe.dao;
 
 import com.ksfe.model.Questionnaire;
 
+import com.ksfe.model.Response;
 import com.ksfe.service.ResponseService;
 import com.ksfe.util.ResponseCode;
 import org.hibernate.Session;
@@ -48,7 +49,8 @@ public class QuestionnaireDAOImpl implements QuestionnaireDAO {
     Root<Questionnaire> root;
     Query<Questionnaire> q;
     Date today = new Date();
-    String responseStatus;
+    private Response response;
+    private String responseStatus;
 
 
     // Insert object
@@ -103,8 +105,10 @@ public class QuestionnaireDAOImpl implements QuestionnaireDAO {
         questionnaireListFiltered.clear();
         //Filter-out answered questionnaire
         for (Questionnaire questionnaire : questionnaireList) {
-            responseStatus = responseService.verifyResponse(questionnaire.getQuestionnaireID());
+            response = responseService.verifyResponse(questionnaire.getQuestionnaireID());
+            responseStatus=response.getResponseStatus();
             questionnaire.setResponseStatus(responseStatus);
+            questionnaire.setResponseID(response.getResponseID());
 
             if (!responseStatus.equalsIgnoreCase(ResponseCode.STATUS_PUBLISHED)) {
                 //Set flag for questionnaire OPEN/MODIFY button view
