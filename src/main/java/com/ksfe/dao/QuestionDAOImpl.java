@@ -6,7 +6,6 @@ package com.ksfe.dao;
 
 import com.ksfe.model.Question;
 import com.ksfe.model.Questionnaire;
-
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
@@ -19,10 +18,8 @@ import javax.persistence.criteria.Root;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
-import java.util.logging.Logger;
 
 /**
  * This is a Spring Repository bean class - DAO

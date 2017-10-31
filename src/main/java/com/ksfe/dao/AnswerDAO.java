@@ -18,5 +18,5 @@ public interface AnswerDAO {
 
     void updateAnswerList(Collection<Integer> answerIDList, Integer responseID);
 
-    List<Answer> getAnswerList(Integer responseID);
+    List<Answer> getAnswerList(int responseID);
 }

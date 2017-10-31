@@ -25,6 +25,7 @@ angular
 					$scope.answerIDList = [];
 					$scope.responseStatus = "";
 					$scope.responseArray =[];
+					$scope.answerArray=[];
 
 					// FLAGS
 					$scope.flagQuestionnaireView = false;
@@ -135,8 +136,6 @@ angular
 														.fromJson($scope.response.data);
 												
 												
-												//PULL UP RESPONSE
-												$scope.getResponse();
 //												
 												
 												
@@ -217,14 +216,16 @@ angular
 					$scope.modifyResponse = function(index) {
 						$scope.responseID = $scope.questionnaireList[index].responseID;
 						
-//						$scope.viewQuest(index);						
+						$scope.viewQuest(index);						
 						// Flags
-						$scope.flagAnswerProcess = true;
-						
+						$scope.flagAnswerProcess = false;
+						$scope.flagQuestionnaireView = false;
+						$scope.flagQuestionView = false;
 						
 						//PULL UP ANSWERS
 						$scope.getAnswerList();
 						
+
 						
 						
 						
@@ -242,7 +243,7 @@ angular
 						// Flags
 						// Variables
 						// Service
-						alert("getAnswerList function called "+$scope.responseID);
+						
 						$http({
 							method : "post",
 							url : "/query/getAnswerList",
@@ -256,13 +257,21 @@ angular
 													.fromJson(result.data);
 											if ($scope.response.status === "SUCCESS") {
 												$scope.message = $scope.response.message;
-												$scope.answerList = angular
+												$scope.answerArray = angular
 														.fromJson($scope.response.data);
+//												// extract answers from JSON
+//												var len = $scope.answerArray.length;
+//												for (var i = 0; i < len; i++) {
+//													var answer = $scope.answerList[i].answerDescription;
+//													$scope.answerList.push(answer);
+//												}
+												
 												alert($scope.message);
 												
 												
 												
-												
+												//PULL UP RESPONSE
+												$scope.getResponse();
 												
 												
 												
@@ -342,7 +351,7 @@ angular
 
 					// Pull UP RESPONSE
 					$scope.getResponse = function() {
-						alert("getResponse function called"+$scope.responseID);
+						
 						// Flags
 						// Variables
 						$scope.responseArray =[];
@@ -362,6 +371,19 @@ angular
 												$scope.message = $scope.response.message;
 												$scope.responseArray = angular
 														.fromJson($scope.response.data);
+												
+												
+												$scope.responseRemarks=$scope.responseArray.responseRemarks;
+												$scope.fileDescription=$scope.responseArray.attachmentDescription;
+												//$scope.file,
+												$scope.respondentName=$scope.responseArray.respondentName;
+												$scope.respondentJobTitle=$scope.responseArray.respondentJobTitle;
+												//Flags
+												$scope.flagAnswerProcess = true;
+												$scope.flagQuestionnaireView = false;
+												$scope.flagQuestionView = true;
+												
+												
 												alert($scope.message);
 											}
 										},

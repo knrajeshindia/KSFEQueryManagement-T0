@@ -15,7 +15,6 @@ import org.springframework.stereotype.Repository;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -82,13 +81,16 @@ public class AnswerDAOImpl implements AnswerDAO {
             session.update(answer);
         }
     }
+
 //Retrieve answer List for responseID
     @Override
-    public List<Answer> getAnswerList(Integer responseID) {
-        Serializable id = new Integer(responseID);
-        query.where(criteriaBuilder.equal(root.get("responseID"), id));
-        answerListRev1 = session.createQuery(query).getResultList();
-        System.out.println("Answer List: "+answerList);
+    public List<Answer> getAnswerList(int responseID) {
+        System.out.println(getClass()+"|"+responseID);
+        bindDB();
+        query.where(criteriaBuilder.equal(root.get("responseID"), responseID));
+        q = session.createQuery(query);
+        answerListRev1 = q.getResultList();
+        System.out.println("Answer List: "+answerListRev1);
         return answerListRev1;
     }
 

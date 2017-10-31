@@ -22,5 +22,5 @@ public interface AnswerService {
 
     void updateAnswerList(Collection<Integer> answerIDList, Integer responseID);
 
-    String getAnswerList(Integer responseID);
+    String getAnswerList(int responseID);
 }

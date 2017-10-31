@@ -172,7 +172,7 @@ public class HomeController {
 
     //Retrieve Answer List
     @RequestMapping(value="/getAnswerList",method=RequestMethod.POST)
-    public @ResponseBody String getAnswerList(@RequestParam("responseID") Integer responseID) {
+    public @ResponseBody String getAnswerList(@RequestParam("responseID") int responseID) {
         System.out.println(getClass()+" | "+responseID);
         jsonResponse=answerService.getAnswerList(responseID);
         System.out.println("Answer List:"+jsonResponse);

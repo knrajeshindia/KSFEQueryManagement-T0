@@ -75,7 +75,7 @@ public class AnswerServiceImpl implements AnswerService {
     //Retrieve answerList from responseID
     @Override
     @Transactional
-    public String getAnswerList(Integer responseID) {
+    public String getAnswerList(int responseID) {
         System.out.println(getClass());
         jsonData = setJsonData();
         System.out.println("Json Data :" + jsonData);
