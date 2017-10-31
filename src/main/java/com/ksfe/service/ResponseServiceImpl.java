@@ -26,7 +26,7 @@ import javax.transaction.Transactional;
 @Service
 public class ResponseServiceImpl implements ResponseService {
     @Autowired
-	private ResponseDAO responseDAO;
+    private ResponseDAO responseDAO;
     Response response;
     String jsonResponse;
     static JsonData jsonData;
@@ -52,7 +52,14 @@ public class ResponseServiceImpl implements ResponseService {
         jsonResponse = JsonUtil.convertJavaToJson(jsonData);
         System.out.println(jsonResponse);
         return jsonResponse;
-        }
+    }
+
+    //Method to verify if a response exist for questionnaireID
+    @Override
+    @Transactional
+    public boolean verifyResponse(Integer questionnaireID) {
+        return responseDAO.verifyResponse(questionnaireID);
+    }
 
     //Set default message data
     public static JsonData setJsonData() {

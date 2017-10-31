@@ -10,6 +10,7 @@ package com.ksfe.dao;
 
 import com.ksfe.model.Questionnaire;
 
+import com.ksfe.service.ResponseService;
 import com.ksfe.util.ResponseCode;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -36,9 +37,12 @@ import java.util.List;
 public class QuestionnaireDAOImpl implements QuestionnaireDAO {
     @Autowired
     private SessionFactory sessionFactory;
+    @Autowired
+    private ResponseService responseService;
     private Questionnaire questionnaire;
     private Session session;
     List<Questionnaire> questionnaireList = new ArrayList<Questionnaire>();
+    List<Questionnaire> questionnaireListFiltered = new ArrayList<Questionnaire>();
     CriteriaBuilder criteriaBuilder;
     CriteriaQuery<Questionnaire> query;
     Root<Questionnaire> root;
@@ -81,27 +85,26 @@ public class QuestionnaireDAOImpl implements QuestionnaireDAO {
         return questionnaire;
     }
 
-    //Retrieve all pending questionnaire List for userID
+    //Retrieve all pending questionnaireList for userID
     @Override
     public List<Questionnaire> viewPendingQuestionnaireList(Integer userID) {
         System.out.println(getClass() + "USER ID:" + userID);
         bindDB();
-        Predicate filter =  criteriaBuilder.and(
+        Predicate filter = criteriaBuilder.and(
                 criteriaBuilder.isMember(userID, root.get("targetRespondentIDList")),
-        criteriaBuilder.greaterThanOrEqualTo(root.get("dueDate"), today),
+                criteriaBuilder.greaterThanOrEqualTo(root.get("dueDate"), today),
                 criteriaBuilder.equal(root.get("questionnairePhase"), "PUBLISHED"));
         query.where(criteriaBuilder.and(filter));
-        /*
-
-                query.where(criteriaBuilder.isMember(userID, root.<List<Integer>>get("targetRespondentIDList")));
-        query.where(criteriaBuilder.greaterThanOrEqualTo(root.get("dueDate"), today));
-        query.where(criteriaBuilder.equal(root.get("questionnairePhase"), "PUBLISHED"));*/
         questionnaireList = session.createQuery(query).getResultList();
-        System.out.println("Questionnairelist-Complete records for userID: " + questionnaireList);
 
-
-
-        return questionnaireList;
+        //Filter-out answered questionnaire
+        for (Questionnaire questionnaire : questionnaireList) {
+            if (!responseService.verifyResponse(questionnaire.getQuestionnaireID())) {
+                questionnaireListFiltered.add(questionnaire);
+            }
+        }
+        System.out.println("Questionnairelist-Complete records for userID: " + questionnaireListFiltered);
+        return questionnaireListFiltered;
     }
 
 

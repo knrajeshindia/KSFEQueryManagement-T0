@@ -16,4 +16,5 @@ import com.ksfe.model.Response;
  */
 public interface ResponseService {
     public String insertResponse(Response response);
+    public boolean verifyResponse(Integer questionnaireID);
 }
