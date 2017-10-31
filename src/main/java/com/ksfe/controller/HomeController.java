@@ -4,16 +4,10 @@
  */
 package com.ksfe.controller;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.*;
-import java.util.stream.Collectors;
-
 import com.ksfe.dao.UnitDAOImpl;
 import com.ksfe.model.*;
 import com.ksfe.service.*;
 import com.ksfe.util.StringToDate;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
@@ -21,8 +15,15 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import javax.validation.Valid;
+import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * This is a Spring MVC based web Controller class
@@ -58,6 +59,7 @@ public class HomeController {
     List<Integer> questionIDList;
     private Answer answer;
     private ArrayList<Answer> answerList;
+    byte attachmentFile[];
 
 	/*
      * @Autowired private QuestionnaireValidator questionnaireValidator;
@@ -171,23 +173,25 @@ public class HomeController {
     //Insert Response
     @RequestMapping(value="/saveResponse",method=RequestMethod.POST)
     public @ResponseBody String saveResponse(
-    		@RequestParam("unitID") Integer unitID,
-    		@RequestParam("questionnaireID") Integer questionnaireID,
-    		@RequestParam("responseRemarks") String responseRemarks,
-    		@RequestParam("attachmentDescription") String attachmentDescription,
-    		@RequestParam("attachmentFile") byte[] attachmentFile,
-    		@RequestParam("respondentName") String respondentName,
-    		@RequestParam("respondentJobTitle") String respondentJobTitle,
-    		
-    		@RequestParam("answerIDList") ArrayList<Integer>answerIDList,
-    		@RequestParam("responseStatus") String responseStatus){
+            @RequestParam("unitID") Integer unitID,
+            @RequestParam("questionnaireID") Integer questionnaireID,
+            @RequestParam("responseRemarks") String responseRemarks,
+            @RequestParam("attachmentDescription") String attachmentDescription,
+           /* @RequestParam("attachmentFile") CommonsMultipartFile file,*/
+            @RequestParam("respondentName") String respondentName,
+            @RequestParam("respondentJobTitle") String respondentJobTitle,
+
+            @RequestParam("answerIDList") ArrayList<Integer>answerIDList,
+            @RequestParam("responseStatus") String responseStatus){
     	System.out.println("Form data binded - Trying to insert " + response);
     	response=new Response();
     	response.setUnitID(unitID);
     	response.setQuestionnaireID(questionnaireID);
     	response.setResponseRemarks(responseRemarks);
     	response.setAttachmentDescription(attachmentDescription);
-    	response.setAttachmentFile(attachmentFile);
+    	//Attach FILE        
+		/*attachmentFile = file.getBytes();
+		response.setAttachmentFile(attachmentFile);*/
     	response.setRespondentName(respondentName);
     	response.setRespondentJobTitle(respondentJobTitle);
     	response.setResponseDate(new Date());
