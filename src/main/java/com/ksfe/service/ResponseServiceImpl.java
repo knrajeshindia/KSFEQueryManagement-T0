@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * This is a Spring Service class - for implementing Service requirements
@@ -29,6 +30,7 @@ public class ResponseServiceImpl implements ResponseService {
     @Autowired
     private ResponseDAO responseDAO;
     Response response;
+    List<Response> responseList=new ArrayList<Response>();
     String jsonResponse;
     static JsonData jsonData;
 
@@ -84,13 +86,35 @@ public class ResponseServiceImpl implements ResponseService {
         jsonResponse = JsonUtil.convertJavaToJson(jsonData);
         System.out.println(jsonResponse);
         return jsonResponse;
+    }
+
+    //Update Response
+    @Override
+    @Transactional
+    public String updateResponse(Response response) {
+        System.out.println(getClass());
+        jsonData = setJsonData();
+        System.out.println("Json Data :" + jsonData);
+        try {
+            response = responseDAO.updateResponse(response);
+            System.out.println(responseList);
+            jsonResponse = JsonUtil.convertJavaToJson(responseList);
+            jsonData.setData(jsonResponse);
+            jsonData.setStatus(ResponseCode.STATUS_SUCCESS);
+            jsonData.setMessage(ResponseCode.MESSAGE_UPDATED);
+        } catch (EmptyResultDataAccessException e) {
+            jsonData.setMessage(ResponseCode.MESSAGE_FAILURE);
+        } catch (DataAccessException de) {
+            jsonData.setMessage(ResponseCode.MESSAGE_NETWORK);
         }
+        jsonResponse = JsonUtil.convertJavaToJson(jsonData);
+        System.out.println(jsonResponse);
+        return jsonResponse;
+    }
 
     //Set default message data
     public static JsonData setJsonData() {
-        if (jsonData == null) {
-            jsonData = new JsonData();
-        }
+        jsonData = new JsonData();
         jsonData.setStatus(ResponseCode.STATUS_FAILURE);
         jsonData.setMessage(ResponseCode.MESSAGE_INITIALISED);
         return jsonData;

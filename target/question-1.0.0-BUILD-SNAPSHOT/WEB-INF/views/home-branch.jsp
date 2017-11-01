@@ -27,8 +27,8 @@ input[type=checkbox] {
 <body ng-controller="responseController">
 	<h2>Response Form</h2>
 	<hr>
-	<button ng-click="viewQuestionnaire()">View Pending
-		Questionnaire</button>
+	<button ng-click="viewQuestionnaire()">View Valid Questionnaire</button>
+	<button ng-click="#">View Complete Questionnaire</button>
 	<br>
 
 	<div ng-show="flagQuestionnaireView">
@@ -43,6 +43,8 @@ input[type=checkbox] {
 				<th>QuestionID</th>
 				<th>Sender</th>
 				<th>JobTitle</th>
+				<th>ResponseID</th>
+				<th>Status</th>
 			</tr>
 
 			<tr ng-repeat="questionnaire in questionnaireList">
@@ -57,7 +59,11 @@ input[type=checkbox] {
 				<td><label>{{questionnaire.questionIDList}}</label></td>
 				<td><label>{{questionnaire.senderName}}</label></td>
 				<td><label>{{questionnaire.senderJobTitle}}</label></td>
-				<td><button ng-click="viewQuest($index)">SELECT</button> <br></td>
+				<td><label>{{questionnaire.responseID}}</label></td>
+				<td><label>{{questionnaire.responseStatus}}</label></td>
+				<td>
+				<button ng-click="viewQuest($index)" ng-hide={{questionnaire.responseFlag}} >OPEN</button> 
+				<button ng-click="modifyResponse($index)" ng-show={{questionnaire.responseFlag}} >MODIFY</button><br></td>
 			</tr>
 		</table>
 	</div>
@@ -83,7 +89,7 @@ input[type=checkbox] {
 				<td><label>{{q.questionID}}</label></td>
 				<td><label>{{q.questionDescription}}</label></td>
 				<td><label>{{q.responseDataType}}</label></td>
-				<td><input type={{q.responseDataType}} ng-model="answerList[$index]" /></td>
+				<td><input type={{q.responseDataType}} ng-model="answerList[$index]" placeholder={{answerList[$index]}} /></td>
 			</tr>
 
 			<tr>
@@ -110,7 +116,7 @@ input[type=checkbox] {
 
 				<td>
 					<button type="button" ng-click="saveAnswer()" ng-hide="flagAnswerProcess">SAVE</button>
-					<button type="button" ng-click="modifyAnswer()" ng-show="flagAnswerProcess">PUBLISH</button>
+					<button type="button" ng-click="publishAnswer()" ng-show="flagAnswerProcess">PUBLISH</button>
 				</td>
 			</tr>
 
@@ -120,10 +126,8 @@ input[type=checkbox] {
 
 	</div>
 	
-	<div ng-show="flagResponseConfirmation" >
-	
-	<strong>Response Saved: ID - {{responseID}}</strong>
-	
+	<div ng-show="flagResponseConfirmation" ><br>	
+	<strong>Response Saved: ID - {{responseID}}</strong>	
 	</div>
 
 

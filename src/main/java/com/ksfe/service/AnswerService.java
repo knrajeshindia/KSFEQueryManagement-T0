@@ -6,8 +6,10 @@ package com.ksfe.service;
 
 import com.ksfe.model.Answer;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 /**
  * This is a Java Interface declaring Service methods
@@ -21,6 +23,10 @@ public interface AnswerService {
     String insertAnswer(ArrayList<Answer> answerList);
 
     void updateAnswerList(Collection<Integer> answerIDList, Integer responseID);
+
+    //Update Answers - Publish
+    @Transactional
+    String updateAnswerList(List<Answer> answerList);
 
     String getAnswerList(int responseID);
 }
