@@ -21,6 +21,7 @@ import javax.persistence.criteria.Root;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -41,9 +42,10 @@ public class ResponseDAOImpl implements ResponseDAO {
     Root<Response> root;
     Query<Response> q;
     String responseStatus;
-    private Collection<Integer> answerIDList=new ArrayList<Integer>();
+    private Collection<Integer> answerIDList = new ArrayList<Integer>();
     private Response responseDummy;
     private Response response;
+    private int responseID;
 
     // Insert object
     @Override
@@ -51,8 +53,8 @@ public class ResponseDAOImpl implements ResponseDAO {
         System.out.println(getClass());
         sessionFactory.getCurrentSession().save(response);
         System.out.println("Inserted Response: " + response);
-        answerIDList=response.getAnswerIDList();
-        answerService.updateAnswerList(answerIDList,response.getResponseID());
+        answerIDList = response.getAnswerIDList();
+        answerService.updateAnswerList(answerIDList, response.getResponseID());
         return response;
     }
 
@@ -64,7 +66,7 @@ public class ResponseDAOImpl implements ResponseDAO {
         Serializable id = new Integer(questionnaireID);
         query.where(criteriaBuilder.equal(root.get("questionnaireID"), id));
         List<Response> responseList = session.createQuery(query).getResultList();
-        responseDummy=new Response();
+        responseDummy = new Response();
 
         if (responseList.size() > 0) {
             for (Response response : responseList) {
@@ -92,15 +94,33 @@ public class ResponseDAOImpl implements ResponseDAO {
 
     //Get single Response object
     @Override
-    public Response getResponse(Integer responseID) {
-        System.out.println(getClass());
+    public Response getResponse(int responseID) {
+        System.out.println(getClass().getName());
         bindDB();
         query.where(criteriaBuilder.equal(root.get("responseID"), responseID));
         q = session.createQuery(query);
-        response = q.getSingleResult();
-        System.out.println("Response: " + response);
-        return response;
-       }
+        this.response = q.getSingleResult();
+        System.out.println("Response: " + this.response);
+        return this.response;
+    }
+
+    //Update response-PUBLISH
+    @Override
+    public Response updateResponse(Response response) {
+        System.out.println(getClass()+"|"+response);
+        responseDummy=getResponse(response.getResponseID());
+        bindDB();
+            responseDummy.setResponseRemarks(response.getResponseRemarks());
+            /*responseDummy.setAttachmentFile(response.getAttachmentFile());*/
+            responseDummy.setAttachmentDescription(response.getAttachmentDescription());
+            responseDummy.setRespondentName(response.getRespondentName());
+            responseDummy.setRespondentJobTitle(response.getRespondentJobTitle());
+            responseDummy.setResponseDate(new Date());
+            responseDummy.setResponseStatus(ResponseCode.STATUS_PUBLISHED);
+            session.update(responseDummy);
+            System.out.println("Response :"+responseDummy);        
+        return responseDummy;
+}
 
     //Critieria builder instantiation
     void bindDB() {
@@ -109,7 +129,5 @@ public class ResponseDAOImpl implements ResponseDAO {
         query = criteriaBuilder.createQuery(Response.class);
         root = query.from(Response.class);
         query.select(root);
-
-
-    }
+        }
 }

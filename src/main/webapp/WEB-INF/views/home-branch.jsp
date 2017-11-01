@@ -116,7 +116,7 @@ input[type=checkbox] {
 
 				<td>
 					<button type="button" ng-click="saveAnswer()" ng-hide="flagAnswerProcess">SAVE</button>
-					<button type="button" ng-click="modifyAnswer()" ng-show="flagAnswerProcess">PUBLISH</button>
+					<button type="button" ng-click="publishAnswer()" ng-show="flagAnswerProcess">PUBLISH</button>
 				</td>
 			</tr>
 
@@ -129,7 +129,9 @@ input[type=checkbox] {
 	<div ng-show="flagResponseConfirmation" ><br>	
 	<strong>Response Saved: ID - {{responseID}}</strong>	
 	</div>
-
+<div ng-show="flagResponsePublishConfirmation" ><br>	
+	<strong>Response PUBLISHED: ID - {{responseID}}</strong>	
+	</div>
 
 
 

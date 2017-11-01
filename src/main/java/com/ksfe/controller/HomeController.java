@@ -170,6 +170,26 @@ public class HomeController {
     }
 
 
+
+    //Update Answers
+    @RequestMapping(value="/updateAnswer",method=RequestMethod.POST)
+    public @ResponseBody String updateAnswer(@RequestParam("answerIDList") Integer[] answerIDList,
+                                           @RequestParam("answerDescriptionList") String[] answerDescriptionList) {
+        System.out.println("Form data binded - Trying to update Answer ID " + answerIDList);
+        if(answerIDList.length==answerDescriptionList.length) {
+            answerList=new ArrayList<Answer>();
+            for(int i=0;i<answerIDList.length;i++){
+                answer = new Answer();
+                answer.setAnswerID(answerIDList[i]);
+                answer.setAnswerDescription(answerDescriptionList[i]);
+                answerList.add(answer);
+            }}
+        jsonResponse = answerService.updateAnswerList(answerList);
+        System.out.println("DATA UPDATED :"+jsonResponse);
+        return jsonResponse;
+    }
+
+
     //Retrieve Answer List
     @RequestMapping(value="/getAnswerList",method=RequestMethod.POST)
     public @ResponseBody String getAnswerList(@RequestParam("responseID") int responseID) {
@@ -213,6 +233,31 @@ public class HomeController {
     }
 
 
+    //UPDATE Response - PUBLISH
+    @RequestMapping(value="/updateResponse",method=RequestMethod.POST)
+    public @ResponseBody String updateResponse(
+            @RequestParam("responseID") Integer responseID,
+            @RequestParam("responseRemarks") String responseRemarks,
+            @RequestParam("attachmentDescription") String attachmentDescription,
+           /* @RequestParam("attachmentFile") CommonsMultipartFile file,*/
+            @RequestParam("respondentName") String respondentName,
+            @RequestParam("respondentJobTitle") String respondentJobTitle){
+        System.out.println("Form data binded - Trying to PUBLISH RESPONSE: " + responseID);
+        response=new Response();
+        response.setResponseID(responseID);
+        response.setResponseRemarks(responseRemarks);
+        response.setAttachmentDescription(attachmentDescription);
+        //Attach FILE
+		/*attachmentFile = file.getBytes();
+		response.setAttachmentFile(attachmentFile);*/
+        response.setRespondentName(respondentName);
+        response.setRespondentJobTitle(respondentJobTitle);
+        jsonResponse = responseService.updateResponse(response);
+        System.out.println("DATA inserted :"+jsonResponse);
+        return jsonResponse;
+    }
+
+
     //Retrieve Response
     @RequestMapping(value="/getResponse",method=RequestMethod.POST)
     public @ResponseBody String getResponse(@RequestParam("responseID") Integer responseID) {
@@ -235,6 +280,25 @@ public class HomeController {
         return "home";
     }
 
+    
+    
+    @RequestMapping(value = "/testResponse", method = RequestMethod.GET)
+    public String testResponse() {
+
+        //RESPONSE
+        response = new Response();
+        response.setResponseID(20); 
+        response.setResponseRemarks("REMARKS");
+        response.setAttachmentDescription("DESCRIPTION");
+        response.setRespondentName("Name");
+        response.setRespondentJobTitle("respondentJobTitle");
+        responseService.getResponse(response.getResponseID()); 
+        responseService.updateResponse(response);
+        return "home";
+    }
+    
+    
+    
     @RequestMapping(value = "/add", method = RequestMethod.GET)
     public String insertQuestion(Model model) {
         System.out.println(getClass());

@@ -19,4 +19,6 @@ public interface ResponseService {
     public Response verifyResponse(Integer questionnaireID);
 
     String getResponse(Integer responseID);
+
+    String updateResponse(Response response);
 }

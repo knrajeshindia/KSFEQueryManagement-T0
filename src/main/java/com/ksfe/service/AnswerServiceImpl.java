@@ -72,6 +72,31 @@ public class AnswerServiceImpl implements AnswerService {
         answerDAO.updateAnswerList(answerIDList,responseID);
     }
 
+    //Update Answers - Publish
+    @Override
+    @Transactional
+    public String updateAnswerList(List<Answer> answerList) {
+        System.out.println(getClass());
+        jsonData = setJsonData();
+        System.out.println("Json Data :" + jsonData);
+        try {
+            this.answerList = answerDAO.updateAnswerList(answerList);
+            System.out.println(answerList);
+            jsonResponse = JsonUtil.convertJavaToJson(this.answerList);
+            jsonData.setData(jsonResponse);
+            jsonData.setStatus(ResponseCode.STATUS_SUCCESS);
+            jsonData.setMessage(ResponseCode.MESSAGE_UPDATED);
+        } catch (EmptyResultDataAccessException e) {
+            jsonData.setMessage(ResponseCode.MESSAGE_FAILURE);
+        } catch (DataAccessException de) {
+            jsonData.setMessage(ResponseCode.MESSAGE_NETWORK);
+        }
+        jsonResponse = JsonUtil.convertJavaToJson(jsonData);
+        System.out.println(jsonResponse);
+        return jsonResponse;
+    }
+
+
     //Retrieve answerList from responseID
     @Override
     @Transactional

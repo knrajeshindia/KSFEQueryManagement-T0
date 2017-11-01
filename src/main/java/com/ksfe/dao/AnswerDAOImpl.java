@@ -33,10 +33,11 @@ public class AnswerDAOImpl implements AnswerDAO {
     private ArrayList<Answer> answerList;
     CriteriaBuilder criteriaBuilder;
     CriteriaQuery<Answer> query;
-    List<Answer> answerListRev1=new ArrayList<Answer>();
+    List<Answer> answerListRev1 = new ArrayList<Answer>();
     Root<Answer> root;
     Query<Answer> q;
     Answer answer;
+    private Integer answerID;
 
 
     //Insert Answer
@@ -75,6 +76,7 @@ public class AnswerDAOImpl implements AnswerDAO {
     @Override
     public void updateAnswerList(Collection<Integer> answerIDList, Integer responseID) {
         System.out.println(getClass());
+        bindDB();
         for (Integer answerID : answerIDList) {
             answer = getAnswer(answerID);
             answer.setResponseID(responseID);
@@ -82,15 +84,34 @@ public class AnswerDAOImpl implements AnswerDAO {
         }
     }
 
-//Retrieve answer List for responseID
+    //Retrieve answer List for responseID
     @Override
     public List<Answer> getAnswerList(int responseID) {
-        System.out.println(getClass()+"|"+responseID);
+        System.out.println(getClass() + "|" + responseID);
         bindDB();
         query.where(criteriaBuilder.equal(root.get("responseID"), responseID));
         q = session.createQuery(query);
         answerListRev1 = q.getResultList();
-        System.out.println("Answer List: "+answerListRev1);
+        System.out.println("Answer List: " + answerListRev1);
+        return answerListRev1;
+    }
+
+    //Update Answer -PUBLISH
+    @Override
+    public List<Answer> updateAnswerList(List<Answer> answerList) {
+        System.out.println(getClass());
+        bindDB();
+        answerListRev1.clear();
+        for (Answer a : answerList) {
+            answerID = a.getAnswerID();
+            answer = getAnswer(answerID);
+            System.out.println("Answer: "+answer);
+            answer.setAnswerDescription(a.getAnswerDescription());
+            answer.setAnswerStatus(ResponseCode.STATUS_PUBLISHED);
+            session.update(answer);
+            answerListRev1.add(answer);
+        }
+        System.out.println("AnswerList :"+answerListRev1);
         return answerListRev1;
     }
 
