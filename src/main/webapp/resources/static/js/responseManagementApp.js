@@ -24,8 +24,8 @@ angular
 
 					$scope.answerIDList = [];
 					$scope.responseStatus = "";
-					$scope.responseArray =[];
-					$scope.answerArray=[];
+					$scope.responseArray = [];
+					$scope.answerArray = [];
 
 					// FLAGS
 					$scope.flagQuestionnaireView = false;
@@ -134,11 +134,9 @@ angular
 												$scope.message = $scope.response.message;
 												$scope.questionList = angular
 														.fromJson($scope.response.data);
-												
-												
-//												
-												
-												
+
+												//												
+
 											}
 										},
 										function(result) {
@@ -204,46 +202,27 @@ angular
 										});
 					};
 
-					
-					
-					
-					
-					
-					
-					
-					
 					// VIEW/MODIFY RESPONSE
 					$scope.modifyResponse = function(index) {
 						$scope.responseID = $scope.questionnaireList[index].responseID;
-						
-						$scope.viewQuest(index);						
+
+						$scope.viewQuest(index);
 						// Flags
 						$scope.flagAnswerProcess = false;
 						$scope.flagQuestionnaireView = false;
 						$scope.flagQuestionView = false;
-						
-						//PULL UP ANSWERS
+
+						// PULL UP ANSWERS
 						$scope.getAnswerList();
-						
 
-						
-						
-						
-						};
+					};
 
-					
-					
-					
-					
-					
-					
-					
-						//PULL UP ANSWERS
+					// PULL UP ANSWERS
 					$scope.getAnswerList = function() {
 						// Flags
 						// Variables
 						// Service
-						
+
 						$http({
 							method : "post",
 							url : "/query/getAnswerList",
@@ -259,22 +238,18 @@ angular
 												$scope.message = $scope.response.message;
 												$scope.answerArray = angular
 														.fromJson($scope.response.data);
-//												// extract answers from JSON
-//												var len = $scope.answerArray.length;
-//												for (var i = 0; i < len; i++) {
-//													var answer = $scope.answerList[i].answerDescription;
-//													$scope.answerList.push(answer);
-//												}
-												
+												// extract answers from JSON
+												var len = $scope.answerArray.length;
+												for (var i = 0; i < len; i++) {
+													$scope.answerList[i] = $scope.answerArray[i].answerDescription;
+													alert("answer :"+$scope.answerList[i]);
+												}
+
 												alert($scope.message);
-												
-												
-												
-												//PULL UP RESPONSE
+
+												// PULL UP RESPONSE
 												$scope.getResponse();
-												
-												
-												
+
 											}
 										},
 										function(result) {
@@ -283,10 +258,6 @@ angular
 										});
 					};
 
-					
-					
-					
-					
 					// ---------------------------------------------------------------------------------
 
 					// RESPONSE
@@ -342,19 +313,13 @@ angular
 													.alert("Server response-FAILURE! Please try again later");
 										});
 					};
-					
-					
-					
-					
-					
-					
 
 					// Pull UP RESPONSE
 					$scope.getResponse = function() {
-						
+
 						// Flags
 						// Variables
-						$scope.responseArray =[];
+						$scope.responseArray = [];
 						// Service
 						$http({
 							method : "post",
@@ -371,19 +336,17 @@ angular
 												$scope.message = $scope.response.message;
 												$scope.responseArray = angular
 														.fromJson($scope.response.data);
-												
-												
-												$scope.responseRemarks=$scope.responseArray.responseRemarks;
-												$scope.fileDescription=$scope.responseArray.attachmentDescription;
-												//$scope.file,
-												$scope.respondentName=$scope.responseArray.respondentName;
-												$scope.respondentJobTitle=$scope.responseArray.respondentJobTitle;
-												//Flags
+
+												$scope.responseRemarks = $scope.responseArray.responseRemarks;
+												$scope.fileDescription = $scope.responseArray.attachmentDescription;
+												// $scope.file,
+												$scope.respondentName = $scope.responseArray.respondentName;
+												$scope.respondentJobTitle = $scope.responseArray.respondentJobTitle;
+												// Flags
 												$scope.flagAnswerProcess = true;
 												$scope.flagQuestionnaireView = false;
 												$scope.flagQuestionView = true;
-												
-												
+
 												alert($scope.message);
 											}
 										},
@@ -392,9 +355,6 @@ angular
 													.alert("Server response-FAILURE! Please try again later");
 										});
 					};
-
-					
-					
 
 					// -----------------------------------------------------------------------------------------------------------------------------
 
