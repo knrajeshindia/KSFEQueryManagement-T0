@@ -15,4 +15,6 @@ public interface QuestionnaireDAO {
     Questionnaire updateQuestionnaire(List<Integer> questionnaire, Integer pk);
 
     List<Questionnaire> viewPendingQuestionnaireList(Integer userID);
+
+    List<Questionnaire> viewCompleteQuestionnaireList(Integer unitID);
 }

@@ -38,7 +38,44 @@ angular
 					$scope.flagResponsePublish = false;
 
 					// ---------------------------------
+					//RESET
+					var flagReset=function(){
+						// FLAGS
+						$scope.flagQuestionnaireView = false;
+						$scope.flagQuestionView = false;
+						$scope.answerProcess = false;
+						$scope.flagResponseConfirmation = false;
+						$scope.flagResponsePublishConfirmation=false;
+						$scope.flagResponsePublish = false;
+					}
 
+					var variableReset=function(){
+					$scope.message = "";
+					$scope.response = "";
+					$scope.data = "";
+					$scope.questionnaireList = [];
+					$scope.responseDataType = "";
+					$scope.answerList = [];
+					$scope.answerIDList = [];
+					$scope.selectedQuestionIDList = [];
+					$scope.questionList = [];
+					$scope.questionnaireID = "";
+					$scope.responseDataType = "";
+					$scope.responseRemarks = "";
+					$scope.fileDescription = "";
+					$scope.file = "";
+					$scope.respondentName = "";
+					$scope.respondentJobTitle = "";
+					$scope.saveAnswerURL = "";
+					$scope.saveResponseURL = "";
+
+					$scope.answerIDList = [];
+					$scope.responseStatus = "";
+					$scope.responseArray = [];
+					$scope.answerArray = [];
+					}
+					
+					
 					// ----------------------------------------------------------------------------------------------------
 					// QUESTIONNAIRE
 					// Variables
@@ -47,7 +84,7 @@ angular
 					$scope.data = "";
 					$scope.questionnaireList = [];
 					// Functions
-					// INSERT QUESTIONNAIRE
+					// PULL UP VALID QUESTIONNAIRE
 					$scope.viewQuestionnaire = function() {
 						// Flag
 						$scope.flagQuestionnaireView = true;
@@ -71,6 +108,31 @@ angular
 												}},
 										function(result) {$window.alert("Server response-FAILURE! Please try again later");
 										});};
+					
+										
+										// PULL UP COMPLETE QUESTIONNAIRE
+										$scope.viewCompleteQuestionnaire = function() {
+											flagReset();
+											variableReset();
+											// Flag
+											$scope.flagQuestionnaireView = true;
+											// Variables
+											$scope.unitID = 1;
+											
+											// Service
+											$http({method : "post",
+												url : "/query/viewCompleteQ",
+												params : {"unitID" : $scope.unitID
+												}}).then(function(result) {
+																$scope.response = angular.fromJson(result.data);
+																if ($scope.response.status === "SUCCESS") {
+																	$scope.message = $scope.response.message;
+																	$scope.data = angular.fromJson($scope.response.data);
+																	$scope.questionnaireList = angular.fromJson($scope.response.data);
+																	// $scope.unitID = "";
+																	}},
+															function(result) {$window.alert("Server response-FAILURE! Please try again later");
+															});};					
 
 					// -------------------------------------------------------------------------------------
 					// QUESTION
@@ -306,9 +368,7 @@ angular
 																	alert($scope.message);
 																	//$scope.responseID = angular.fromJson($scope.response.data).responseID;
 																	// Flags
-																	$scope.flagQuestionView = false;
-																	$scope.flagResponseConfirmation = true;
-																	$scope.flagResponsePublish = false;
+																	reset();
 																	$scope.flagResponsePublishConfirmation=true;}},
 															function(result) {$window.alert("Server response-FAILURE! Please try again later");});};
 

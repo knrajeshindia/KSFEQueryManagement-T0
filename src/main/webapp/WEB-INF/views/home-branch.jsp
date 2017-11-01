@@ -28,7 +28,7 @@ input[type=checkbox] {
 	<h2>Response Form</h2>
 	<hr>
 	<button ng-click="viewQuestionnaire()">View Valid Questionnaire</button>
-	<button ng-click="#">View Complete Questionnaire</button>
+	<button ng-click="viewCompleteQuestionnaire()">View Complete Questionnaire</button>
 	<br>
 
 	<div ng-show="flagQuestionnaireView">

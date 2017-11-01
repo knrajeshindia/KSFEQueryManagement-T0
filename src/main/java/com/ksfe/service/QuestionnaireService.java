@@ -19,4 +19,6 @@ public interface QuestionnaireService {
     public Questionnaire updateQuestionnaire(List<Integer> questionnaire, Integer pk);
 
     String viewPendingQuestionnaireList(Integer userID);
+
+    String viewCompleteQuestionnaireList(Integer unitID);
 }

@@ -110,6 +110,17 @@ public class HomeController {
         return jsonResponse;
     }
 
+
+    //Retrieve Complete Questionnaire List
+    @RequestMapping(value="/viewCompleteQ",method=RequestMethod.POST)
+    public @ResponseBody String viewCompleteQ(@RequestParam("unitID") Integer unitID) {
+        System.out.println(getClass()+" | "+unitID);
+        jsonResponse=questionnaireService.viewCompleteQuestionnaireList(unitID);
+        System.out.println("Questionnaire:"+jsonResponse);
+        return jsonResponse;
+    }
+
+
     //Retrieve Question List
     @RequestMapping(value="/viewQuest",method=RequestMethod.POST)
     public @ResponseBody String viewQuest(@RequestParam("questionIDList") String questionIDListString) {

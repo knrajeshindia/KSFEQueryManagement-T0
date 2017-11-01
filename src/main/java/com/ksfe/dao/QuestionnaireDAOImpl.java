@@ -124,6 +124,28 @@ public class QuestionnaireDAOImpl implements QuestionnaireDAO {
         return questionnaireListFiltered;
     }
 
+    //Retrieve all Questionnaire List for unit ID
+    @Override
+    public List<Questionnaire> viewCompleteQuestionnaireList(Integer unitID) {
+        System.out.println(getClass() + " UNIT ID : " + unitID);
+        bindDB();
+        System.out.println("bindDB invoked");
+        Predicate filter = criteriaBuilder.and(
+                criteriaBuilder.isMember(unitID, root.get("targetRespondentIDList")));
+        query.where(criteriaBuilder.and(filter));
+        //ORDER BY
+        query.orderBy(criteriaBuilder.desc(root.get("questionnaireID")));
+        questionnaireList = session.createQuery(query).getResultList();
+         /*//Add response details
+        for (Questionnaire questionnaire : questionnaireList) {
+            response = responseService.verifyResponse(questionnaire.getQuestionnaireID());
+            responseStatus=response.getResponseStatus();
+            questionnaire.setResponseStatus(responseStatus);
+            questionnaire.setResponseID(response.getResponseID()); }*/
+        System.out.println("Questionnairelist-Complete records for userID: " + questionnaireList);
+        return questionnaireList;
+    }
+
 
     //Critieria builder instantiation
     void bindDB() {

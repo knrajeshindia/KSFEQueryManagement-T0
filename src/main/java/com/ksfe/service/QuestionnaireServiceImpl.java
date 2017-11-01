@@ -97,6 +97,30 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
         return jsonResponse;
     }
 
+    //Retrieve complete Questionnaire List
+    @Override
+    @Transactional
+    public String viewCompleteQuestionnaireList(Integer unitID) {
+        System.out.println(getClass());
+        jsonData = setJsonData();
+        System.out.println("Json Data :" + jsonData);
+        try {
+            questionnaireList = questionnaireDAO.viewCompleteQuestionnaireList(unitID);
+            System.out.println(questionnaireList);
+            jsonResponse = JsonUtil.convertJavaToJson(questionnaireList);
+            jsonData.setData(jsonResponse);
+            jsonData.setStatus(ResponseCode.STATUS_SUCCESS);
+            jsonData.setMessage(ResponseCode.MESSAGE_UPDATED);
+        } catch (EmptyResultDataAccessException e) {
+            jsonData.setMessage(ResponseCode.MESSAGE_FAILURE);
+        } catch (DataAccessException de) {
+            jsonData.setMessage(ResponseCode.MESSAGE_NETWORK);
+        }
+        jsonResponse = JsonUtil.convertJavaToJson(jsonData);
+        System.out.println(jsonResponse);
+        return jsonResponse;
+    }
+
     //Get all UnitIDs for selected UnitTypeID
     private Questionnaire getAllRespondents(Questionnaire questionnaire) {
         unitIDList = respondentService.getUnitIDList(questionnaire.getTargetRespondentIDList());
@@ -107,9 +131,7 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
 
     //Set default message data
     public static JsonData setJsonData() {
-        if (jsonData == null) {
-            jsonData = new JsonData();
-        }
+        jsonData = new JsonData();
         jsonData.setStatus(ResponseCode.STATUS_FAILURE);
         jsonData.setMessage(ResponseCode.MESSAGE_INITIALISED);
         return jsonData;
