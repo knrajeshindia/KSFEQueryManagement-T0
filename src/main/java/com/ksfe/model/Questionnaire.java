@@ -53,6 +53,8 @@ public class Questionnaire implements Serializable {
     private boolean responseFlag;
     @Transient
     private Integer responseID;
+    @Transient
+    private Date responseDate;
 
 
     @NotNull(message = "required field")
@@ -90,6 +92,7 @@ public class Questionnaire implements Serializable {
                 ", responseStatus='" + responseStatus + '\'' +
                 ", responseFlag=" + responseFlag +
                 ", responseID=" + responseID +
+                ", responseDate=" + responseDate +
                 ", senderName='" + senderName + '\'' +
                 ", senderJobTitle='" + senderJobTitle + '\'' +
                 ", questionnaireStatus=" + questionnaireStatus +
@@ -227,5 +230,13 @@ public class Questionnaire implements Serializable {
 
     public void setResponseID(Integer responseID) {
         this.responseID = responseID;
+    }
+
+    public Date getResponseDate() {
+        return responseDate;
+    }
+
+    public void setResponseDate(Date responseDate) {
+        this.responseDate = responseDate;
     }
 }

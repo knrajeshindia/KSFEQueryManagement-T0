@@ -4,16 +4,18 @@
  */
 package com.ksfe.dao;
 
+import com.ksfe.model.Login;
 import com.ksfe.model.Unit;
-import com.ksfe.util.SessionUtil;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -26,7 +28,14 @@ import java.util.List;
 public class UnitDAOImpl implements UnitDAO {
     @Autowired
     private SessionFactory sessionFactory;
+    private Session session;
     private List<Integer> unitIDList;
+    CriteriaBuilder criteriaBuilder;
+    CriteriaQuery<Unit> query;
+    List<Unit> answerListRev1 = new ArrayList<Unit>();
+    Root<Unit> root;
+    Query<Unit> q;
+    private Unit unit;
 
     //Insert unit
     @Override
@@ -54,6 +63,41 @@ public class UnitDAOImpl implements UnitDAO {
         unitIDList = session.createQuery(criteriaQuery).getResultList();
         System.out.println("UnitIDlist-Complete records: " + unitIDList);
         return unitIDList;
+    }
+
+    //Retrieve one Unit
+    @Override
+    public Unit getUnit(int pk) {
+        System.out.println(getClass());
+        bindDB();
+        query.where(criteriaBuilder.equal(root.get("unitID"), pk));
+        q = session.createQuery(query);
+        unit = q.getSingleResult();
+        System.out.println("UNIT: " + unit);
+        return unit;
+    }
+
+    //Verify User
+    @Override
+    public Unit verifyUnit(Integer unitID, String password) {
+        this.unit=getUnit(unitID);
+        if(this.unit!=null){
+            if(this.unit.getPassword().equals(password)){
+                return this.unit;
+            }
+        }
+        return null;
+    }
+
+    //Critieria builder instantiation
+    void bindDB() {
+        session = sessionFactory.getCurrentSession();
+        criteriaBuilder = session.getCriteriaBuilder();
+        query = criteriaBuilder.createQuery(Unit.class);
+        root = query.from(Unit.class);
+        query.select(root);
+        q = null;
+        unit = null;
     }
 }
 

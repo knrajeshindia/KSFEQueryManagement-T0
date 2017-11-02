@@ -4,9 +4,9 @@
  */
 package com.ksfe.service;
 
+import com.ksfe.model.Login;
 import com.ksfe.model.Unit;
 
-import javax.transaction.Transactional;
 import java.util.List;
 
 /**
@@ -18,4 +18,5 @@ import java.util.List;
 public interface UnitService {
     public void insertUnit(Unit unit);
     List<Integer> getUnitIDList(Integer unitTypeID);
+    String verifyUnit(Integer unitID, String password);
 }

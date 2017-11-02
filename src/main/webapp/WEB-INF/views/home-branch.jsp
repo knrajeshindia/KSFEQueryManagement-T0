@@ -43,6 +43,7 @@ input[type=checkbox] {
 				<th>QuestionID</th>
 				<th>Sender</th>
 				<th>JobTitle</th>
+				<th>Responded Date</th>
 				<th>ResponseID</th>
 				<th>Status</th>
 			</tr>
@@ -59,6 +60,8 @@ input[type=checkbox] {
 				<td><label>{{questionnaire.questionIDList}}</label></td>
 				<td><label>{{questionnaire.senderName}}</label></td>
 				<td><label>{{questionnaire.senderJobTitle}}</label></td>
+				<td><label>{{questionnaire.responseDate|date:
+						'dd-MM-yyyy'}}</label></td>
 				<td><label>{{questionnaire.responseID}}</label></td>
 				<td><label>{{questionnaire.responseStatus}}</label></td>
 				<td>
@@ -102,7 +105,7 @@ input[type=checkbox] {
 			</tr>
 			<tr>
 				<td>Remarks</td>
-				<td><input type="text" ng-model="responseRemarks" /></td>
+				<td><textarea ng-model="responseRemarks" /></textarea></td>
 			</tr>
 			<tr>
 				<td>Respondent Name</td>

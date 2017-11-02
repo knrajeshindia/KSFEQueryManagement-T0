@@ -297,6 +297,23 @@ public class HomeController {
     public String testResponse() {
 
         //RESPONSE
+        /*response = new Response();
+        response.setResponseID(20); 
+        response.setResponseRemarks("REMARKS");
+        response.setAttachmentDescription("DESCRIPTION");
+        response.setRespondentName("Name");
+        response.setRespondentJobTitle("respondentJobTitle");
+        responseService.getResponse(response.getResponseID()); 
+        responseService.updateResponse(response);*/
+    	System.out.println(responseService.verifyResponse(20));
+        return "home";
+    }
+    
+    
+    @RequestMapping(value = "/testQuestionnaire", method = RequestMethod.GET)
+    public String testQuestionnaire() {
+
+        //Questionnaire
         response = new Response();
         response.setResponseID(20); 
         response.setResponseRemarks("REMARKS");
@@ -317,6 +334,10 @@ public class HomeController {
         //UNIT TYPE
         UnitType unitType = new UnitType("UnitType", "Eligibility");
         unitTypeService.insertUnitType(unitType);
+        UnitType unitType2 = new UnitType("UnitType", "Eligibility");
+        unitTypeService.insertUnitType(unitType2);
+        UnitType unitType3 = new UnitType("UnitType", "Eligibility");
+        unitTypeService.insertUnitType(unitType3);
         System.out.println("Unit Type inserted" + unitType);
 
         //UNIT
@@ -324,9 +345,17 @@ public class HomeController {
                 "Telephone", "Status");
         unit.setUnitTypeID(1);
         unitService.insertUnit(unit);
+        Unit unit2 = new Unit(2, "Password", "UnitName", "Code", "Address", "District", "Manager", "Email", "Mobile",
+                "Telephone", "Status");
+        unit.setUnitTypeID(2);
+        unitService.insertUnit(unit);
+        Unit unit3 = new Unit(3, "Password", "UnitName", "Code", "Address", "District", "Manager", "Email", "Mobile",
+                "Telephone", "Status");
+        unit.setUnitTypeID(3);
+        unitService.insertUnit(unit);
         System.out.println("Unit inserted" + unit);
 
-        //QUESTIONNAIRE
+        /*//QUESTIONNAIRE
         Questionnaire questionnaire = new Questionnaire("QTitle", "QDesc", "QRemarks", "Rajesh", "Accounts Manager");
         questionnaire.setPostedDate(new Date());
         questionnaire.setDueDate(StringToDate.convertString("20/10/2017"));
@@ -341,16 +370,16 @@ public class HomeController {
         questionService.getAllQuestions();
         questionService.getQuestion(1);
         questionService.getMultipleQuestions(0);
-        questionService.updateQuestion("Good afternoon", 1);
+        questionService.updateQuestion("Good afternoon", 1);*/
 
         // questionService.deleteQuestion(5);
         // questionnaireDAO.deleteQuestionnaire(1);
 
-        //RESPONSE
+        /*//RESPONSE
         response = new Response(1, 1, "respondentName", "respondentJobTitle");
         response.setResponseDate(new Date());
         response.setResponseRemarks("Remarks");
-        responseService.insertResponse(response);
+        responseService.insertResponse(response);*/
 
         return "home";
     }
@@ -434,7 +463,12 @@ public class HomeController {
     }
     
     
-    
+ // DUMMY
+    @RequestMapping(value = "/register", method = RequestMethod.GET)
+    public String register() {
+        
+        return "home-register";
+    }
     
     
 
@@ -452,6 +486,16 @@ public class HomeController {
     public String response() {
         System.out.println("Trying to call Response");
         return "home-branch";
+    }
+
+    // LOGIN-VERIFY USER
+    @RequestMapping(value = "/verifyUnit", method = RequestMethod.POST)
+    public @ResponseBody String verifyUnit(
+            @RequestParam("unitID") Integer unitID,
+            @RequestParam("password") String password) {
+    	System.out.println("Trying to verify UNIT :"+unitID);
+        jsonResponse=unitService.verifyUnit(unitID,password);
+        return jsonResponse;
     }
 
     

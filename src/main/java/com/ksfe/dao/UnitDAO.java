@@ -4,6 +4,7 @@
  */
 package com.ksfe.dao;
 
+import com.ksfe.model.Login;
 import com.ksfe.model.Unit;
 
 import java.util.List;
@@ -18,4 +19,9 @@ public interface UnitDAO {
     void insertUnit(Unit unit);
 
     List<Integer> getUnitIDList(Integer unitTypeID);
+
+    //Retrieve one Unit
+    Unit getUnit(int pk);
+
+    Unit verifyUnit(Integer unitID, String password);
 }

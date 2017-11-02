@@ -59,36 +59,30 @@ public class ResponseDAOImpl implements ResponseDAO {
     }
 
     //Verify response status for questionnaireID
+    //Revise to select only response - ID and status only
     @Override
     public Response verifyResponse(Integer questionnaireID) {
         System.out.println(getClass());
         bindDB();
-        Serializable id = new Integer(questionnaireID);
-        query.where(criteriaBuilder.equal(root.get("questionnaireID"), id));
+        query.where(criteriaBuilder.equal(root.get("questionnaireID"), questionnaireID));
         List<Response> responseList = session.createQuery(query).getResultList();
-        responseDummy = new Response();
-
+        System.out.println(responseList);
         if (responseList.size() > 0) {
             for (Response response : responseList) {
+            	responseDummy = new Response();
+                responseDummy.setResponseID(response.getResponseID());
+                responseDummy.setResponseDate(response.getResponseDate());
                 if (response.getResponseStatus().equalsIgnoreCase("PUBLISHED")) {
                     responseDummy.setResponseStatus(ResponseCode.STATUS_PUBLISHED);
-                    responseDummy.setResponseID(response.getResponseID());
                     return responseDummy;
                 } else {
                     responseDummy.setResponseStatus(ResponseCode.STATUS_DRAFT);
-                    responseDummy.setResponseID(response.getResponseID());
                     return responseDummy;
                 }
             }
         }
+        responseDummy = new Response();
         responseDummy.setResponseStatus(ResponseCode.STATUS_NOT_RESPONDED);
-       /* Response response = session.createQuery(query).getSingleResult();
-        System.out.println("Response object"+response);
-        if(response !=null){
-            if(response.getResponseStatus()=="PUBLISHED"){
-                return true;
-            }
-        }*/
         return responseDummy;
     }
 

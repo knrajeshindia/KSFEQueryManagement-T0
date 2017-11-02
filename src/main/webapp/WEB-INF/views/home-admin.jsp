@@ -38,15 +38,15 @@ input[type=checkbox] {
 		<table>
 			<tr>
 				<td>Title</td>
-				<td><input type="text" ng-model="questionnaireTitle" /></td>
+				<td><input type="text" ng-model="questionnaireTitle" placeholder="Questionnaire Title" /></td>
 			</tr>
 			<tr>
 				<td>Description</td>
-				<td><textarea ng-model="questionnaireDescription"></textarea></td>
+				<td><textarea ng-model="questionnaireDescription" placeholder="Description"></textarea></td>
 			</tr>
 			<tr>
 				<td>Remarks</td>
-				<td><input ng-model="questionnaireRemarks" /></td>
+				<td><input ng-model="questionnaireRemarks" placeholder="Remarks"/></td>
 			</tr>
 
 			<tr>
@@ -69,11 +69,11 @@ input[type=checkbox] {
 
 			<tr>
 				<td>Sender Name</td>
-				<td><input ng-model="senderName" /></td>
+				<td><input ng-model="senderName" placeholder="Name" /></td>
 			</tr>
 			<tr>
 				<td>Sender Job Title</td>
-				<td><input ng-model="senderJobTitle" /></td>
+				<td><input ng-model="senderJobTitle" placeholder="Job Title" /></td>
 			</tr>
 			<tr>
 				<td><button ng-click="insertQ()">Create Questionnaire</button></td>

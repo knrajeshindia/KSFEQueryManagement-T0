@@ -23,6 +23,10 @@ angular
 					$scope.respondentJobTitle = "";
 					$scope.saveAnswerURL = "";
 					$scope.saveResponseURL = "";
+					$scope.unitID = "";
+					$scope.password="";
+					$scope.unitDetails=[];
+					
 
 					$scope.answerIDList = [];
 					$scope.responseStatus = "";
@@ -75,7 +79,25 @@ angular
 					$scope.answerArray = [];
 					}
 					
-					
+					//LOGIN
+					$scope.verifyUnit=function(){
+					alert("verifyUnit"+$scope.unitID)
+					variableReset();
+					$http({method : "post",
+						url : "/query/verifyUnit",
+						params : {	"unitID" : $scope.unitID,
+									"password" : $scope.password,
+						}}).then(function(result) {
+										$scope.response = angular.fromJson(result.data);
+										if ($scope.response.status === "SUCCESS") {
+											$scope.message = $scope.response.message;
+											$scope.data = angular.fromJson($scope.response.data);
+											$scope.unitDetails = angular.fromJson($scope.response.data);
+											}},
+									function(result) {$window.alert("Server response-FAILURE! Please try again later");
+									});};		
+						
+						
 					// ----------------------------------------------------------------------------------------------------
 					// QUESTIONNAIRE
 					// Variables

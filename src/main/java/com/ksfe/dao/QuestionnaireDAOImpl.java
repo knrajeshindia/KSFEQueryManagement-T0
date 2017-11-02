@@ -93,7 +93,6 @@ public class QuestionnaireDAOImpl implements QuestionnaireDAO {
     public List<Questionnaire> viewPendingQuestionnaireList(Integer userID) {
         System.out.println(getClass() + "USER ID:" + userID);
         bindDB();
-
         Predicate filter = criteriaBuilder.and(
                 criteriaBuilder.isMember(userID, root.get("targetRespondentIDList")),
                 criteriaBuilder.greaterThanOrEqualTo(root.get("dueDate"), today),
@@ -108,6 +107,7 @@ public class QuestionnaireDAOImpl implements QuestionnaireDAO {
             response = responseService.verifyResponse(questionnaire.getQuestionnaireID());
             responseStatus=response.getResponseStatus();
             questionnaire.setResponseStatus(responseStatus);
+            questionnaire.setResponseDate(response.getResponseDate());
             questionnaire.setResponseID(response.getResponseID());
 
             if (!responseStatus.equalsIgnoreCase(ResponseCode.STATUS_PUBLISHED)) {
@@ -136,12 +136,14 @@ public class QuestionnaireDAOImpl implements QuestionnaireDAO {
         //ORDER BY
         query.orderBy(criteriaBuilder.desc(root.get("questionnaireID")));
         questionnaireList = session.createQuery(query).getResultList();
-         /*//Add response details
+         //Add response details
         for (Questionnaire questionnaire : questionnaireList) {
             response = responseService.verifyResponse(questionnaire.getQuestionnaireID());
+            System.out.println("RESPONSE "+response);
             responseStatus=response.getResponseStatus();
             questionnaire.setResponseStatus(responseStatus);
-            questionnaire.setResponseID(response.getResponseID()); }*/
+            questionnaire.setResponseDate(response.getResponseDate());
+            questionnaire.setResponseID(response.getResponseID());}
         System.out.println("Questionnairelist-Complete records for userID: " + questionnaireList);
         return questionnaireList;
     }
