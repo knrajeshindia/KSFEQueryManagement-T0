@@ -98,7 +98,7 @@ public class QuestionnaireDAOImpl implements QuestionnaireDAO {
                 criteriaBuilder.greaterThanOrEqualTo(root.get("dueDate"), today),
                 criteriaBuilder.equal(root.get("questionnairePhase"), "PUBLISHED"));
         query.where(criteriaBuilder.and(filter));
-        //ORDER BY
+        //ORDER BY CONDITION
         query.orderBy(criteriaBuilder.asc(root.get("dueDate")));
         questionnaireList = session.createQuery(query).getResultList();
         questionnaireListFiltered.clear();
