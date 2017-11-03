@@ -85,7 +85,7 @@ var app = angular
 						//alert("UnitID value set = " + loginFactoryService.unitID);
 						variableReset();
 						//$scope.unitID=loginFactoryService.unitID;
-						alert("UnitID value set = " + $scope.unitID);
+						
 						$http({
 							method : "post",
 							url : "/query/verifyUnit",

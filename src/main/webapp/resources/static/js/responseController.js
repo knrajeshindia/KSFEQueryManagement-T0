@@ -2,10 +2,7 @@ angular
 		.module('myApp', ['loginModule'])
 		.controller(
 				'responseController',['$scope', '$window', '$http','loginFactoryService',
-				function($scope, $window, $http,loginFactoryService) {
-					
-					
-								
+				function($scope, $window, $http,loginFactoryService) {								
 
 					// Variables
 					$scope.message = "";
@@ -116,7 +113,6 @@ angular
 						// Flag
 						$scope.flagQuestionnaireView = true;
 						// Variables
-						alert("unitID from Service : "+loginFactoryService.unitID);
 						$scope.unitID = loginFactoryService.unitID;
 						alert("unitID : "+$scope.unitID);
 						// Service
@@ -218,7 +214,6 @@ angular
 
 					// SAVE ANSWER
 					$scope.saveAnswer = function() {
-						alert("saveAnswer Called, flagPublishResponse :");
 						// Flags
 						$scope.flagQuestionnaireView = false;
 						$scope.flagAnswerProcess = false;
@@ -336,7 +331,7 @@ angular
 
 					// SAVE RESPONSE
 					$scope.saveResponse = function() {
-						alert("saveResponse invoked, flagResponsePublish:"	+ $scope.flagResponsePublish);
+						
 						// Flags
 						$scope.flagQuestionnaireView = false;
 						// Variables
@@ -371,7 +366,7 @@ angular
 										
 										// PUBLISH RESPONSE
 										$scope.publishResponse = function() {
-											alert("publishResponse invoked");
+											
 											// Flags
 											$scope.flagQuestionnaireView = false;
 											// Variables
@@ -390,8 +385,7 @@ angular
 																$scope.response = angular.fromJson(result.data);
 																if ($scope.response.status === "SUCCESS") {
 																	$scope.message = $scope.response.message;
-																	alert($scope.message);
-																	//$scope.responseID = angular.fromJson($scope.response.data).responseID;
+																																		//$scope.responseID = angular.fromJson($scope.response.data).responseID;
 																	// Flags
 																	reset();
 																	$scope.flagResponsePublishConfirmation=true;}},
