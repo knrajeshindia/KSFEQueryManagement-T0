@@ -79,7 +79,7 @@ angular
 					$scope.answerArray = [];
 					}
 					
-					//LOGIN
+					/*//LOGIN
 					$scope.verifyUnit=function(){
 					alert("verifyUnit"+$scope.unitID)
 					variableReset();
@@ -95,7 +95,7 @@ angular
 											$scope.unitDetails = angular.fromJson($scope.response.data);
 											}},
 									function(result) {$window.alert("Server response-FAILURE! Please try again later");
-									});};		
+									});};	*/	
 						
 						
 					// ----------------------------------------------------------------------------------------------------
@@ -108,14 +108,14 @@ angular
 					// Functions
 					// PULL UP VALID QUESTIONNAIRE
 					$scope.viewQuestionnaire = function() {
+						alert("viewQuestionnaire()");
+						flagReset();
+						variableReset();
 						// Flag
 						$scope.flagQuestionnaireView = true;
-						$scope.flagQuestionView = false;
 						// Variables
-						$scope.unitID = 1;
-						$scope.message = "";
-						$scope.response = "";
-						$scope.data = "";
+						$scope.unitID = 2;
+						alert("unitID : "+$scope.unitID);
 						// Service
 						$http({method : "post",
 							url : "/query/viewQ",
@@ -139,7 +139,7 @@ angular
 											// Flag
 											$scope.flagQuestionnaireView = true;
 											// Variables
-											$scope.unitID = 1;
+											$scope.unitID = 27;
 											
 											// Service
 											$http({method : "post",

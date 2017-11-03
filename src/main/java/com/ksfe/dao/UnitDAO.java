@@ -4,10 +4,10 @@
  */
 package com.ksfe.dao;
 
-import com.ksfe.model.Login;
 import com.ksfe.model.Unit;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * This is a Java interface for defining DAO operations
@@ -24,4 +24,10 @@ public interface UnitDAO {
     Unit getUnit(int pk);
 
     Unit verifyUnit(Integer unitID, String password);
+
+    //Add all unitID as HASHSET - for entire organisation
+    Set<Integer> getUnitIDSet();
+
+    //Add all unitID as HASHSET - for REGIONAL OFFICES
+    Set<Integer> getUnitIDSet(Integer regionID);
 }

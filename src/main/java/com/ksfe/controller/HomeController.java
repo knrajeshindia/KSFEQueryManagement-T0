@@ -7,7 +7,6 @@ package com.ksfe.controller;
 import com.ksfe.dao.UnitDAOImpl;
 import com.ksfe.model.*;
 import com.ksfe.service.*;
-import com.ksfe.util.StringToDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
@@ -15,11 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.commons.CommonsMultipartFile;
-
 import javax.validation.Valid;
-import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -83,6 +78,12 @@ public class HomeController {
         return "";
     }
 
+
+
+
+
+
+
     @RequestMapping(value="/insertQ",method=RequestMethod.POST)    
     public @ResponseBody String insertQ(@RequestBody Questionnaire questionnaire) {
         System.out.println("Form data binded - Trying to insert " + questionnaire);
@@ -90,6 +91,13 @@ public class HomeController {
         System.out.println("Questionnaire inserted"+questionnaire);
         return jsonResponse;
     }
+
+
+
+
+
+
+
 
     //Update Questionnaire
     @RequestMapping(value="/updateQ",method=RequestMethod.POST)
@@ -332,13 +340,13 @@ public class HomeController {
         System.out.println(getClass());
 
         //UNIT TYPE
-        UnitType unitType = new UnitType("UnitType", "Eligibility");
+        /*UnitType unitType = new UnitType("UnitType", "Eligibility");
         unitTypeService.insertUnitType(unitType);
         UnitType unitType2 = new UnitType("UnitType", "Eligibility");
         unitTypeService.insertUnitType(unitType2);
         UnitType unitType3 = new UnitType("UnitType", "Eligibility");
         unitTypeService.insertUnitType(unitType3);
-        System.out.println("Unit Type inserted" + unitType);
+        System.out.println("Unit Type inserted" + unitType);*/
 
         //UNIT
         Unit unit = new Unit(1, "Password", "UnitName", "Code", "Address", "District", "Manager", "Email", "Mobile",
@@ -508,9 +516,14 @@ public class HomeController {
     @ModelAttribute("respondentList")
     public Set<Integer> getTargetRespondentList() {
         Set<Integer> targetRespondentList = new HashSet<Integer>();
+        targetRespondentList.add(0);
         targetRespondentList.add(1);
         targetRespondentList.add(2);
-        targetRespondentList.add(3);
+        targetRespondentList.add(11);
+        targetRespondentList.add(12);
+        targetRespondentList.add(111);
+        targetRespondentList.add(112);
+        
         return targetRespondentList;
     }
 

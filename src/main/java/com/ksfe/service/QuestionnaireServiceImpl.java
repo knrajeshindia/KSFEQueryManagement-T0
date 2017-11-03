@@ -75,14 +75,14 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
     //Get all pending questionnaire list
     @Override
     @Transactional
-    public String viewPendingQuestionnaireList(Integer userID) {
+    public String viewPendingQuestionnaireList(Integer unitID) {
         System.out.println(getClass());
         jsonData = setJsonData();
         System.out.println("Json Data :" + jsonData);
 
         try {
-            questionnaireList = questionnaireDAO.viewPendingQuestionnaireList(userID);
-            System.out.println(questionnaireList);
+            questionnaireList = questionnaireDAO.viewPendingQuestionnaireList(unitID);
+            System.out.println("UNIT ID"+unitID);
             jsonResponse = JsonUtil.convertJavaToJson(questionnaireList);
             jsonData.setData(jsonResponse);
             jsonData.setStatus(ResponseCode.STATUS_SUCCESS);
@@ -122,8 +122,11 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
     }
 
     //Get all UnitIDs for selected UnitTypeID
+    @Transactional
     private Questionnaire getAllRespondents(Questionnaire questionnaire) {
+        System.out.println(getClass()+" getRespondents() "+questionnaire.getQuestionnaireTitle());
         unitIDList = respondentService.getUnitIDList(questionnaire.getTargetRespondentIDList());
+        System.out.println("@Questionnaire-service - unitIDs retrieved"+unitIDList);
         questionnaire.setTargetRespondentIDList(unitIDList);
         return questionnaire;
     }

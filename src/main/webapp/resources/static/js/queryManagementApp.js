@@ -24,16 +24,32 @@ angular
 
 					// TARGET RESPONDENTS
 					$scope.respondents = [ {
+						targetID : 0,
+						Name : 'Entire organisation',
+						Selected : false
+					},{
 						targetID : 1,
-						Name : 'All Departments',
+						Name : 'Department-Accounts',
 						Selected : false
 					}, {
 						targetID : 2,
-						Name : 'All Regions',
+						Name : 'Department-Legal',
+						Selected : false
+					},{
+						targetID : 11,
+						Name : 'Region office-1',
 						Selected : false
 					}, {
-						targetID : 3,
-						Name : 'All Branches',
+						targetID : 12,
+						Name : 'Region office-2',
+						Selected : false
+					},{
+						targetID : 111,
+						Name : 'Region-1 branches',
+						Selected : false
+					}, {
+						targetID : 112,
+						Name : 'Region-2 branches',
 						Selected : false
 					} ];
 

@@ -4,7 +4,6 @@
  */
 package com.ksfe.dao;
 
-import com.ksfe.model.Login;
 import com.ksfe.model.Unit;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -16,7 +15,9 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * This is a Spring Repository bean class - DAO
@@ -55,7 +56,7 @@ public class UnitDAOImpl implements UnitDAO {
         CriteriaBuilder builder = session.getCriteriaBuilder();
         System.out.println("builder created: ");
         CriteriaQuery<Integer> criteriaQuery = builder.createQuery(Integer.class);
-        System.out.println("queery created: "+criteriaQuery);
+        System.out.println("query created: "+criteriaQuery);
         Root<Unit> unitRoot = criteriaQuery.from(Unit.class);
         System.out.println("root created: ");
         criteriaQuery.select(unitRoot.get("unitID"));
@@ -64,6 +65,36 @@ public class UnitDAOImpl implements UnitDAO {
         System.out.println("UnitIDlist-Complete records: " + unitIDList);
         return unitIDList;
     }
+
+    //Add all unitID as HASHSET - for entire organisation
+    @Override
+    public Set<Integer> getUnitIDSet() {
+        System.out.println(getClass());
+        Session session = sessionFactory.getCurrentSession();
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaQuery<Integer> criteriaQuery = builder.createQuery(Integer.class);
+        Root<Unit> unitRoot = criteriaQuery.from(Unit.class);
+        criteriaQuery.select(unitRoot.get("unitID"));
+        unitIDList = session.createQuery(criteriaQuery).getResultList();
+        Set<Integer> unitIDSet=new HashSet<Integer>(unitIDList);
+        System.out.println("unitIDList-Complete records: " + unitIDSet);
+        return unitIDSet;
+    }
+    //Add all BRACHES - unitID as HASHSET - for specific region
+    @Override
+    public Set<Integer> getUnitIDSet(Integer regionID) {
+        System.out.println(getClass());
+        Session session = sessionFactory.getCurrentSession();
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaQuery<Integer> criteriaQuery = builder.createQuery(Integer.class);
+        Root<Unit> unitRoot = criteriaQuery.from(Unit.class);
+        criteriaQuery.select(unitRoot.get("unitID"));
+        criteriaQuery.where(builder.equal(unitRoot.get("regionID"), regionID));
+        unitIDList = session.createQuery(criteriaQuery).getResultList();
+        Set<Integer> unitIDSet=new HashSet<Integer>(unitIDList);
+        System.out.println("unitIDSet-Complete records: " + unitIDSet);
+        return unitIDSet;
+       }
 
     //Retrieve one Unit
     @Override
@@ -88,6 +119,8 @@ public class UnitDAOImpl implements UnitDAO {
         }
         return null;
     }
+
+
 
     //Critieria builder instantiation
     void bindDB() {

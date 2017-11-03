@@ -90,11 +90,11 @@ public class QuestionnaireDAOImpl implements QuestionnaireDAO {
 
     //Retrieve all pending questionnaireList for userID
     @Override
-    public List<Questionnaire> viewPendingQuestionnaireList(Integer userID) {
-        System.out.println(getClass() + "USER ID:" + userID);
+    public List<Questionnaire> viewPendingQuestionnaireList(Integer unitID) {
+        System.out.println(getClass() + "UNIT ID:" + unitID);
         bindDB();
         Predicate filter = criteriaBuilder.and(
-                criteriaBuilder.isMember(userID, root.get("targetRespondentIDList")),
+                criteriaBuilder.isMember(unitID, root.get("targetRespondentIDList")),
                 criteriaBuilder.greaterThanOrEqualTo(root.get("dueDate"), today),
                 criteriaBuilder.equal(root.get("questionnairePhase"), "PUBLISHED"));
         query.where(criteriaBuilder.and(filter));
