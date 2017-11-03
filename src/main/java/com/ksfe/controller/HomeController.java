@@ -481,12 +481,10 @@ public class HomeController {
     
 
  // DUMMY
-    @RequestMapping(value = "/dumy", method = RequestMethod.GET)
+    @RequestMapping(value = "/dummy", method = RequestMethod.GET)
     public String dummy() {
-        System.out.println("Trying to call UNITDAOIMPL");
-        unitDAOImpl.getClass();
-        System.out.println("ID List");
-        return "";
+        
+        return "dummy";
     }
     
  // RESPONSE

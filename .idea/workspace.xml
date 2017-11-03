@@ -1,18 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="ffa6b4bc-b049-4433-b992-00d00f8635c0" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/ksfe/controller/HomeController.java" afterPath="$PROJECT_DIR$/src/main/java/com/ksfe/controller/HomeController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/ksfe/dao/QuestionnaireDAOImpl.java" afterPath="$PROJECT_DIR$/src/main/java/com/ksfe/dao/QuestionnaireDAOImpl.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/ksfe/dao/UnitDAO.java" afterPath="$PROJECT_DIR$/src/main/java/com/ksfe/dao/UnitDAO.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/ksfe/dao/UnitDAOImpl.java" afterPath="$PROJECT_DIR$/src/main/java/com/ksfe/dao/UnitDAOImpl.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/ksfe/service/QuestionnaireServiceImpl.java" afterPath="$PROJECT_DIR$/src/main/java/com/ksfe/service/QuestionnaireServiceImpl.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/ksfe/service/RespondentService.java" afterPath="$PROJECT_DIR$/src/main/java/com/ksfe/service/RespondentService.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/resources/static/js/queryManagementApp.js" afterPath="$PROJECT_DIR$/src/main/webapp/resources/static/js/queryManagementApp.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/resources/static/js/responseManagementApp.js" afterPath="$PROJECT_DIR$/src/main/webapp/resources/static/js/responseManagementApp.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/m2e-wtp/web-resources/META-INF/maven/com.ksfe/question/pom.properties" afterPath="$PROJECT_DIR$/target/m2e-wtp/web-resources/META-INF/maven/com.ksfe/question/pom.properties" />
-    </list>
+    <list default="true" id="ffa6b4bc-b049-4433-b992-00d00f8635c0" name="Default" comment="" />
     <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -86,8 +75,8 @@
       <file leaf-file-name="QuestionnaireDAOImpl.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/ksfe/dao/QuestionnaireDAOImpl.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="50">
-              <caret line="93" column="45" lean-forward="false" selection-start-line="93" selection-start-column="45" selection-end-line="93" selection-end-column="45" />
+            <state relative-caret-position="169">
+              <caret line="100" column="28" lean-forward="false" selection-start-line="100" selection-start-column="28" selection-end-line="100" selection-end-column="28" />
               <folding>
                 <element signature="e#1366#1381#0" expanded="true" />
                 <element signature="e#1450#1465#0" expanded="true" />
@@ -611,13 +600,6 @@
       <option name="presentableId" value="Default" />
       <updated>1508035558007</updated>
     </task>
-    <task id="LOCAL-00012" summary="1. password field added to unit;&#10;2. attachment fields added to response;&#10;3. response date added to response&#10;Model CHECKED-WORKING.">
-      <created>1508212731136</created>
-      <option name="number" value="00012" />
-      <option name="presentableId" value="LOCAL-00012" />
-      <option name="project" value="LOCAL" />
-      <updated>1508212731136</updated>
-    </task>
     <task id="LOCAL-00013" summary="1. password field added to unit;&#10;2. attachment fields added to response;&#10;3. response date added to response&#10;Model CHECKED-WORKING.">
       <created>1508212806165</created>
       <option name="number" value="00013" />
@@ -954,7 +936,14 @@
       <option name="project" value="LOCAL" />
       <updated>1509652279984</updated>
     </task>
-    <option name="localTasksCounter" value="61" />
+    <task id="LOCAL-00061" summary="1. partly done login screen&#10;2. Partly configured target resp list modifications..&#10;3. Angular Service class to be created for dtata access across various controllers.&#10;&#10;Application CHECKED-WORKING.">
+      <created>1509720517490</created>
+      <option name="number" value="00061" />
+      <option name="presentableId" value="LOCAL-00061" />
+      <option name="project" value="LOCAL" />
+      <updated>1509720517492</updated>
+    </task>
+    <option name="localTasksCounter" value="62" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -1021,7 +1010,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="1.Cascade mode added to table associations&#10;Application CHECKED-WORKING." />
     <MESSAGE value="1.Front end presentation page addeed to model-not complete- pending&#10;Application CHECKED-WORKING." />
     <MESSAGE value="1.Front end presentation page-Question and Response addeed to model-not complete- pending&#10;Application CHECKED-WORKING." />
     <MESSAGE value="1.Front end response page updated&#10;Application CHECKED-WORKING." />
@@ -1046,7 +1034,8 @@
     <MESSAGE value="1. Retrieved response values for modify button in questionnaire EDIT mode&#10;&#10;Application CHECKED-WORKING." />
     <MESSAGE value="1. partly done &quot;view complete questionnaire (Histroy) &quot;feature&#10;&#10;Application CHECKED-WORKING." />
     <MESSAGE value="1. partly done login screen&#10;&#10;Application CHECKED-WORKING." />
-    <option name="LAST_COMMIT_MESSAGE" value="1. partly done login screen&#10;&#10;Application CHECKED-WORKING." />
+    <MESSAGE value="1. partly done login screen&#10;2. Partly configured target resp list modifications..&#10;3. Angular Service class to be created for dtata access across various controllers.&#10;&#10;Application CHECKED-WORKING." />
+    <option name="LAST_COMMIT_MESSAGE" value="1. partly done login screen&#10;2. Partly configured target resp list modifications..&#10;3. Angular Service class to be created for dtata access across various controllers.&#10;&#10;Application CHECKED-WORKING." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -1414,8 +1403,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/ksfe/dao/QuestionnaireDAOImpl.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="50">
-          <caret line="93" column="45" lean-forward="false" selection-start-line="93" selection-start-column="45" selection-end-line="93" selection-end-column="45" />
+        <state relative-caret-position="169">
+          <caret line="100" column="28" lean-forward="false" selection-start-line="100" selection-start-column="28" selection-end-line="100" selection-end-column="28" />
           <folding>
             <element signature="e#1366#1381#0" expanded="true" />
             <element signature="e#1450#1465#0" expanded="true" />

@@ -1,8 +1,11 @@
 angular
-		.module('myApp', [])
+		.module('myApp', ['loginModule'])
 		.controller(
-				'responseController',
-				function($scope, $window, $http) {
+				'responseController',['$scope', '$window', '$http','loginFactoryService',
+				function($scope, $window, $http,loginFactoryService) {
+					
+					
+								
 
 					// Variables
 					$scope.message = "";
@@ -108,13 +111,13 @@ angular
 					// Functions
 					// PULL UP VALID QUESTIONNAIRE
 					$scope.viewQuestionnaire = function() {
-						alert("viewQuestionnaire()");
 						flagReset();
 						variableReset();
 						// Flag
 						$scope.flagQuestionnaireView = true;
 						// Variables
-						$scope.unitID = 2;
+						alert("unitID from Service : "+loginFactoryService.unitID);
+						$scope.unitID = loginFactoryService.unitID;
 						alert("unitID : "+$scope.unitID);
 						// Service
 						$http({method : "post",
@@ -424,4 +427,4 @@ angular
 
 					// -----------------------------------------------------------------------------------------------------------------------------
 
-				});
+				}]);
