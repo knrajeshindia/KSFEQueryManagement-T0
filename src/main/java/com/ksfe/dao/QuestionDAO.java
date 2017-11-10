@@ -31,5 +31,5 @@ public interface QuestionDAO {
     //Delete Question
     Question deleteQuestion(Integer pk);
 
-    List<Question> getMultipleQuestions(List<Integer> questionIDList);
+    List<Question> getMultipleQuestions(List<Integer> questionIDList/*, Integer responseID*/);
 }

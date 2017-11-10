@@ -14,6 +14,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -113,6 +114,21 @@ public class AnswerDAOImpl implements AnswerDAO {
         }
         System.out.println("AnswerList :"+answerListRev1);
         return answerListRev1;
+    }
+
+
+    //Retrieve answer for question ID + responseID (for sepcific Unit)
+    @Override
+    public String getAnswer(Integer qID, Integer responseID) {
+        String answerString="Pl submit your answer";
+        Predicate filter = criteriaBuilder.and(
+                criteriaBuilder.equal(root.get("responseID"), responseID),
+                criteriaBuilder.equal(root.get("questionID"), qID));
+        query.where(criteriaBuilder.and(filter));
+        answer = session.createQuery(query).getSingleResult();
+        if(answer!=null)answerString=answer.getAnswerDescription();
+        System.out.println("Retrieved Answer : "+answerString);
+        return answerString;
     }
 
     //Critieria builder instantiation

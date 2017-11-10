@@ -1,192 +1,216 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%-- <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%> --%>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
+    <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+    <html ng-app="myApp">
 
-<html ng-app="myApp">
-<head>
+    <head>
 
-<script
-	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
-<script
-	src="<c:url value="/resources/static/js/queryManagementApp.js" />"></script>
+        <style>
+            input[type=checkbox] {
+                -webkit-appearance: checkbox;
+            }
+        </style>
 
-<style>
-input[type=checkbox] {
-	-webkit-appearance: checkbox;
-}
-</style>
+    </head>
 
-</head>
-<body ng-controller="namesCtrl as ctrl">
+    <body ng-controller="QuestionnaireController as ctrl">
 
-	<button ng-click="changeVisibility()" ng-show="flag1Button1">Create Questionnaire</button>
+        <button ng-click="changeVisibility()" ng-show="flag1Button1">Create Questionnaire</button>
 
+        <h1>KSFE</h1>
+        <hr>
 
-	<h1>KSFE</h1>
-	<hr>
+        <div id="1" ng-show="flag1">
 
-	<div id="1" ng-show="flag1">
+            <h2>Questionnaire Creation Form</h2>
+            <hr />
 
-		<h2>Questionnaire Creation Form</h2>
-		<hr />
+            <table>
+                <tr>
+                    <td>Title</td>
+                    <td>
+                        <input type="text" ng-model="questionnaireTitle" placeholder="Questionnaire Title" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>Description</td>
+                    <td>
+                        <textarea ng-model="questionnaireDescription" placeholder="Description"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Remarks</td>
+                    <td>
+                        <input ng-model="questionnaireRemarks" placeholder="Remarks" />
+                    </td>
+                </tr>
 
-		<table>
-			<tr>
-				<td>Title</td>
-				<td><input type="text" ng-model="questionnaireTitle" /></td>
-			</tr>
-			<tr>
-				<td>Description</td>
-				<td><textarea ng-model="questionnaireDescription"></textarea></td>
-			</tr>
-			<tr>
-				<td>Remarks</td>
-				<td><input ng-model="questionnaireRemarks" /></td>
-			</tr>
+                <tr>
+                    <td>Due Date</td>
+                    <td>
+                        <input type="date" ng-model="dueDate" min={{today|date: 'yyyy-MM-dd'}} required />
+                    </td>
+                </tr>
+                <tr>
+                    <td>Target Respondents</td>
+                    <td>
+                        <div ng-repeat="target in respondents">
+                            <label for="chkCustomer_{{target.targetID}}">
+                                <input id="chkCustomer_{{target.targetID}}" type="checkbox" ng-model="target.Selected" ng-click="getValue()" /> {{target.Name}}
+                            </label>
+                        </div>
+                    </td>
+                </tr>
 
-			<tr>
-				<td>Due Date</td>
-				<td><input type="date" ng-model="dueDate" min ={{today|date:'yyyy-MM-dd'}} required /></td>
-			</tr>
-			<tr>
-				<td>Target Respondents</td>
-				<td>
-					<div ng-repeat="target in respondents">
-						<label for="chkCustomer_{{target.targetID}}"> <input
-							id="chkCustomer_{{target.targetID}}" type="checkbox"
-							ng-model="target.Selected" ng-click="getValue()" />
-							{{target.Name}}
-						</label>
-					</div>
-				</td>
-			</tr>
+                <tr>
+                    <td>Sender Name</td>
+                    <td>
+                        <input ng-model="senderName" placeholder="Name" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>Sender Job Title</td>
+                    <td>
+                        <input ng-model="senderJobTitle" placeholder="Job Title" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <button ng-click="insertQ()">Create Questionnaire</button>
+                    </td>
+                </tr>
+            </table>
+            </form>
+            <hr>
+        </div>
 
+        <div ng-show="flag2">
 
-			<tr>
-				<td>Sender Name</td>
-				<td><input ng-model="senderName" /></td>
-			</tr>
-			<tr>
-				<td>Sender Job Title</td>
-				<td><input ng-model="senderJobTitle" /></td>
-			</tr>
-			<tr>
-				<td><button ng-click="insertQ()">Create Questionnaire</button></td>
-			</tr>
-		</table>
-		</form>
-		<hr>
-	</div>
+            <table>
+                <tr>
+                    <td>
+                        <label>Questionnaire ID</label>
+                    </td>
+                    <td>{{questionnaireID}}</td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>Questionnaire Title</label>
+                    </td>
+                    <td>{{questionnaireTitle}}</td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>Questionnaire Description</label>
+                    </td>
+                    <td>{{questionnaireDescription}}</td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>Questionnaire Remarks</label>
+                    </td>
+                    <td>{{questionnaireRemarks}}</td>
+                </tr>
 
-	<div ng-show="flag2">
+                <tr>
+                    <td>
+                        <label>Due date</label>
+                    </td>
+                    <td>{{dueDate|date : "dd/MM/yyyy"}}</td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>Respondents</label>
+                    </td>
+                    <td>{{selectedRespondents}}</td>
+                </tr>
 
-		<table>
-			<tr>
-				<td><label>Questionnaire ID</label></td>
-				<td>{{questionnaireID}}</td>
-			</tr>
-			<tr>
-				<td><label>Questionnaire Title</label></td>
-				<td>{{questionnaireTitle}}</td>
-			</tr>
-			<tr>
-				<td><label>Questionnaire Description</label></td>
-				<td>{{questionnaireDescription}}</td>
-			</tr>
-			<tr>
-				<td><label>Questionnaire Remarks</label></td>
-				<td>{{questionnaireRemarks}}</td>
-			</tr>
+            </table>
+            <hr>
+        </div>
 
-			<tr>
-				<td><label>Due date</label></td>
-				<td>{{dueDate|date : "dd/MM/yyyy"}}</td>
-			</tr>
-			<tr>
-				<td><label>Respondents</label></td>
-				<td>{{selectedRespondents}}</td>
-			</tr>
+        <div id="3" ng-show="flag3">
 
+            <h3>Questions in current questionnaire</h3>
 
-		</table>
-		<hr>
-	</div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID.</th>
+                        <th>Question</th>
+                        <th>DataType</th>
+                        <th width="20%"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="u in questionArray">
+                        <td>
+                            <label>{{u.questionID}}</label>
+                        </td>
+                        <td>
+                            <label>{{u.questionDescription}}</label>
+                        </td>
+                        <td>
+                            <label>{{u.responseDataType}}</label>
+                        </td>
+                        <td>
+                            <input type="checkbox" ng-model="u.Remove" />
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div>
+                <button ng-click="publish()">Publish Questionnaire</button>
+                <button ng-click="removeRow()">Remove Question</button>
+            </div>
+            </table>
+            <hr>
+        </div>
 
-	<div id="3" ng-show="flag3">
+        <div id="4" ng-show="flag4">
+            <h3>Add Question</h3>
+            <hr>
+            <table>
+                <tr>
+                    <td>Question</td>
+                    <td>
+                        <textarea ng-model="questionDescription" rows="2" cols="50"> </textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Response data type</td>
+                    <td>
+                        <select ng-model="selectedResponseDataType" ng-options="responseDataType.name for responseDataType in responseDataTypes"></select>
+                    </td>
+                </tr>
+                <tr>
+                    <tr>
+                        <td>
+                            <button type="submit" ng-click="insertQuest()">Add Question
+                            </button>
+                        </td>
+                    </tr>
 
-		<h3>Questions in current questionnaire</h3>
+            </table>
 
-		<table>
-			<thead>
-				<tr>
-					<th>ID.</th>
-					<th>Question</th>
-					<th>DataType</th>
-					<th width="20%"></th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr ng-repeat="u in questionArray">
-					<td><label>{{u.questionID}}</label></td>
-					<td><label>{{u.questionDescription}}</label></td>
-					<td><label>{{u.responseDataType}}</label></td>
-					<td><input type="checkbox" ng-model="u.Remove" /></td>
-				</tr>
-			</tbody>
-		</table>
-		<div>
-			<button ng-click="publish()">Publish Questionnaire</button>
-			<button ng-click="removeRow()">Remove Question</button>
-		</div>
-		</table>
-		<hr>
-	</div>
+            <hr>
 
-<div id="4" ng-show="flag4">
-<h3>Add Question</h3>
-		<hr>
-		<table>
-			<tr>
-				<td>Question</td>
-				<td><textarea ng-model="questionDescription" rows="2" cols="50"> </textarea></td>
-			</tr>
-			<tr>
-				<td>Response data type</td>
-				<td><select ng-model="selectedResponseDataType"
-					ng-options="responseDataType.name for responseDataType in responseDataTypes"></select>
-				</td>
-			</tr>
-			<tr>
-			<tr>
-				<td><button type="submit" ng-click="insertQuest()">Add
-						Question</button></td>
-			</tr>
+        </div>
 
-		</table>
+        <div id="5" ng-show="flag5">
+            <h3>Questionnaire - {{questionnaireID}} published successfully</h3>
+            <hr>
 
-		<hr>
+        </div>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+        <script src="<c:url value="/resources/static/js/ksfeApp.js" />"></script>
+            
+            <script src="<c:url value="/resources/static/js/service/loginService.js" />"></script>
+            <script src="<c:url value="/resources/static/js/controller/questionnaireController.js" />"></script>
 
+    </body>
 
-
-
-	</div>
-
-
-
-	<div id="5" ng-show="flag5">
-		<h3>Questionnaire - {{questionnaireID}} published successfully</h3>
-		<hr>
-
-
-
-
-	</div>
-
-
-</body>
-</html>
+    </html>

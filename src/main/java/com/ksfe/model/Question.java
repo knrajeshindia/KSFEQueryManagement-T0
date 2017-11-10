@@ -26,6 +26,9 @@ public class Question implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer questionID;
 
+    @Transient
+    private String answer;
+
     //Review
     private Integer questionnaireID;
     @NotNull(message = "required field")
@@ -52,6 +55,7 @@ public class Question implements Serializable {
     public String toString() {
         return "Question{" +
                 "questionID=" + questionID +
+                ", answer='" + answer + '\'' +
                 ", questionnaireID=" + questionnaireID +
                 ", questionDescription='" + questionDescription + '\'' +
                 ", responseDataType='" + responseDataType + '\'' +
@@ -106,5 +110,13 @@ public class Question implements Serializable {
 
     public void setAnswerIDList(Collection<Integer> answerIDList) {
         this.answerIDList = answerIDList;
+    }
+
+    public String getAnswer() {
+        return answer;
+    }
+
+    public void setAnswer(String answer) {
+        this.answer = answer;
     }
 }

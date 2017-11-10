@@ -25,5 +25,5 @@ public interface QuestionService {
     //Delete Question
     public Question deleteQuestion(Integer pk);
 
-    String viewPendingQuestionList(List<Integer> questionIDList);
+    String viewPendingQuestionList(List<Integer> questionIDList/*, Integer responseID*/);
 }

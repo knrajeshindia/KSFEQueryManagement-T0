@@ -32,6 +32,8 @@ public class QuestionDAOImpl implements QuestionDAO {
 
     @Autowired
     private SessionFactory sessionFactory;
+    @Autowired
+    private AnswerDAO answerDAO;
     private Session session;
     Question question;
     List<Question> questionList;
@@ -114,11 +116,15 @@ public class QuestionDAOImpl implements QuestionDAO {
 
     //Retrieve List<Question> from List of questionID
     @Override
-    public List<Question> getMultipleQuestions(List<Integer> questionIDList) {
+    public List<Question> getMultipleQuestions(List<Integer> questionIDList/*, Integer responseID*/) {
         questionListSet = new HashSet<Question>();
         for (Integer qID : questionIDList) {
             question = new Question();
             question = (Question) getQuestion(qID);
+            /*if(responseID!=null){
+            String answer=answerDAO.getAnswer(qID,responseID);
+            question.setAnswer(answer);}*/
+
             questionListSet.add(question);
         }
         questionList = new ArrayList<>(questionListSet);

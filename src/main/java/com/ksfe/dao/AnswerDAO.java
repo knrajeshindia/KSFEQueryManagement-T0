@@ -21,4 +21,6 @@ public interface AnswerDAO {
     List<Answer> getAnswerList(int responseID);
 
     List<Answer> updateAnswerList(List<Answer> answerIDList);
+
+    String getAnswer(Integer qID, Integer responseID);
 }

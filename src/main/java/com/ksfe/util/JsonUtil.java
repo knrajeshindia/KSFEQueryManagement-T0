@@ -3,7 +3,6 @@ package com.ksfe.util;
 
 import java.io.IOException;
 
-import org.apache.log4j.Logger;
 import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.JsonParseException;
 import org.codehaus.jackson.map.JsonMappingException;

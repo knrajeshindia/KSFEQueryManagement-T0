@@ -93,15 +93,16 @@ public class QuestionServiceImpl implements QuestionService {
     //Retrieve multiple Question from questionID List
     @Override
     @Transactional
-    public String viewPendingQuestionList(List<Integer> questionIDList) {
+    public String viewPendingQuestionList(List<Integer> questionIDList/*, Integer responseID*/) {
         questionList=new ArrayList<Question>();
         System.out.println(getClass());
         jsonData = setJsonData();
         System.out.println("Json Data :"+jsonData);
         System.out.println("@ ServiceImpl :"+questionIDList);
         try {
-            questionList=questionDAO.getMultipleQuestions(questionIDList);
-            System.out.println(question);
+            questionList=questionDAO.getMultipleQuestions(questionIDList/*,responseID*/);
+            //sort questions based on questionID by ASC
+            questionList.sort((q1, q2) -> q1.getQuestionID().compareTo(q2.getQuestionID()));           
             jsonResponse = JsonUtil.convertJavaToJson(questionList);
             jsonData.setData(jsonResponse);
             jsonData.setStatus(ResponseCode.STATUS_SUCCESS);

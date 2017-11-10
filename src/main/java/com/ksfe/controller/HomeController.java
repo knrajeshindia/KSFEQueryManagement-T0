@@ -7,6 +7,8 @@ package com.ksfe.controller;
 import com.ksfe.dao.UnitDAOImpl;
 import com.ksfe.model.*;
 import com.ksfe.service.*;
+import com.ksfe.util.ResponseCode;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
@@ -131,20 +133,15 @@ public class HomeController {
 
     //Retrieve Question List
     @RequestMapping(value="/viewQuest",method=RequestMethod.POST)
-    public @ResponseBody String viewQuest(@RequestParam("questionIDList") String questionIDListString) {
+    public @ResponseBody String viewQuest(@RequestParam("questionIDList") String questionIDListString
+                                          /*@RequestParam("responseID") Integer responseID*/) {
         questionIDList=new ArrayList<Integer>();
         System.out.println(getClass()+" | "+questionIDListString);
         questionIDList=Arrays.asList(questionIDListString.split(",")).stream()
         		  .map(s -> Integer.parseInt(s))
         		  .collect(Collectors.toList());       
-        System.out.println(questionIDList);
-        
-        
-        
-        /*for(String a:questionIDListString){
-            questionIDList.add(Integer.parseInt(a));
-        }*/
-        jsonResponse=questionService.viewPendingQuestionList(questionIDList);
+        System.out.println(questionIDList/*+" |  ResponseID : "+responseID*/);
+        jsonResponse=questionService.viewPendingQuestionList(questionIDList)/*,responseID)*/;
         System.out.println("Question List:"+jsonResponse);
         return jsonResponse;
     }
@@ -229,9 +226,8 @@ public class HomeController {
            /* @RequestParam("attachmentFile") CommonsMultipartFile file,*/
             @RequestParam("respondentName") String respondentName,
             @RequestParam("respondentJobTitle") String respondentJobTitle,
-
-            @RequestParam("answerIDList") ArrayList<Integer>answerIDList,
-            @RequestParam("responseStatus") String responseStatus){
+            @RequestParam("answerIDList") ArrayList<Integer>answerIDList
+            /*@RequestParam("responseStatus") String responseStatus*/){
     	System.out.println("Form data binded - Trying to insert " + response);
     	response=new Response();
     	response.setUnitID(unitID);
@@ -245,12 +241,25 @@ public class HomeController {
     	response.setRespondentJobTitle(respondentJobTitle);
     	response.setResponseDate(new Date());
     	response.setAnswerIDList(answerIDList);
-    	response.setResponseStatus(responseStatus);
+    	response.setResponseStatus(ResponseCode.STATUS_DRAFT);
         jsonResponse = responseService.insertResponse(response);
         System.out.println("DATA inserted :"+jsonResponse);
         return jsonResponse;
     }
 
+    
+    
+    
+  ////Insert Response
+    @RequestMapping(value="/saveResponseDummy",method=RequestMethod.POST)
+    public @ResponseBody String saveResponseDummy() {
+    	System.out.println("@save response dummy");
+		return "success";
+    }
+    
+    
+    
+    
 
     //UPDATE Response - PUBLISH
     @RequestMapping(value="/updateResponse",method=RequestMethod.POST)
@@ -487,11 +496,63 @@ public class HomeController {
         return "dummy";
     }
     
+ // DUMMY2
+    @RequestMapping(value = "/dummy2", method = RequestMethod.GET)
+    public String dummy2() {
+        
+        return "dummy2";
+    }
+    
+ // DUMMY3
+    @RequestMapping(value = "/dummy3", method = RequestMethod.GET)
+    public String dummy3() {
+        
+        return "dummy3";
+    }
+    
+ // dummy4 GET
+    @RequestMapping(value = "/dummy4", method = RequestMethod.GET)
+    public String dummy4() {
+        
+        return "dummy4";
+    }
+    
+ // login GET
+    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    public String login() {
+        
+        return "login";
+    }
+    
+    
+    //dashboard GET
+    @RequestMapping(value = "/dashboard", method = RequestMethod.GET)
+    public String dashboard() {
+        
+        return "dashboard";
+    }
+    
+    // dummy4 POST
+    @RequestMapping(value = "/dummy4", method = RequestMethod.POST)
+    public String dummy4A() {
+        
+        return "dummy4";
+    }
+    
+    //KSFE GET
+    @RequestMapping(value = "/ksfe", method = RequestMethod.GET)
+    public String ksfe() {
+        
+        return "ksfeHome";
+    }
+    
+    
+    
  // RESPONSE
     @RequestMapping(value = "/response", method = RequestMethod.GET)
     public String response() {
         System.out.println("Trying to call Response");
-        return "home-branch";
+        return "home-branch2";
     }
 
     // LOGIN-VERIFY USER

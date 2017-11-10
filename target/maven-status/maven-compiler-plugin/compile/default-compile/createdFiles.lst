@@ -5,6 +5,7 @@ com\ksfe\dao\QuestionnaireDAO.class
 com\ksfe\dao\UnitDAOImpl.class
 com\ksfe\dao\AnswerDAOImpl.class
 com\ksfe\dao\TargetDAO.class
+com\ksfe\test\DummyTest.class
 com\ksfe\service\AnswerServiceImpl.class
 com\ksfe\service\QuestionnaireServiceImpl.class
 com\ksfe\model\Response.class
@@ -35,10 +36,10 @@ com\ksfe\service\UnitTypeServiceImpl.class
 com\ksfe\dao\TargetDAOImpl.class
 com\ksfe\service\UnitTypeService.class
 com\ksfe\service\UnitService.class
-com\ksfe\TestApp\TestApplication.class
 com\ksfe\dao\UnitTypeDAO.class
 com\ksfe\util\SessionUtil.class
 com\ksfe\dao\UnitDAO.class
+com\ksfe\model\Login.class
 com\ksfe\model\Questionnaire.class
 com\ksfe\service\QuestionnaireService.class
 com\ksfe\dao\QuestionDAO.class
