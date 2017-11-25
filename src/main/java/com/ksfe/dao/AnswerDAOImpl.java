@@ -56,8 +56,7 @@ public class AnswerDAOImpl implements AnswerDAO {
         for (Answer a : answerList) {
             a.setAnswerStatus(ResponseCode.STATUS_DRAFT);
             insertAnswer(a);
-            this.answerList.add(a);
-        }
+            this.answerList.add(a);}
         return this.answerList;
     }
 

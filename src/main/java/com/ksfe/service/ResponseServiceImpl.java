@@ -60,8 +60,8 @@ public class ResponseServiceImpl implements ResponseService {
     //Method to verify if a response exist for questionnaireID
     @Override
     @Transactional
-    public Response verifyResponse(Integer questionnaireID) {
-        return responseDAO.verifyResponse(questionnaireID);
+    public Response verifyResponse(Integer questionnaireID, Integer unitID) {
+        return responseDAO.verifyResponse(questionnaireID,unitID);
     }
 
     //Method to get One response object in JSON

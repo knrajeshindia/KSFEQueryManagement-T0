@@ -114,7 +114,7 @@ public class HomeController {
     //Retrieve Questionnaire List
     @RequestMapping(value="/viewQ",method=RequestMethod.POST)
     public @ResponseBody String viewQ(@RequestParam("unitID") Integer unitID) {
-        System.out.println(getClass()+" | "+unitID);
+        System.out.println(getClass()+" UID IS | "+unitID);
         jsonResponse=questionnaireService.viewPendingQuestionnaireList(unitID);
         System.out.println("Questionnaire:"+jsonResponse);
         return jsonResponse;
@@ -171,7 +171,7 @@ public class HomeController {
     @RequestMapping(value="/saveAnswer",method=RequestMethod.POST)
     public @ResponseBody String saveAnswer(@RequestParam("questionIDList") Integer[] questionIDList,
                                              @RequestParam("answerDescriptionList") String[] answerDescriptionList) {
-        System.out.println("Form data binded - Trying to insert " + questionIDList);
+        System.out.println("Form data binded - Trying to save Answer " + questionIDList);
         if(questionIDList.length==answerDescriptionList.length) {
             answerList=new ArrayList<Answer>();
             for(int i=0;i<questionIDList.length;i++){
@@ -185,6 +185,23 @@ public class HomeController {
         return jsonResponse;
     }
 
+   /* //Insert Answers-REVISED
+    @RequestMapping(value="/saveAnswerR2",method=RequestMethod.POST)
+    public @ResponseBody String saveAnswerR2(@RequestParam("questionIDList") Integer[] questionIDList,
+                                           @RequestParam("answerDescriptionList") String[] answerDescriptionList) {
+        System.out.println("Form data binded - Trying to save Answer " + questionIDList);
+        if(questionIDList.length==answerDescriptionList.length) {
+            answerList=new ArrayList<Answer>();
+            for(int i=0;i<questionIDList.length;i++){
+                answer = new Answer();
+                answer.setQuestionID(questionIDList[i]);
+                answer.setAnswerDescription(answerDescriptionList[i]);
+                answerList.add(answer);
+            }}
+        jsonResponse = answerService.insertAnswer(answerList);
+        System.out.println("DATA inserted :"+jsonResponse);
+        return jsonResponse;
+    }*/
 
 
     //Update Answers
@@ -247,10 +264,40 @@ public class HomeController {
         return jsonResponse;
     }
 
-    
-    
-    
-  ////Insert Response
+
+    /*//Insert Response-Revised
+    @RequestMapping(value="/saveResponseR2",method=RequestMethod.POST)
+    public @ResponseBody String saveResponseR2(
+            @RequestParam("unitID") Integer unitID,
+            @RequestParam("questionnaireID") Integer questionnaireID,
+            @RequestParam("responseRemarks") String responseRemarks,
+            @RequestParam("attachmentDescription") String attachmentDescription,
+           *//* @RequestParam("attachmentFile") CommonsMultipartFile file,*//*
+            @RequestParam("respondentName") String respondentName,
+            @RequestParam("respondentJobTitle") String respondentJobTitle
+            *//*@RequestParam("responseStatus") String responseStatus*//*){
+        System.out.println("Form data binded - Trying to insert " + response);
+        response=new Response();
+        response.setUnitID(unitID);
+        response.setQuestionnaireID(questionnaireID);
+        response.setResponseRemarks(responseRemarks);
+        response.setAttachmentDescription(attachmentDescription);
+        //Attach FILE
+		*//*attachmentFile = file.getBytes();
+		response.setAttachmentFile(attachmentFile);*//*
+        response.setRespondentName(respondentName);
+        response.setRespondentJobTitle(respondentJobTitle);
+        response.setResponseDate(new Date());
+        response.setResponseStatus(ResponseCode.STATUS_DRAFT);
+        jsonResponse = responseService.insertResponse(response);
+        System.out.println("DATA inserted :"+jsonResponse);
+        return jsonResponse;
+    }
+*/
+
+
+
+    ////Insert Response
     @RequestMapping(value="/saveResponseDummy",method=RequestMethod.POST)
     public @ResponseBody String saveResponseDummy() {
     	System.out.println("@save response dummy");
@@ -322,7 +369,7 @@ public class HomeController {
         response.setRespondentJobTitle("respondentJobTitle");
         responseService.getResponse(response.getResponseID()); 
         responseService.updateResponse(response);*/
-    	System.out.println(responseService.verifyResponse(20));
+    	//System.out.println(responseService.verifyResponse(20, unitID));
         return "home";
     }
     

@@ -2,14 +2,12 @@ package com.ksfe.dao;
 
 import com.ksfe.model.Response;
 
-import java.util.List;
-
 public interface ResponseDAO {
 
 	public Response insertResponse(Response response) ;
 
 
-    Response verifyResponse(Integer questionnaireID);
+    Response verifyResponse(Integer questionnaireID, Integer unitID);
 
     Response getResponse(int responseID);
 

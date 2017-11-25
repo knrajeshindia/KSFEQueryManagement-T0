@@ -79,7 +79,6 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
         System.out.println(getClass());
         jsonData = setJsonData();
         System.out.println("Json Data :" + jsonData);
-
         try {
             questionnaireList = questionnaireDAO.viewPendingQuestionnaireList(unitID);
             System.out.println("UNIT ID"+unitID);

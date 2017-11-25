@@ -17,8 +17,8 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -61,10 +61,13 @@ public class ResponseDAOImpl implements ResponseDAO {
     //Verify response status for questionnaireID
     //Revise to select only response - ID and status only
     @Override
-    public Response verifyResponse(Integer questionnaireID) {
+    public Response verifyResponse(Integer questionnaireID, Integer unitID) {
         System.out.println(getClass());
         bindDB();
-        query.where(criteriaBuilder.equal(root.get("questionnaireID"), questionnaireID));
+        Predicate filter = criteriaBuilder.and(
+                criteriaBuilder.equal(root.get("questionnaireID"), questionnaireID),
+                criteriaBuilder.equal(root.get("unitID"), unitID));
+        query.where(criteriaBuilder.and(filter));
         List<Response> responseList = session.createQuery(query).getResultList();
         System.out.println(responseList);
         if (responseList.size() > 0) {

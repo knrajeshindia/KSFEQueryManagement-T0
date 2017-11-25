@@ -104,7 +104,7 @@ public class QuestionnaireDAOImpl implements QuestionnaireDAO {
         questionnaireListFiltered.clear();
         //Filter-out answered questionnaire
         for (Questionnaire questionnaire : questionnaireList) {
-            response = responseService.verifyResponse(questionnaire.getQuestionnaireID());
+            response = responseService.verifyResponse(questionnaire.getQuestionnaireID(),unitID);
             responseStatus=response.getResponseStatus();
             questionnaire.setResponseStatus(responseStatus);
             questionnaire.setResponseDate(response.getResponseDate());
@@ -138,7 +138,7 @@ public class QuestionnaireDAOImpl implements QuestionnaireDAO {
         questionnaireList = session.createQuery(query).getResultList();
          //Add response details
         for (Questionnaire questionnaire : questionnaireList) {
-            response = responseService.verifyResponse(questionnaire.getQuestionnaireID());
+            response = responseService.verifyResponse(questionnaire.getQuestionnaireID(), unitID);
             System.out.println("RESPONSE "+response);
             responseStatus=response.getResponseStatus();
             questionnaire.setResponseStatus(responseStatus);
