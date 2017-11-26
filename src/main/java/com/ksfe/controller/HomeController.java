@@ -88,7 +88,7 @@ public class HomeController {
 
     @RequestMapping(value="/insertQ",method=RequestMethod.POST)    
     public @ResponseBody String insertQ(@RequestBody Questionnaire questionnaire) {
-        System.out.println("Form data binded - Trying to insert " + questionnaire);
+        System.out.println("Questionnaire binded : " + questionnaire);
         jsonResponse = questionnaireService.insertQuestionnaire(questionnaire);
         System.out.println("Questionnaire inserted"+questionnaire);
         return jsonResponse;
@@ -130,6 +130,14 @@ public class HomeController {
         return jsonResponse;
     }
 
+    //Retrieve My OWN Questionnaire List(Created by self)
+    @RequestMapping(value="/viewMyQ",method=RequestMethod.POST)
+    public @ResponseBody String viewMyQ(@RequestParam("unitID") Integer unitID) {
+        System.out.println(getClass()+" UID IS | "+unitID);
+        jsonResponse=questionnaireService.viewMyQuestionnaireList(unitID);
+        System.out.println("Questionnaire:"+jsonResponse);
+        return jsonResponse;
+    }
 
     //Retrieve Question List
     @RequestMapping(value="/viewQuest",method=RequestMethod.POST)
@@ -629,7 +637,6 @@ public class HomeController {
         targetRespondentList.add(12);
         targetRespondentList.add(111);
         targetRespondentList.add(112);
-        
         return targetRespondentList;
     }
 

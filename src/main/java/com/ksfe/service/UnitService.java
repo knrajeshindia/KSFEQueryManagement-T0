@@ -19,4 +19,5 @@ public interface UnitService {
     public void insertUnit(Unit unit);
     List<Integer> getUnitIDList(Integer unitTypeID);
     String verifyUnit(Integer unitID, String password);
+    String getUnitName(Integer unitID);
 }

@@ -96,6 +96,13 @@ public class UnitDAOImpl implements UnitDAO {
         return unitIDSet;
        }
 
+    //Retrieve one Unit Name
+    @Override
+    public String getUnitName(Integer unitID) {
+        unit=getUnit(unitID);
+        return unit.getUnitName();
+    }
+
     //Retrieve one Unit
     @Override
     public Unit getUnit(int pk) {

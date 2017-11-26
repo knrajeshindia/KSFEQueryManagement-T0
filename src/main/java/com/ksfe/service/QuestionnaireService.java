@@ -21,4 +21,6 @@ public interface QuestionnaireService {
     String viewPendingQuestionnaireList(Integer userID);
 
     String viewCompleteQuestionnaireList(Integer unitID);
+
+    String viewMyQuestionnaireList(Integer unitID);
 }

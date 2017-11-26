@@ -30,4 +30,7 @@ public interface UnitDAO {
 
     //Add all unitID as HASHSET - for REGIONAL OFFICES
     Set<Integer> getUnitIDSet(Integer regionID);
+
+    //Retrieve Unit Name
+    String getUnitName(Integer unitID);
 }

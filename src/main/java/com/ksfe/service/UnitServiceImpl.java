@@ -71,6 +71,13 @@ public class UnitServiceImpl implements UnitService {
         return jsonResponse;
     }
 
+    //Retrieve Unit Name
+    @Override
+    @Transactional
+    public String getUnitName(Integer unitID) {
+        return unitDAO.getUnitName(unitID);
+    }
+
     //Set default message data
     public static JsonData setJsonData() {
         jsonData = new JsonData();

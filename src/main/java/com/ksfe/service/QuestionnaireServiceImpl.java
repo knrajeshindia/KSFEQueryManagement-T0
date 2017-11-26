@@ -120,6 +120,30 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
         return jsonResponse;
     }
 
+    //Retrieve MY Questionnaire List(Self created)
+    @Override
+    @Transactional
+    public String viewMyQuestionnaireList(Integer unitID) {
+        System.out.println(getClass());
+        jsonData = setJsonData();
+        System.out.println("Json Data :" + jsonData);
+        try {
+            questionnaireList = questionnaireDAO.viewMyQuestionnaireList(unitID);
+            System.out.println("UNIT ID"+unitID);
+            jsonResponse = JsonUtil.convertJavaToJson(questionnaireList);
+            jsonData.setData(jsonResponse);
+            jsonData.setStatus(ResponseCode.STATUS_SUCCESS);
+            jsonData.setMessage(ResponseCode.MESSAGE_UPDATED);
+        } catch (EmptyResultDataAccessException e) {
+            jsonData.setMessage(ResponseCode.MESSAGE_FAILURE);
+        } catch (DataAccessException de) {
+            jsonData.setMessage(ResponseCode.MESSAGE_NETWORK);
+        }
+        jsonResponse = JsonUtil.convertJavaToJson(jsonData);
+        System.out.println(jsonResponse);
+        return jsonResponse;
+    }
+
     //Get all UnitIDs for selected UnitTypeID
     @Transactional
     private Questionnaire getAllRespondents(Questionnaire questionnaire) {

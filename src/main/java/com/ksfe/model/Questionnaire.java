@@ -55,8 +55,11 @@ public class Questionnaire implements Serializable {
     private Integer responseID;
     @Transient
     private Date responseDate;
-
-
+    @NotNull(message = "required field")
+    @Column(nullable = false)
+    private Integer unitID;
+    @Transient
+    private String unitIDName;
     @NotNull(message = "required field")
     @Column(nullable = false)
     private String senderName;
@@ -93,6 +96,8 @@ public class Questionnaire implements Serializable {
                 ", responseFlag=" + responseFlag +
                 ", responseID=" + responseID +
                 ", responseDate=" + responseDate +
+                ", unitID=" + unitID +
+                ", unitIDName='" + unitIDName + '\'' +
                 ", senderName='" + senderName + '\'' +
                 ", senderJobTitle='" + senderJobTitle + '\'' +
                 ", questionnaireStatus=" + questionnaireStatus +
@@ -238,5 +243,21 @@ public class Questionnaire implements Serializable {
 
     public void setResponseDate(Date responseDate) {
         this.responseDate = responseDate;
+    }
+
+    public Integer getUnitID() {
+        return unitID;
+    }
+
+    public void setUnitID(Integer unitID) {
+        this.unitID = unitID;
+    }
+
+    public String getUnitIDName() {
+        return unitIDName;
+    }
+
+    public void setUnitIDName(String unitIDName) {
+        this.unitIDName = unitIDName;
     }
 }

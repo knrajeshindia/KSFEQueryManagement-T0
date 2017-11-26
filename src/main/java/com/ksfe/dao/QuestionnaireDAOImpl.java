@@ -12,6 +12,7 @@ import com.ksfe.model.Questionnaire;
 
 import com.ksfe.model.Response;
 import com.ksfe.service.ResponseService;
+import com.ksfe.service.UnitService;
 import com.ksfe.util.ResponseCode;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -40,6 +41,8 @@ public class QuestionnaireDAOImpl implements QuestionnaireDAO {
     private SessionFactory sessionFactory;
     @Autowired
     private ResponseService responseService;
+    @Autowired
+    private UnitService unitService;
     private Questionnaire questionnaire;
     private Session session;
     List<Questionnaire> questionnaireList = new ArrayList<Questionnaire>();
@@ -120,6 +123,7 @@ public class QuestionnaireDAOImpl implements QuestionnaireDAO {
                 questionnaireListFiltered.add(questionnaire);
             }
         }
+        insertUnitName(questionnaireList);
         System.out.println("Questionnairelist-Complete records for userID: " + questionnaireListFiltered);
         return questionnaireListFiltered;
     }
@@ -144,10 +148,33 @@ public class QuestionnaireDAOImpl implements QuestionnaireDAO {
             questionnaire.setResponseStatus(responseStatus);
             questionnaire.setResponseDate(response.getResponseDate());
             questionnaire.setResponseID(response.getResponseID());}
+        insertUnitName(questionnaireList);
         System.out.println("Questionnairelist-Complete records for userID: " + questionnaireList);
         return questionnaireList;
     }
 
+    //Retrieve MY Questionnaire -SELF CREATED
+    @Override
+    public List<Questionnaire> viewMyQuestionnaireList(Integer unitID) {
+        System.out.println(getClass() + " UNIT ID : " + unitID);
+        bindDB();
+        System.out.println("bindDB invoked");
+        Predicate filter = criteriaBuilder.and(
+                criteriaBuilder.equal(root.get("unitID"), unitID));
+        query.where(criteriaBuilder.and(filter));
+        //ORDER BY
+        query.orderBy(criteriaBuilder.desc(root.get("questionnaireID")));
+        questionnaireList = session.createQuery(query).getResultList();
+        insertUnitName(questionnaireList);
+        return questionnaireList;
+    }
+
+    private List<Questionnaire> insertUnitName(List<Questionnaire> questionnaireList){
+        for(Questionnaire q:questionnaireList){
+            q.setUnitIDName(unitService.getUnitName(q.getUnitID()));
+        }
+        return questionnaireList;
+    }
 
     //Critieria builder instantiation
     void bindDB() {
