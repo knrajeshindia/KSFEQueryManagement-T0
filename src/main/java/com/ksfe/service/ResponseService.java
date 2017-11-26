@@ -21,4 +21,6 @@ public interface ResponseService {
     String getResponse(Integer responseID);
 
     String updateResponse(Response response);
+
+    int getResponsePercentage(Integer questionnaireID);
 }

@@ -72,7 +72,7 @@ public class ResponseDAOImpl implements ResponseDAO {
         System.out.println(responseList);
         if (responseList.size() > 0) {
             for (Response response : responseList) {
-            	responseDummy = new Response();
+                responseDummy = new Response();
                 responseDummy.setResponseID(response.getResponseID());
                 responseDummy.setResponseDate(response.getResponseDate());
                 if (response.getResponseStatus().equalsIgnoreCase("PUBLISHED")) {
@@ -104,20 +104,35 @@ public class ResponseDAOImpl implements ResponseDAO {
     //Update response-PUBLISH
     @Override
     public Response updateResponse(Response response) {
-        System.out.println(getClass()+"|"+response);
-        responseDummy=getResponse(response.getResponseID());
+        System.out.println(getClass() + "|" + response);
+        responseDummy = getResponse(response.getResponseID());
         bindDB();
-            responseDummy.setResponseRemarks(response.getResponseRemarks());
+        responseDummy.setResponseRemarks(response.getResponseRemarks());
             /*responseDummy.setAttachmentFile(response.getAttachmentFile());*/
-            responseDummy.setAttachmentDescription(response.getAttachmentDescription());
-            responseDummy.setRespondentName(response.getRespondentName());
-            responseDummy.setRespondentJobTitle(response.getRespondentJobTitle());
-            responseDummy.setResponseDate(new Date());
-            responseDummy.setResponseStatus(ResponseCode.STATUS_PUBLISHED);
-            session.update(responseDummy);
-            System.out.println("Response :"+responseDummy);        
+        responseDummy.setAttachmentDescription(response.getAttachmentDescription());
+        responseDummy.setRespondentName(response.getRespondentName());
+        responseDummy.setRespondentJobTitle(response.getRespondentJobTitle());
+        responseDummy.setResponseDate(new Date());
+        responseDummy.setResponseStatus(ResponseCode.STATUS_PUBLISHED);
+        session.update(responseDummy);
+        System.out.println("Response :" + responseDummy);
         return responseDummy;
-}
+    }
+
+    //Retrieves actual response to questionnaire
+    //Revise to retrieve only count - currently retrieving all response object
+    @Override
+    public int getResponsePercentage(Integer questionnaireID) {
+        System.out.println(getClass());
+        bindDB();
+        Predicate filter = criteriaBuilder.and(
+                criteriaBuilder.equal(root.get("questionnaireID"), questionnaireID),
+                criteriaBuilder.equal(root.get("responseStatus"), "PUBLISHED"));
+        query.where(criteriaBuilder.and(filter));
+        List<Response> responseList = session.createQuery(query).getResultList();
+        System.out.println(responseList.size());
+        return responseList.size();
+    }
 
     //Critieria builder instantiation
     void bindDB() {
@@ -126,5 +141,5 @@ public class ResponseDAOImpl implements ResponseDAO {
         query = criteriaBuilder.createQuery(Response.class);
         root = query.from(Response.class);
         query.select(root);
-        }
+    }
 }

@@ -12,4 +12,6 @@ public interface ResponseDAO {
     Response getResponse(int responseID);
 
     Response updateResponse(Response response);
+
+    int getResponsePercentage(Integer questionnaireID);
 }

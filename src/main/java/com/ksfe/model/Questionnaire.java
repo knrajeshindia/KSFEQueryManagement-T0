@@ -50,6 +50,8 @@ public class Questionnaire implements Serializable {
     @Transient
     private String responseStatus;
     @Transient
+    private Integer responsePercentage;
+    @Transient
     private boolean responseFlag;
     @Transient
     private Integer responseID;
@@ -93,6 +95,7 @@ public class Questionnaire implements Serializable {
                 ", questionIDList=" + questionIDList +
                 ", responseIDList=" + responseIDList +
                 ", responseStatus='" + responseStatus + '\'' +
+                ", responsePercentage=" + responsePercentage +
                 ", responseFlag=" + responseFlag +
                 ", responseID=" + responseID +
                 ", responseDate=" + responseDate +
@@ -259,5 +262,13 @@ public class Questionnaire implements Serializable {
 
     public void setUnitIDName(String unitIDName) {
         this.unitIDName = unitIDName;
+    }
+
+    public Integer getResponsePercentage() {
+        return responsePercentage;
+    }
+
+    public void setResponsePercentage(Integer responsePercentage) {
+        this.responsePercentage = responsePercentage;
     }
 }

@@ -112,6 +112,13 @@ public class ResponseServiceImpl implements ResponseService {
         return jsonResponse;
     }
 
+    //Get actual Response %
+    @Override
+    @Transactional
+    public int getResponsePercentage(Integer questionnaireID) {
+        return responseDAO.getResponsePercentage(questionnaireID);
+    }
+
     //Set default message data
     public static JsonData setJsonData() {
         jsonData = new JsonData();

@@ -166,16 +166,29 @@ public class QuestionnaireDAOImpl implements QuestionnaireDAO {
         query.orderBy(criteriaBuilder.desc(root.get("questionnaireID")));
         questionnaireList = session.createQuery(query).getResultList();
         insertUnitName(questionnaireList);
+        getResponsePercentage(questionnaireList);
         return questionnaireList;
     }
 
+    //Insert UnitName from unitID
     private List<Questionnaire> insertUnitName(List<Questionnaire> questionnaireList){
         for(Questionnaire q:questionnaireList){
-            q.setUnitIDName(unitService.getUnitName(q.getUnitID()));
+            q.setUnitIDName(unitService.getUnitName(q.getUnitID()));}
+        return questionnaireList;
+    }
+
+    //View Response Percentage for Questionnaire
+    private List<Questionnaire> getResponsePercentage(List<Questionnaire> questionnaireList){
+        for(Questionnaire q:questionnaireList){
+            int targetRespondents = q.getTargetRespondentIDList().size();
+            double actualResponse=(double)responseService.getResponsePercentage(q.getQuestionnaireID());
+            System.out.println("actual response : "+actualResponse+"/"+targetRespondents);
+            Double responsePercentage=actualResponse/targetRespondents*100;
+            System.out.println("responsePercentage : "+responsePercentage.intValue());
+            q.setResponsePercentage(responsePercentage.intValue());
         }
         return questionnaireList;
     }
-
     //Critieria builder instantiation
     void bindDB() {
         session = sessionFactory.getCurrentSession();
