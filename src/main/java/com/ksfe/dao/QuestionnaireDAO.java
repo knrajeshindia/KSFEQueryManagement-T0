@@ -18,5 +18,9 @@ public interface QuestionnaireDAO {
 
     List<Questionnaire> viewCompleteQuestionnaireList(Integer unitID);
 
-    List<Questionnaire> viewMyQuestionnaireList(Integer unitID);
+    List<Questionnaire> viewMyPublishedQuestionnaireList(Integer unitID);
+
+    List<Questionnaire> viewMySavedQuestionnaireList(Integer unitID);
+
+    Questionnaire saveQuestionnaire(List<Integer> questionIDList, Integer pk);
 }

@@ -65,12 +65,22 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
         return jsonResponse;
     }
 
+    //Publish Questionnaire
     @Override
     @Transactional
     public Questionnaire updateQuestionnaire(List<Integer> questionIDList, Integer pk) {
     	System.out.println("@service - redirecting to DAO : "+questionnaire);
         return questionnaireDAO.updateQuestionnaire(questionIDList,pk);
     }
+
+    //Save Questionnaire
+    @Override
+    @Transactional
+    public Questionnaire saveQuestionnaire(List<Integer> questionIDList, Integer pk) {
+        System.out.println("@service - redirecting to DAO : "+questionnaire);
+        return questionnaireDAO.saveQuestionnaire(questionIDList,pk);
+    }
+
 
     //Get all pending questionnaire list
     @Override
@@ -120,15 +130,15 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
         return jsonResponse;
     }
 
-    //Retrieve MY Questionnaire List(Self created)
+    //Retrieve MY Questionnaire PUBLISHED List(Self created)
     @Override
     @Transactional
-    public String viewMyQuestionnaireList(Integer unitID) {
+    public String viewMyPublishedQuestionnaireList(Integer unitID) {
         System.out.println(getClass());
         jsonData = setJsonData();
         System.out.println("Json Data :" + jsonData);
         try {
-            questionnaireList = questionnaireDAO.viewMyQuestionnaireList(unitID);
+            questionnaireList = questionnaireDAO.viewMyPublishedQuestionnaireList(unitID);
             System.out.println("UNIT ID"+unitID);
             jsonResponse = JsonUtil.convertJavaToJson(questionnaireList);
             jsonData.setData(jsonResponse);
@@ -143,6 +153,31 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
         System.out.println(jsonResponse);
         return jsonResponse;
     }
+
+    //Retrieve MY Questionnaire SAVED List(Self created)
+    @Override
+    @Transactional
+    public String viewMySavedQuestionnaireList(Integer unitID) {
+        System.out.println(getClass());
+        jsonData = setJsonData();
+        System.out.println("Json Data :" + jsonData);
+        try {
+            questionnaireList = questionnaireDAO.viewMySavedQuestionnaireList(unitID);
+            System.out.println("UNIT ID"+unitID);
+            jsonResponse = JsonUtil.convertJavaToJson(questionnaireList);
+            jsonData.setData(jsonResponse);
+            jsonData.setStatus(ResponseCode.STATUS_SUCCESS);
+            jsonData.setMessage(ResponseCode.MESSAGE_UPDATED);
+        } catch (EmptyResultDataAccessException e) {
+            jsonData.setMessage(ResponseCode.MESSAGE_FAILURE);
+        } catch (DataAccessException de) {
+            jsonData.setMessage(ResponseCode.MESSAGE_NETWORK);
+        }
+        jsonResponse = JsonUtil.convertJavaToJson(jsonData);
+        System.out.println(jsonResponse);
+        return jsonResponse;
+    }
+
 
     //Get all UnitIDs for selected UnitTypeID
     @Transactional

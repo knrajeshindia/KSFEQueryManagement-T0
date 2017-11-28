@@ -97,11 +97,18 @@ public class HomeController {
 
 
 
+    //Save Questionnaire
+    @RequestMapping(value="/saveQ",method=RequestMethod.POST)
+    public @ResponseBody void saveQ(@RequestParam("questionIDList") List<Integer> questionIDList,
+                                      @RequestParam("questionnaireID") Integer pk ) {
+        System.out.println("Update Questionnaire data binded - Trying to UPDATE Questionnaire : " + pk +" | "+questionIDList);
+        questionnaireService.saveQuestionnaire(questionIDList,pk);
+        System.out.println("Questionnaire UPDATED");
+    }
 
 
 
-
-    //Update Questionnaire
+    //Publish Questionnaire
     @RequestMapping(value="/updateQ",method=RequestMethod.POST)
     public @ResponseBody void updateQ(@RequestParam("questionIDList") List<Integer> questionIDList,
                                       @RequestParam("questionnaireID") Integer pk ) {
@@ -130,11 +137,20 @@ public class HomeController {
         return jsonResponse;
     }
 
-    //Retrieve My OWN Questionnaire List(Created by self)
-    @RequestMapping(value="/viewMyQ",method=RequestMethod.POST)
-    public @ResponseBody String viewMyQ(@RequestParam("unitID") Integer unitID) {
+    //Retrieve My OWN PUBLISHED Questionnaire List(Created by self)
+    @RequestMapping(value="/viewMyPublishedQ",method=RequestMethod.POST)
+    public @ResponseBody String viewMyPublishedQ(@RequestParam("unitID") Integer unitID) {
         System.out.println(getClass()+" UID IS | "+unitID);
-        jsonResponse=questionnaireService.viewMyQuestionnaireList(unitID);
+        jsonResponse=questionnaireService.viewMyPublishedQuestionnaireList(unitID);
+        System.out.println("Questionnaire:"+jsonResponse);
+        return jsonResponse;
+    }
+
+    //Retrieve My OWN SAVED Questionnaire List(Created by self)
+    @RequestMapping(value="/viewMySavedQ",method=RequestMethod.POST)
+    public @ResponseBody String viewMySavedQ(@RequestParam("unitID") Integer unitID) {
+        System.out.println(getClass()+" UID IS | "+unitID);
+        jsonResponse=questionnaireService.viewMySavedQuestionnaireList(unitID);
         System.out.println("Questionnaire:"+jsonResponse);
         return jsonResponse;
     }

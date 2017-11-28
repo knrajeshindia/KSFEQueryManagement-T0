@@ -23,6 +23,8 @@ https://www.javacodegeeks.com/2013/04/jpa-2-0-criteria-query-with-hibernate.html
     https://docs.oracle.com/cd/E19226-01/820-7627/gjixa/index.html
     https://www.tutorialspoint.com/jpa/jpa_criteria_api.htm
 
+    https://en.wikibooks.org/wiki/Java_Persistence/Criteria
+
     ------------------------------------------------------------------------
     Hibernate fetch type
 
@@ -43,3 +45,9 @@ http://www.encodedna.com/angularjs/tutorial/add-remove-table-rows-dynamically-in
 ----------------------------------------------------------------------------------------
 Angular file upload
 https://www.tutorialspoint.com/angularjs/angularjs_upload_file.htm
+---------------------------------------------------------------------------------------------
+Angular heirarcheial checkbox list
+http://embed.plnkr.co/bKJNoG/
+https://codepen.io/sliiice/pen/GurpF
+http://demos.telerik.com/kendo-ui/treeview/checkboxes
+http://www.lidorsystems.com/support/articles/angularjs/treeview/tree-view-checkbox-items.aspx

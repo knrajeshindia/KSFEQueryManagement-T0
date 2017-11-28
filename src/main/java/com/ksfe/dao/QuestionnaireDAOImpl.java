@@ -77,7 +77,7 @@ public class QuestionnaireDAOImpl implements QuestionnaireDAO {
         return questionnaire;
     }
 
-
+    //Publish Questionnaire
     @Override
     public Questionnaire updateQuestionnaire(List<Integer> questionIDList, Integer pk) {
         System.out.println(getClass());
@@ -88,6 +88,17 @@ public class QuestionnaireDAOImpl implements QuestionnaireDAO {
         this.questionnaire.setQuestionnairePhase(ResponseCode.STATUS_PUBLISHED);
         session.update(this.questionnaire);
         System.out.println("Questionnaire- Updated Description: " + this.questionnaire);
+        return questionnaire;
+    }
+    //Save Questionnaire
+    @Override
+    public Questionnaire saveQuestionnaire(List<Integer> questionIDList, Integer pk) {
+        this.questionnaire = getQuestionnaire(pk);
+        this.questionnaire.setQuestionIDList(questionIDList);
+        this.questionnaire.setPostedDate(new Date());
+        this.questionnaire.setQuestionnairePhase(ResponseCode.STATUS_SAVED);
+        session.update(this.questionnaire);
+        System.out.println("Questionnaire- Saved: " + this.questionnaire);
         return questionnaire;
     }
 
@@ -107,8 +118,8 @@ public class QuestionnaireDAOImpl implements QuestionnaireDAO {
         questionnaireListFiltered.clear();
         //Filter-out answered questionnaire
         for (Questionnaire questionnaire : questionnaireList) {
-            response = responseService.verifyResponse(questionnaire.getQuestionnaireID(),unitID);
-            responseStatus=response.getResponseStatus();
+            response = responseService.verifyResponse(questionnaire.getQuestionnaireID(), unitID);
+            responseStatus = response.getResponseStatus();
             questionnaire.setResponseStatus(responseStatus);
             questionnaire.setResponseDate(response.getResponseDate());
             questionnaire.setResponseID(response.getResponseID());
@@ -140,27 +151,29 @@ public class QuestionnaireDAOImpl implements QuestionnaireDAO {
         //ORDER BY
         query.orderBy(criteriaBuilder.desc(root.get("questionnaireID")));
         questionnaireList = session.createQuery(query).getResultList();
-         //Add response details
+        //Add response details
         for (Questionnaire questionnaire : questionnaireList) {
             response = responseService.verifyResponse(questionnaire.getQuestionnaireID(), unitID);
-            System.out.println("RESPONSE "+response);
-            responseStatus=response.getResponseStatus();
+            System.out.println("RESPONSE " + response);
+            responseStatus = response.getResponseStatus();
             questionnaire.setResponseStatus(responseStatus);
             questionnaire.setResponseDate(response.getResponseDate());
-            questionnaire.setResponseID(response.getResponseID());}
+            questionnaire.setResponseID(response.getResponseID());
+        }
         insertUnitName(questionnaireList);
         System.out.println("Questionnairelist-Complete records for userID: " + questionnaireList);
         return questionnaireList;
     }
 
-    //Retrieve MY Questionnaire -SELF CREATED
+    //Retrieve MY Questionnaire PUBLISHED -SELF CREATED
     @Override
-    public List<Questionnaire> viewMyQuestionnaireList(Integer unitID) {
+    public List<Questionnaire> viewMyPublishedQuestionnaireList(Integer unitID) {
         System.out.println(getClass() + " UNIT ID : " + unitID);
         bindDB();
         System.out.println("bindDB invoked");
         Predicate filter = criteriaBuilder.and(
-                criteriaBuilder.equal(root.get("unitID"), unitID));
+            criteriaBuilder.equal(root.get("unitID"), unitID),
+            criteriaBuilder.equal(root.get("questionnairePhase"), "PUBLISHED"));
         query.where(criteriaBuilder.and(filter));
         //ORDER BY
         query.orderBy(criteriaBuilder.desc(root.get("questionnaireID")));
@@ -170,25 +183,46 @@ public class QuestionnaireDAOImpl implements QuestionnaireDAO {
         return questionnaireList;
     }
 
+    //Retrieve MY Questionnaire SAVED -SELF CREATED
+    @Override
+    public List<Questionnaire> viewMySavedQuestionnaireList(Integer unitID) {
+        System.out.println(getClass() + " UNIT ID : " + unitID);
+        bindDB();
+        System.out.println("bindDB invoked");
+        Predicate filter = criteriaBuilder.and(
+                criteriaBuilder.equal(root.get("unitID"), unitID),
+                criteriaBuilder.equal(root.get("questionnairePhase"), ResponseCode.STATUS_SAVED));
+        query.where(criteriaBuilder.and(filter));
+        //ORDER BY
+        query.orderBy(criteriaBuilder.desc(root.get("questionnaireID")));
+        questionnaireList = session.createQuery(query).getResultList();
+        insertUnitName(questionnaireList);
+        return questionnaireList;
+    }
+
+
+
     //Insert UnitName from unitID
-    private List<Questionnaire> insertUnitName(List<Questionnaire> questionnaireList){
-        for(Questionnaire q:questionnaireList){
-            q.setUnitIDName(unitService.getUnitName(q.getUnitID()));}
+    private List<Questionnaire> insertUnitName(List<Questionnaire> questionnaireList) {
+        for (Questionnaire q : questionnaireList) {
+            q.setUnitIDName(unitService.getUnitName(q.getUnitID()));
+        }
         return questionnaireList;
     }
 
     //View Response Percentage for Questionnaire
-    private List<Questionnaire> getResponsePercentage(List<Questionnaire> questionnaireList){
-        for(Questionnaire q:questionnaireList){
+    private List<Questionnaire> getResponsePercentage(List<Questionnaire> questionnaireList) {
+        for (Questionnaire q : questionnaireList) {
             int targetRespondents = q.getTargetRespondentIDList().size();
-            double actualResponse=(double)responseService.getResponsePercentage(q.getQuestionnaireID());
-            System.out.println("actual response : "+actualResponse+"/"+targetRespondents);
-            Double responsePercentage=actualResponse/targetRespondents*100;
-            System.out.println("responsePercentage : "+responsePercentage.intValue());
+            double actualResponse = (double) responseService.getResponsePercentage(q.getQuestionnaireID());
+            System.out.println("actual response : " + actualResponse + "/" + targetRespondents);
+            Double responsePercentage = actualResponse / targetRespondents * 100;
+            System.out.println("responsePercentage : " + responsePercentage.intValue());
             q.setResponsePercentage(responsePercentage.intValue());
         }
         return questionnaireList;
     }
+
     //Critieria builder instantiation
     void bindDB() {
         session = sessionFactory.getCurrentSession();

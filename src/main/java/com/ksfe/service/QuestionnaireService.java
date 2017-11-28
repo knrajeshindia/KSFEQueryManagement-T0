@@ -22,5 +22,9 @@ public interface QuestionnaireService {
 
     String viewCompleteQuestionnaireList(Integer unitID);
 
-    String viewMyQuestionnaireList(Integer unitID);
+    String viewMyPublishedQuestionnaireList(Integer unitID);
+
+    String viewMySavedQuestionnaireList(Integer unitID);
+
+    Questionnaire saveQuestionnaire(List<Integer> questionIDList, Integer pk);
 }
